@@ -104,10 +104,10 @@
                             "biome" : "unknown",
                             "mobility": "boat, zeppelin, rails"
                         }];
-                //var text = [];
+                var text = [];
                 for(let i = 0; i < json.length; i++) {
                     let obj = json[i];
-                   text = new Writer(
+                    text[i] = new Writer(
                         obj.City_Name,
                         {
                             "anchor": "center",
@@ -119,7 +119,7 @@
                                 "z":  obj.z
                             }
                         }
-                        );
+                     );
                 }
                 
         };
