@@ -30,7 +30,7 @@
 <body>
     <canvas id="renderCanvas" touch-action="none"></canvas>
     <!-- touch-action="none" for best results from PEP -->
-    
+
     <script>
         var canvas = document.getElementById("renderCanvas");
 
@@ -49,38 +49,58 @@
         var delayCreateScene = function () {
             // Create a scene.
             var scene = new BABYLON.Scene(engine);
-        
+            // Meshwriter scale
+            var scale   = 0.1, MeshWriter, text1, text2, text3, text4;
+
             // Create a default skybox with an environment.
             //var hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("textures/environment.dds", scene);
             //var currentSkybox = scene.createDefaultSkybox(hdrTexture, true);
-        
+
             // Append glTF model to scene.
             BABYLON.SceneLoader.Append("scenes/", "Test_Maq1.gltf", scene, function (scene) {
                 //var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2,  Math.PI / 4, 5, BABYLON.Vector3(2001, 800, 1153), scene);
                 //camera.attachControl(canvas, true);
-                
+
                 // Create a default arc rotate camera and light.
                  scene.createDefaultCameraOrLight(true, true, true);
                 // The default camera looks at the back of the asset.
                 // Rotate the camera by 180 degrees to the front of the asset.
                 scene.activeCamera.alpha += Math.PI;
                 scene.activeCamera.position = new BABYLON.Vector3(-2001, 300, -1153);
-                
+
                 scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
-                
+
                 //Light direction is up and left
                 var light = new BABYLON.HemisphericLight("hemiLight", new BABYLON.Vector3(0, 1, 0), scene);
                 light.diffuse = new BABYLON.Color3(1, 1, 1);
                 light.specular = new BABYLON.Color3(0.59, 0.69, 0.8);
                 light.groundColor = new BABYLON.Color3(0.27, 0.31, 0.27);
-                
+
             });
-        
+            write()
             return scene;
+
+            function write () {
+                Writer = BABYLON.MeshWriter(scene, {scale:scale,defaultFont:"Arial"});
+                text1  = new Writer(
+                                "HAVEN",
+                                {
+                                    "anchor": "center",
+                                    "letter-height": 60,
+                                    "color": "#39c",
+                                    "position": {
+                                        "y":  40,
+                                        "x": 13,
+                                        "z":  6
+                                    }
+                                }
+                            );
+                          }
+
         };
                 window.initFunction = async function() {
-                    
-                    
+
+
                     var asyncEngineCreation = async function() {
                         try {
                         return createDefaultEngine();
@@ -94,7 +114,7 @@
         if (!engine) throw 'engine should not be null.';
         startRenderLoop(engine, canvas);
         window.scene = delayCreateScene();};
-        initFunction().then(() => {sceneToRender = scene                    
+        initFunction().then(() => {sceneToRender = scene
         });
 
         // Resize
