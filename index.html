@@ -107,7 +107,7 @@
                 //var text = [];
                 for(let i = 0; i < json.length; i++) {
                     let obj = json[i];
-                    eval('var text'+i+' = new Writer(
+                   text = new Writer(
                         obj.City_Name,
                         {
                             "anchor": "center",
@@ -119,7 +119,7 @@
                                 "z":  obj.z
                             }
                         }
-                        ););
+                        );
                 }
                 
         };
