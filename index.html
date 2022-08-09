@@ -86,36 +86,44 @@
 
             function write () {
                 Writer = BABYLON.MeshWriter(scene, {scale:scale,defaultFont:"Arial"});
-                var cityname = "Haven"
-                text1  = new Writer(
-                                cityname,
-                                {
-                                    "anchor": "center",
-                                    "letter-height": 100,
-                                    "color": "#39c",
-                                    "position": {
-                                        "y":  0,
-                                        "x": 2001,
-                                        "z":  1153
-                                    }
-                                }
-                            );
-                var cityname2 = "Puerto Del Sol"
-                var city2_x = 2280
-                var city2_z = 421
-                text2  = new Writer(
-                                cityname2,
-                                {
-                                    "anchor": "center",
-                                    "letter-height": 100,
-                                    "color": "#39c",
-                                    "position": {
-                                        "y":  0,
-                                        "x": city2_x,
-                                        "z":  city2_z
-                                    }
-                                }
-                            );
+                let json = [{
+                            "City_Name" : "Haven", 
+                            "Mayor"   : "AliasAlreadyTaken",
+                            "x" : "2001",
+                            "y" : "0",
+                            "z" : "1153",
+                            "biome" : unknown,
+                            "mobility": "boat, zeppelin, rails"
+                        },
+                        {
+                            "City_Name" : "Puerto Del Sol", 
+                            "Mayor"   : "Chache",
+                            "x" : "2280",
+                            "y" : "0",
+                            "z" : "421",
+                            "biome" : unknown,
+                            "mobility": "boat, zeppelin, rails"
+                        }];
+
+
+                for(let i = 0; i < json.length; i++) {
+                    let obj = json[i];
+                    text[i] = new writer(
+                        obj.City_Name,
+                        {
+                            "anchor": "center",
+                            "letter-height": 100,
+                            "color": "#45d",
+                            "position": {
+                                "y":  0,
+                                "x": obj.x,
+                                "z":  obj.z
+                            }
+                        }
+                        );
+                    //console.log(obj.id);
+                }
+                
         };
         }
         
