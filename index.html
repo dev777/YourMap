@@ -57,7 +57,7 @@
             // Append glTF model to scene.
             BABYLON.SceneLoader.Append("scenes/", "Test_Maq1.gltf", scene, function (scene) {
                 //const camera = new BABYLON.ArcRotateCamera("camera", Math.PI / 2, Math.PI / 2.5, 150, new BABYLON.Vector3(0, 100, 0));
-                var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2,  Math.PI / 4, 5, BABYLON.Vector3.(0, 200, 0), scene);
+                var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2,  Math.PI / 4, 5, BABYLON.Vector3(0, 200, 0), scene);
                 camera.attachControl(canvas, true);
                 
                 // Create a default arc rotate camera and light.
