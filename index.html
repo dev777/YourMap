@@ -56,7 +56,7 @@
             //var hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("textures/environment.dds", scene);
             //var currentSkybox = scene.createDefaultSkybox(hdrTexture, true);
 
-            // Append glTF model to scene./*
+            // Append glTF model to scene.
             BABYLON.SceneLoader.Append("scenes/", "Test_Maq1.gltf", scene, function (scene) {
                 //var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2,  Math.PI / 4, 5, BABYLON.Vector3(2001, 800, 1153), scene);
                 //camera.attachControl(canvas, true);
@@ -76,9 +76,8 @@
                 light.specular = new BABYLON.Color3(0.59, 0.69, 0.8);
                 light.groundColor = new BABYLON.Color3(0.27, 0.31, 0.27);
 
-            });*/
-            scene.createDefaultCameraOrLight(true, true, true);
-            scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
+            });
+            
             if ( typeof TYPE === "undefined" ) {
                 fauxLoad()
             }
