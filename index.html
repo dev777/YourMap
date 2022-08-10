@@ -105,25 +105,12 @@
                             "mobility": "boat, zeppelin, rails"
                         }];
 
-                for(let i = 0; i < json.length; i++) {
+                for (let i = 0; i < json.length; i++) {
                     let obj = json[i];
-                    //text = new Writer(
-                    
                     eval('text'+ obj.City_Name + ' = new Writer("'+ obj.City_Name + '",{"anchor": "center","letter-height": 100,"color": "#1C3870","position": { "y":  0, "x": '+ obj.x +', "z": '+ obj.z +' }});');
-                    
-                    /*
-                    window['text'+i] = new Writer( 
-                        obj.City_Name,
-                        {
-                            "anchor": "center",
-                            "letter-height": 100,
-                            "color": "#45d",
-                            "position": { "y":  0, "x": obj.x, "z": obj.z }
-                        }
-                     );*/
                 }
                
-        };
+            };
         }
         
         function fauxLoad(){
