@@ -379,7 +379,7 @@
 
             for(let i = 0; i < json.length; i++) {
                 let obj = json[i];
-                eval('var text'+ i + ' = new Writer("'+ obj.City_Name +'",{"anchor": "center","letter-height": 40,"color": "#1C3870","position": {"x" : '+ obj.x +', "y" : 0, "z": '+ obj.z +'}});');
+                eval('var text'+ i + ' = new Writer("'+ obj.City_Name +'",{"anchor": "center","letter-height": 100,"color": "#1C3870","position": {"x" : '+ obj.x +', "y" : 0, "z": '+ obj.z +'}});');
             }
         }
         }
