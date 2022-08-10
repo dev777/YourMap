@@ -104,13 +104,26 @@
                             "biome" : "unknown",
                             "mobility": "boat, zeppelin, rails"
                         }];
-
-                for (let i = 0; i < json.length; i++) {
+                //var text = [];
+                for(let i = 0; i < json.length; i++) {
                     let obj = json[i];
-                    eval('text'+ obj.City_Name + ' = new Writer("Havfgfdhgen",{"anchor": "center","letter-height": 40,"color": "#1C3870","position": {"z": 70}});');
+                    //text = new Writer(
+                    window['text'+i] = new Writer( 
+                        obj.City_Name,
+                        {
+                            "anchor": "center",
+                            "letter-height": 100,
+                            "color": "#45d",
+                            "position": {
+                                "y":  0,
+                                "x": obj.x,
+                                "z":  obj.z
+                            }
+                        }
+                     );
                 }
                
-            };
+        };
         }
         
         function fauxLoad(){
