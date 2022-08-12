@@ -20,6 +20,8 @@ https://dev777.github.io/YourMap/
 --- TO DO ---
 * Many things...
 * TXT : rotate them
+* TXT : fix 'n' letter or use CAPS
+* PERF : replace circular grid with a 3D mesh instance
 * UI : Side pannel with cities that focus on selected city with a local ArcCam
 * UI : choose cameras : free / top / reset_one
 * change lightning and colors
