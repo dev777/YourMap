@@ -34,34 +34,34 @@
 
     <canvas id="renderCanvas"></canvas>
     <script>
-        // Cities datas Credits : alexandre2005, Bla, Boot, Chache, Mielle and probably many others (help makes this accurate please)
-        var canvas = document.getElementById("renderCanvas");
+      // Cities datas Credits : alexandre2005, Bla, Boot, Chache, Mielle and probably many others (help makes this accurate please)
 
-        var startRenderLoop = function (engine, canvas) {
-            engine.runRenderLoop(function () {
-                if (sceneToRender && sceneToRender.activeCamera) {
-                    sceneToRender.render();
-                }
-            });
-        }
+      // INIT SCENE
+      var canvas = document.getElementById("renderCanvas");
+      var startRenderLoop = function (engine, canvas) {
+          engine.runRenderLoop(function () {
+              if (sceneToRender && sceneToRender.activeCamera) {
+                  sceneToRender.render();
+              }
+          });
+      }
+      var engine = null;
+      var scene = null;
+      var sceneToRender = null;
+      var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
+      var createScene = function() {
 
-        var engine = null;
-        var scene = null;
-        var sceneToRender = null;
-        var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
-        var createScene = function() {
+    	var scene   = new BABYLON.Scene(engine);
+      var scale   = 1, MeshWriter, text1, text2, text3, text4;
 
-        	var scene   = new BABYLON.Scene(engine);
-          var scale   = 1, MeshWriter, text1, text2, text3, text4;
-
-          // Arc Cameras
-          var camera  = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/4, 50, BABYLON.Vector3.Zero(), scene);
-        	camera.attachControl(canvas, true);
-          scene.activeCamera.position = new BABYLON.Vector3(0, 1500, -2500);
-          camera.zoomToMouseLocation = true;
-          camera.wheelDeltaPercentage = 0.02;
-          camera.maxZ = 50000;
-          camera.panningSensibility = 1;
+      // Arc Cameras
+      var camera  = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/4, 50, BABYLON.Vector3.Zero(), scene);
+    	camera.attachControl(canvas, true);
+      scene.activeCamera.position = new BABYLON.Vector3(0, 1500, -2500);
+      camera.zoomToMouseLocation = true;
+      camera.wheelDeltaPercentage = 0.02;
+      camera.maxZ = 50000;
+      camera.panningSensibility = 1;
 
           // Universal Camera
           /*
@@ -124,6 +124,7 @@
           eval ('const torusGrid_'+ i +' = BABYLON.MeshBuilder.CreateTorus("torusGrid_'+ i +'", {thickness: '+ thickness +', diameter: '+ i +', tessellation: 32});');
           /*eval('torusGrid_'+ i +'.material = gridMat;');*/
           }
+          /* test grid TO DO Replace with a simple mesh*/
           var text_Grid_500 = new Writer("500", {"anchor": "left","letter-height": 50,"color": "#000000","position": {"x" : 500, "y" : 0, "z": -15}});
           var text_Grid_1000 = new Writer("1000", {"anchor": "left","letter-height": 50,"color": "#000000","position": {"x" : 1000, "y" : 0, "z": -15}});
           var text_Grid_1500 = new Writer("1500", {"anchor": "left","letter-height": 50,"color": "#000000","position": {"x" : 1500, "y" : 0, "z": -15}});
@@ -142,7 +143,7 @@
           text_Disclaimer.color = "Orange";
           text_Disclaimer.fontSize = 20;
           advancedTexture.addControl(text_Disclaimer);
-          text_Disclaimer.top = 350;
+          text_Disclaimer.top = 360;
           text_Disclaimer.textWrapping= true;
           text_Disclaimer.lineSpacing = 7;
           text_Disclaimer.width = "750px";
@@ -467,13 +468,16 @@
 
               // so we get our precious json
               let obj = json_Cities[i];
-
+              const City_Name = obj.City_Name.toUpperCase();
+              const City_Mayor = obj.Mayor.toUpperCase();
+              const Biome = obj.biome.toUpperCase();
+              const Mobility = obj.mobility.toUpperCase();
               // --- create City Names text at exact x/z position, y is forced +10 ---
-              eval('var text_CityName_'+ i +' = new Writer("'+ obj.City_Name +'",{"anchor": "center","letter-height": 110,"color": "#1C3870","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ obj.z +'}});');
+              eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": 90,"color": "#1C3870","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ obj.z +'}});');
 
               // --- second line for Mayors name // "color": "#aa,aa,cc"
               var Line2 = obj.z - 55;
-              eval('var text_Mayor'+ i +' = new Writer("'+ obj.Mayor +'",{"anchor": "center","letter-height": 55,"color": "#777777","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line2 +'}});');
+              eval('var text_Mayor'+ i +' = new Writer("'+ City_Mayor +'",{"anchor": "center","letter-height": 42,"color": "#777777","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line2 +'}});');
 
               // --- third line for coords
               var Line3 = obj.z - 100;
@@ -481,7 +485,7 @@
 
               // --- third line for biome and mobility
               var Line4 = obj.z - 140;
-              eval('var text_biome'+ i +' = new Writer("'+ obj.biome +' // '+ obj.mobility +'",{"anchor": "center","letter-height": 35,"color": "#25004a","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line4 +'}});');
+              eval('var text_biome'+ i +' = new Writer("'+ Biome +' // '+ Mobility +'",{"anchor": "center","letter-height": 25,"color": "#25004a","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line4 +'}});');
 
               // replacing city text with 3UI
               // this works
@@ -516,7 +520,7 @@
               eval('text_button'+ i +'.fontSize = 164;');
               eval('button'+ i +'.content = text_button'+ i +';');
 
-              // Adding a disc at City position but y:0
+              // Adding a disc at City position but forcing y:0
               eval('var disc'+ i +' = BABYLON.MeshBuilder.CreateDisc("disc", {radius: 64 , arc: 1, tessellation: 24}, scene);');
               eval('disc'+ i +'.rotation.x = BABYLON.Tools.ToRadians(90);');
               eval('disc'+ i +'.position = new BABYLON.Vector3('+ obj.x +', 0, '+ obj.z+');');
