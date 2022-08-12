@@ -33,7 +33,7 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 * test flythrough (city to city)
 * add icons for mobility
 * UI : add layers displaying mobility paths (boat; zep; rails)
-* UI : display more cities datas (shields, description, state, alliance)
+* UI : display more cities datas (shields, quick description, state, alliance, farms, portals, church)
 * obtain a layer 0 of the world (only ocean, river) >> add water only (Global Blender Mesh)
 * replace city names with Blender objects ?
 * EVENT : make city's discs clickable too > then option list (travel, info...)
