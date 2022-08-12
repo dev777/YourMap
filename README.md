@@ -26,6 +26,9 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [x] TXT : rotate them >> City names rotated 90°
 - [x] TXT : fix 'n' letter or use CAPS >> using caps for now
 - [ ] PERF : replace circular grid with a 3D mesh instance
+- [ ] add possibility to place grid origin at locations, with rotation
+- [ ] AND / OR add a ruler
+- [ ] Add registered path (with multilines)
 - [ ] UI : Side pannel with cities that focus on selected city with a local ArcCam
 - [ ] UI : choose cameras : free / top / reset_one
 - [ ] change lightning and colors
