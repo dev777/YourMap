@@ -139,7 +139,7 @@
           // GUI
           var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mapUI");
           var text_Disclaimer = new BABYLON.GUI.TextBlock();
-          text_Disclaimer.text = "LEFT Mouse Button >> ROTATE View --- RIGHT Mouse Button >> PAN View WHEEL Mouse >> ZOOM --- F5 >> Restart";
+          text_Disclaimer.text = "LEFT Mouse Button >> ROTATE View --- RIGHT Mouse Button >> PAN View WHEEL Mouse >> ZOOM to pointer --- F5 >> Restart";
           text_Disclaimer.color = "Orange";
           text_Disclaimer.fontSize = 20;
           advancedTexture.addControl(text_Disclaimer);
@@ -481,8 +481,10 @@
               const City_Mayor = obj.Mayor.toUpperCase();
               const Biome = obj.biome.toUpperCase();
               const Mobility = obj.mobility.toUpperCase();
-              // --- create City Names text at exact x/z position, y is forced +10 ---
-              eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": 90,"color": "#1C3870","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ obj.z +'}});');
+              // --- create City Names text at exact x/z position, y is forced +15 ---
+              eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": 90,"color": "#1C3870","position": {"x" : '+ obj.x +', "y" : 15, "z": '+ obj.z +'}});');
+              eval('mesh_CityName_'+ i +' = text_CityName_'+ i +'.getMesh();');
+              eval('mesh_CityName_'+ i +'.rotation.x = BABYLON.Tools.ToRadians(-90);');
 
               // --- second line for Mayors name // "color": "#aa,aa,cc"
               var Line2 = obj.z - 55;
@@ -491,6 +493,8 @@
               // --- third line for coords
               var Line3 = obj.z - 100;
               eval('var text_Coords'+ i +' = new Writer("[ '+ obj.x +' , '+ obj.y +' , '+ obj.z +' ]",{"anchor": "center","letter-height": 35,"color": "#25004a","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line3 +'}});');
+              /*eval('mesh_Coords_'+ i +' = text_Coords_'+ i +'.getMesh();');
+              eval('mesh_Coords_'+ i +'.rotation.x = BABYLON.Tools.ToRadians(-90);');*/
 
               // --- third line for biome and mobility
               var Line4 = obj.z - 140;
@@ -538,6 +542,9 @@
               //discCityMat.emissiveColor = new BABYLON.Color3(.8, 0.4, 0.1)
               eval('disc'+ i +'.material = discCityMat;');
             }
+            // obsolete, has been included in loop creation text
+            //mesh_CityName_13  = text_CityName_13.getMesh()
+            //mesh_CityName_13.rotation.x = BABYLON.Tools.ToRadians(-90);
           }
 
 
