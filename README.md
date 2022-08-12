@@ -38,4 +38,4 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 * replace city names with Blender objects ?
 * EVENT : make city's discs clickable too > then option list (travel, info...)
 * add voice's attack spot and dates, add POVs category
-* add Tunnels / briges
+* add Tunnels / bridges
