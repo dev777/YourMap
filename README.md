@@ -17,6 +17,9 @@ Let see if it grows.
 
 https://dev777.github.io/YourMap/
 
+CONTROLS
+LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
+
 --- TO DO ---
 * Many things...
 * TXT : rotate them
