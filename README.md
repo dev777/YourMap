@@ -11,7 +11,7 @@ Those games are also about exploration, so if you use this : use it with moderat
 
 OBVIOUSLY this in a WORK IN PROGRESS
 
-Am already glad been able to put something so quickly with not too much hurddles.
+Am already glad been able to put something so quickly with not too much hurddles, thx to Babylon.js
 
 Let see if it grows.
 
@@ -33,3 +33,4 @@ https://dev777.github.io/YourMap/
 * obtain a layer 0 of the world (only ocean, river) >> add water only (Global Blender Mesh)
 * replace city names with Blender objects ?
 * EVENT : make city's discs clickable too > then option list (travel, info...)
+* add voice's attack spot and dates, add POVs category
