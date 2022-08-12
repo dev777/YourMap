@@ -22,6 +22,7 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 
 --- TO DO ---
 * Many things...
+* separate Json file
 * TXT : rotate them
 * TXT : fix 'n' letter or use CAPS
 * PERF : replace circular grid with a 3D mesh instance
