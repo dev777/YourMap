@@ -156,11 +156,14 @@
 
           // Load Meshes
           Promise.all([
+          // Let's add a zeppelin above Haven
           BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "zeppelin.gltf", scene).then(function (result) {
             result.meshes[0].position.x = 2001;
             result.meshes[0].position.y = 150;
             result.meshes[0].position.z = 1153;
             result.meshes[0].scaling.scaleInPlace(5);
+            // this thing can probably be turned
+            result.meshes[0].rotation.y = BABYLON.Tools.ToRadians(-90);
           }),
           /*BABYLON.SceneLoader.ImportMeshAsync(null, baseUrl + "Avocado/glTF/", "Avocado.gltf", scene).then(function (result) {
             result.meshes[0].position.x = -0.01;
