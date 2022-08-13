@@ -153,9 +153,28 @@
           // Create the 3D UI manager
           var manager = new BABYLON.GUI.GUI3DManager(scene);
 
+
+          // Load Meshes
+          Promise.all([
+          BABYLON.SceneLoader.ImportMeshAsync(null, "/meshes/", "zeppelin.gltf", scene).then(function (result) {
+            result.meshes[0].position.x = 0.01;
+          }),
+          /*BABYLON.SceneLoader.ImportMeshAsync(null, baseUrl + "Avocado/glTF/", "Avocado.gltf", scene).then(function (result) {
+            result.meshes[0].position.x = -0.01;
+            result.meshes[0].position.y = -0.01;
+            result.meshes[0].scaling.scaleInPlace(0.25);
+          })*/
+          ]).then(() => {
+          /*scene.createDefaultCameraOrLight(true, true, true);
+          scene.activeCamera.alpha += Math.PI;*/
+          });
+
           // write all the initial 3D texts with MEshWriter
           write()
         	return scene;
+
+
+
 
           /* JSON LOADER
           // loading json
@@ -481,8 +500,8 @@
               const City_Mayor = obj.Mayor.toUpperCase();
               const Biome = obj.biome.toUpperCase();
               const Mobility = obj.mobility.toUpperCase();
-              // --- create City Names text at exact x/z position, y is forced +15 ---
-              eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": 90,"color": "#1C3870","position": {"x" : '+ obj.x +', "y" : 15, "z": '+ obj.z +'}});');
+              // --- create City Names text at exact x/z position, y is forced +15 --- // "#1C3870"
+              eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": 90,"color": "#caaa55","position": {"x" : '+ obj.x +', "y" : 15, "z": '+ obj.z +'}});');
               eval('mesh_CityName_'+ i +' = text_CityName_'+ i +'.getMesh();');
               eval('mesh_CityName_'+ i +'.rotation.x = BABYLON.Tools.ToRadians(-90);');
 
