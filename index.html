@@ -158,6 +158,7 @@
           Promise.all([
           BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "zeppellin.gltf", scene).then(function (result) {
             result.meshes[0].position.y = 50;
+            result.meshes[1].position.y = 50;
           }),
           /*BABYLON.SceneLoader.ImportMeshAsync(null, baseUrl + "Avocado/glTF/", "Avocado.gltf", scene).then(function (result) {
             result.meshes[0].position.x = -0.01;
