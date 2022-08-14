@@ -435,25 +435,41 @@
 
       	return scene;
 
-        // Mass ZEp deployement
+        // Mass Zep deployement
         function zeppelination() {
           Promise.all([
           BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "zeppelin.gltf", scene).then(function (zeppelin) {
             zeppelinMesh = zeppelin.meshes[0];
-            // cloning zep for future use
-            var zepclone = zeppelinMesh.clone("zepclone");
-            zepclone.position.x = 150;
-            zepclone.rotation = new BABYLON.Vector3(0, -1.57, 0);
-            // Original one goes above Have+
+
+            //
+            for ( let i = 0; i < json_Cities.length; i++ ) {
+
+              // so we get our precious json
+              let obj = json_Cities[i];
+
+              if ( (obj.mobility.includes("zeppelin")) && (!(obj.City_Name.includes("Haven")) )) {
+                eval('var zepclone_'+ i +' = zeppelinMesh.clone("zepclone'+ i +'");');
+
+                eval ('zepclone_'+ i +'.position.x = '+ obj.x +'+ 50;');
+                eval ('zepclone_'+ i +'.position.y = 130;');
+                eval ('zepclone_'+ i +'.position.z = '+ obj.z +';');
+                eval ('zepclone_'+ i +'.scaling.scaleInPlace(1.5);');
+                eval ('zepclone_'+ i +'.rotation = new BABYLON.Vector3(0, -1.57, 0);');
+              }
+
+            }
+            // Original one goes above Haven
             zeppelinMesh.position.x = 2001;
             zeppelinMesh.position.y = 250;
             zeppelinMesh.position.z = 1153;
             zeppelinMesh.scaling.scaleInPlace(5);
             zeppelinMesh.rotation = new BABYLON.Vector3(0, 1.5708, 0);
           })]).then(() => {
-           console.log("3D Zep imported");
+           console.log("3D Zep imported, cloned and positionned");
          });
         }
+
+
         // write all the initial 3D texts with MeshWriter
         function write_CityInfos () {
           /* -------------- CITIES LIST ------------ */
