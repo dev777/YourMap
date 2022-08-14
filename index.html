@@ -49,530 +49,444 @@
       var scene = null;
       var sceneToRender = null;
       var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
+
+      /* -------------- MAIN FUNCTION ------------ */
       var createScene = function() {
 
-    	var scene   = new BABYLON.Scene(engine);
-      var scale   = 1, MeshWriter, text1, text2, text3, text4;
+      	var scene   = new BABYLON.Scene(engine);
+        var scale   = 1, MeshWriter;
 
-      // Arc Cameras
-      var camera  = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/4, 50, BABYLON.Vector3.Zero(), scene);
-    	camera.attachControl(canvas, true);
-      scene.activeCamera.position = new BABYLON.Vector3(0, 1500, -2500);
-      camera.zoomToMouseLocation = true;
-      camera.wheelDeltaPercentage = 0.02;
-      camera.maxZ = 50000;
-      camera.panningSensibility = 1;
+        // Arc Cameras
+        var camera_arc1  = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/4, 50, BABYLON.Vector3.Zero(), scene);
+      	camera_arc1.attachControl(canvas, true);
+        camera_arc1.zoomToMouseLocation = true;
+        camera_arc1.wheelDeltaPercentage = 0.02;
+        camera_arc1.maxZ = 50000;
+        camera_arc1.panningSensibility = 1;
+        scene.activeCamera.position = new BABYLON.Vector3(0, 1500, -2500);
 
-          // Universal Camera
-          /*
-          var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
-          // Enable mouse wheel inputs.
-          camera.inputs.addMouseWheel();
-          // Change the mouse wheel Y axis to controll the cameras height in the scene:
-          //camera.inputs.attached["mousewheel"].wheelYMoveRelative = BABYLON.Coordinate.Y;
-          // Revese the mouse wheel Y axis direction:
-          // camera.inputs.attached["mousewheel"].wheelPrecisionY = -1;
-          // This targets the camera to scene origin
-          camera.setTarget(BABYLON.Vector3.Zero());
-          // This attaches the camera to the canvas
-          camera.attachControl(true);
-          scene.activeCamera.position = new BABYLON.Vector3(2001, 800, 0);*/
+        // Universal Camera
+        /*
+        var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
+        // Enable mouse wheel inputs.
+        camera.inputs.addMouseWheel();
+        // Change the mouse wheel Y axis to controll the cameras height in the scene:
+        //camera.inputs.attached["mousewheel"].wheelYMoveRelative = BABYLON.Coordinate.Y;
+        // Revese the mouse wheel Y axis direction:
+        // camera.inputs.attached["mousewheel"].wheelPrecisionY = -1;
+        // This targets the camera to scene origin
+        camera.setTarget(BABYLON.Vector3.Zero());
+        // This attaches the camera to the canvas
+        camera.attachControl(true);
+        scene.activeCamera.position = new BABYLON.Vector3(2001, 800, 0);*/
 
-          // light
-          var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 10, 0), scene);
-          light.intensity = 0.7;
+        // Environment
+        // (Background color)
+        scene.clearColor = new BABYLON.Color3(0.2, 0.2, 0.298);
+        //scene.ambientColor = new BABYLON.Color3(0.1, 0.0, 0.15);
+        scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
+        scene.fogDensity = 0.0001;
 
-          // required to load Meshwriter
-          if ( typeof TYPE === "undefined" ) {
-              fauxLoad()
-          }
+        // light
+        var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 10, 0), scene);
+        light.intensity = 0.4;
 
-          // Init Writer for 3D text
-          Writer = BABYLON.MeshWriter(scene, {scale:scale,defaultFont:"Arial"});
+        // required to load Meshwriter
+        if ( typeof TYPE === "undefined" ) {
+            fauxLoad()
+        }
+        // Init Writer for 3D text
+        Writer = BABYLON.MeshWriter(scene, {scale:scale,defaultFont:"Arial"});
 
-          // ORIGIN
-          // Place a sphere at origin
-          var origin = BABYLON.Mesh.CreateSphere("sphere_origin", 16, 5, scene);
-          var disc_origin = BABYLON.Mesh.CreateDisc("disc_origin", {radius: 128 , arc: 1, tessellation: 24}, scene);
-          disc_origin.position = new BABYLON.Vector3(0,0,0);
+        // ORIGIN
+        // Place a txt at origin
+        var text_Origin = new Writer("ORIGIN", {"anchor": "center","letter-height": 60,"color": "#ff0000","position": {"x" : 0, "y" : 0, "z": -20}});
 
-          const originMat = new BABYLON.StandardMaterial("originMat");
-          originMat.diffuseColor = new BABYLON.Color3(1, 0, 0)
-          origin.material = originMat;
-          disc_origin.material = originMat;
+        // text distances along +z axis
+        for ( let i = 500; i < 40000; i += 500) {
+          eval('var text_Grid_'+ i +' = new Writer("'+ i +'", {"anchor": "left","letter-height": 50,"color": "#000000","position": {"x" : '+ i +', "y" : 0, "z": -15}});');
+        }
 
-          var text_Origin = new Writer("ORIGIN", {"anchor": "center","letter-height": 60,"color": "#ff0000","position": {"x" : 0, "y" : 0, "z": -20}});
-
-          // Place a sphere at Haven Position
-          var haven_pos = BABYLON.Mesh.CreateSphere("sphere_haven", 16, 15, scene);
-          haven_pos.material = originMat;
-          haven_pos.position = new BABYLON.Vector3(2001, 0, 1153);
-
-          // Grid circle distance
-          /*const gridMat = new BABYLON.StandardMaterial("gridMat")
-          gridMat.emissiveColor = new BABYLON.Color3(1, 1, 1)*/
-          for ( let i = 1000; i < 20000; i += 1000) {
-          if (i % 1000 === 0) {
-            thickness = 1;
-          }
-          if (i % 2000 === 0) {
-            thickness = 3;
-          }
-          if (i % 10000 === 0) {
-            thickness = 6;
-          }
-          eval ('const torusGrid_'+ i +' = BABYLON.MeshBuilder.CreateTorus("torusGrid_'+ i +'", {thickness: '+ thickness +', diameter: '+ i +', tessellation: 32});');
-          /*eval('torusGrid_'+ i +'.material = gridMat;');*/
-          }
-          /* test grid TO DO Replace with a simple mesh*/
-          var text_Grid_500 = new Writer("500", {"anchor": "left","letter-height": 50,"color": "#000000","position": {"x" : 500, "y" : 0, "z": -15}});
-          var text_Grid_1000 = new Writer("1000", {"anchor": "left","letter-height": 50,"color": "#000000","position": {"x" : 1000, "y" : 0, "z": -15}});
-          var text_Grid_1500 = new Writer("1500", {"anchor": "left","letter-height": 50,"color": "#000000","position": {"x" : 1500, "y" : 0, "z": -15}});
-          var text_Grid_2000 = new Writer("2000", {"anchor": "left","letter-height": 50,"color": "#000000","position": {"x" : 2000, "y" : 0, "z": -15}});
-          var text_Grid_500 = new Writer("2500", {"anchor": "left","letter-height": 50,"color": "#000000","position": {"x" : 2500, "y" : 0, "z": -15}});
-          var text_Grid_500 = new Writer("3000", {"anchor": "left","letter-height": 50,"color": "#000000","position": {"x" : 3000, "y" : 0, "z": -15}});
-          var text_Grid_3500 = new Writer("3500", {"anchor": "left","letter-height": 50,"color": "#000000","position": {"x" : 3500, "y" : 0, "z": -15}});
-          var text_Grid_4000 = new Writer("4000", {"anchor": "left","letter-height": 50,"color": "#000000","position": {"x" : 4000, "y" : 0, "z": -15}});
-          var text_Grid_4500 = new Writer("4500", {"anchor": "left","letter-height": 50,"color": "#000000","position": {"x" : 4500, "y" : 0, "z": -15}});
-          var text_Grid_5000 = new Writer("5000", {"anchor": "left","letter-height": 50,"color": "#000000","position": {"x" : 5000, "y" : 0, "z": -15}});
-
-          // GUI
-          var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mapUI");
-          var text_Disclaimer = new BABYLON.GUI.TextBlock();
-          text_Disclaimer.text = "LEFT Mouse Button >> ROTATE View --- RIGHT Mouse Button >> PAN View WHEEL Mouse >> ZOOM to pointer --- F5 >> Restart";
-          text_Disclaimer.color = "Orange";
-          text_Disclaimer.fontSize = 20;
-          advancedTexture.addControl(text_Disclaimer);
-          text_Disclaimer.top = 360;
-          text_Disclaimer.textWrapping= true;
-          text_Disclaimer.lineSpacing = 7;
-          text_Disclaimer.width = "750px";
-          text_Disclaimer.height = "300px";
+        // GUI
+        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mapUI");
+        var text_Disclaimer = new BABYLON.GUI.TextBlock();
+        text_Disclaimer.text = "LEFT Mouse Button >> ROTATE View      RIGHT Mouse Button >> PAN View WHEEL Mouse >> ZOOM to pointer      F5 >> Restart";
+        text_Disclaimer.color = "Orange";
+        text_Disclaimer.fontSize = 18;
+        text_Disclaimer.top = 260;
+        text_Disclaimer.textWrapping= true;
+        text_Disclaimer.lineSpacing = 7;
+        text_Disclaimer.width = "680px";
+        text_Disclaimer.height = "300px";
+        advancedTexture.addControl(text_Disclaimer);
 
 
-          // Create the 3D UI manager
-          var manager = new BABYLON.GUI.GUI3DManager(scene);
+        // Create the 3D UI manager
+        //var manager = new BABYLON.GUI.GUI3DManager(scene);
 
 
-          // Load Meshes
-          Promise.all([
-          // Let's add a zeppelin above Haven
-          BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "zeppelin.gltf", scene).then(function (result) {
-            result.meshes[0].position.x = 2001;
-            result.meshes[0].position.y = 250;
-            result.meshes[0].position.z = 1153;
-            result.meshes[0].scaling.scaleInPlace(5);
-            // this thing can probably be turned
-            //result.meshes[0].rotation.y = BABYLON.Tools.ToRadians(-90);
-             result.meshes[0].rotation = new BABYLON.Vector3(0, 1.5708, 0);
-          }),
-          /*BABYLON.SceneLoader.ImportMeshAsync(null, baseUrl + "Avocado/glTF/", "Avocado.gltf", scene).then(function (result) {
-            result.meshes[0].position.x = -0.01;
-            result.meshes[0].position.y = -0.01;
-            result.meshes[0].scaling.scaleInPlace(0.25);
-          })*/
-          ]).then(() => {
-          /*scene.createDefaultCameraOrLight(true, true, true);
-          scene.activeCamera.alpha += Math.PI;*/
-             console.log("zep imported");
-          });
+        // Load Meshes
+        Promise.all([
+        // Let's add a zeppelin above Haven
+        BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "zeppelin.gltf", scene).then(function (result) {
+          result.meshes[0].position.x = 2001;
+          result.meshes[0].position.y = 250;
+          result.meshes[0].position.z = 1153;
+          result.meshes[0].scaling.scaleInPlace(5);
+          result.meshes[0].rotation = new BABYLON.Vector3(0, 1.5708, 0);
+        }),
+        BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "Circular_Grid.gltf", scene).then(function (result) {
+        })
+        ]).then(() => {
+           console.log("3D Meshes imported");
+        });
 
-          // write all the initial 3D texts with MEshWriter
-          write()
-        	return scene;
+        // write all 3D texts
+        write()
+      	return scene;
 
-
-
-
-          /* JSON LOADER
-          // loading json
-          var Cities_list;
-          var oReq = new XMLHttpRequest();
-          oReq.onload = reqListener;
-          oReq.open("get", "Cities_list.json", true);
-          oReq.send();
-
-          // parse JSON
-          function reqListener(e) {
-            Cities_list = JSON.parse(this.responseText);
-          }
-          */
-
-          function write () {
-
-
-            let json_Cities = [{
-              "City_Name" : "Aqueron",
-              "Mayor"   : "Skyisblue",
-              "x" : "1719",
-              "y" : "0",
-              "z" : "2735",
-              "biome" : "mushroom",
-              "mobility": "boat"
-              },
-              {
-              "City_Name" : "Atlantis",
-              "Mayor"   : "unknown",
-              "x" : "25138",
-              "y" : "-31",
-              "z" : "30535",
-              "biome" : "unknown",
-              "mobility": "unknown"
-              },
-              {
-              "City_Name" : "Aventiure",
-              "Mayor"   : "Arabella",
-              "x" : "-1000",
-              "y" : "0",
-              "z" : "-3014",
-              "biome" : "caves",
-              "mobility": "zeppelin"
-              },
-              {
-              "City_Name" : "Bahia de Balar",
-              "Mayor"   : "Ineva",
-              "x" : "296",
-              "y" : "0",
-              "z" : "1730",
-              "biome" : "grassland",
-              "mobility": "zeppelin"
-              },
-              {
-              "City_Name" : "Citadelle",
-              "Mayor"   : "Bizon",
-              "x" : "4951",
-              "y" : "0",
-              "z" : "4350",
-              "biome" : "grassland, mushroom",
-              "mobility": "boat"
-              },{
-              "City_Name" : "Eavesdown",
-              "Mayor"   : "Anaconda, Grey",
-              "x" : "-105",
-              "y" : "73",
-              "z" : "9282",
-              "biome" : "snow",
-              "mobility": "none"
-              },{
-              "City_Name" : "Egypt",
-              "Mayor"   : "Unelias",
-              "x" : "707",
-              "y" : "0",
-              "z" : "5776",
-              "biome" : "sandstone",
-              "mobility": "boat"
-              },{
-              "City_Name" : "Finntown",
-              "Mayor"   : "seppo",
-              "x" : "1734",
-              "y" : "0",
-              "z" : "3001",
-              "biome" : "mushroom",
-              "mobility": "boat"
-              },
-              {
-              "City_Name" : "Fort Glacier",
-              "Mayor"   : "Aristotle",
-              "x" : "448",
-              "y" : "178",
-              "z" : "20680",
-              "biome" : "glacier",
-              "mobility": "zeppelin"
-              },
-              {
-              "City_Name" : "FrostHall",
-              "Mayor"   : "jackofthebean000",
-              "x" : "2930",
-              "y" : "72",
-              "z" : "309",
-              "biome" : "glacier",
-              "mobility": "rail"
-              },{
-              "City_Name" : "Gond en Galad",
-              "Mayor"   : "Nobody24",
-              "x" : "1838",
-              "y" : "0",
-              "z" : "1789",
-              "biome" : "savanna",
-              "mobility": "zeppelin"
-              },{
-              "City_Name" : "Greenborough",
-              "Mayor"   : "Eraldemay",
-              "x" : "6106",
-              "y" : "0",
-              "z" : "5743",
-              "biome" : "grove, mushroom",
-              "mobility": "boat"
-              },{
-              "City_Name" : "Hanamura",
-              "Mayor"   : "Kur",
-              "x" : "1313",
-              "y" : "0",
-              "z" : "1446",
-              "biome" : "Mushroom",
-              "mobility": "boat"
-              },{
-              "City_Name" : "Haven",
-              "Mayor"   : "Hynek Svoboda (NPC)",
-              "x" : "2001",
-              "y" : "0",
-              "z" : "1153",
-              "biome" : "sandstone",
-              "mobility": "boat, zeppelin, rails"
-              },{
-              "City_Name" : "Isola Bella",
-              "Mayor"   : "Halina",
-              "x" : "28932",
-              "y" : "0",
-              "z" : "30147",
-              "biome" : "grove, mushroom",
-              "mobility": "boat"
-              },{
-              "City_Name" : "Lamorra",
-              "Mayor"   : "Ineva",
-              "x" : "27546",
-              "y" : "20",
-              "z" : "28939",
-              "biome" : "sakura",
-              "mobility": "zeppelin"
-              },{
-              "City_Name" : "Maravillosa",
-              "Mayor"   : "Sokomine",
-              "x" : "-38",
-              "y" : "0",
-              "z" : "22649",
-              "biome" : "jumble",
-              "mobility": "boat"
-              },
-              {
-              "City_Name" : "Meistrite Linn",
-              "Mayor"   : "Leet_Peet",
-              "x" : "777",
-              "y" : "0",
-              "z" : "2005",
-              "biome" : "plains",
-              "mobility": "zeppelin"
-              },
-              {
-              "City_Name" : "Monsabor",
-              "Mayor"   : "Dragoni_is_bored",
-              "x" : "7300",
-              "y" : "0",
-              "z" : "1001",
-              "biome" : "glacier",
-              "mobility": "zeppelin"
-              },
-              {
-              "City_Name" : "Netherlands",
-              "Mayor"   : "Ernesto",
-              "x" : "3187",
-              "y" : "0",
-              "z" : "4010",
-              "biome" : "taiga",
-              "mobility": "zeppelin"
-              },
-              {
-              "City_Name" : "Odonhull",
-              "Mayor"   : "alexandre2005, upie",
-              "x" : "1359",
-              "y" : "0",
-              "z" : "415",
-              "biome" : "mountain",
-              "mobility": "zeppelin"
-              },
-              {
-              "City_Name" : "Pluton",
-              "Mayor"   : "debiankaios, guiseppe",
-              "x" : "-1529",
-              "y" : "163",
-              "z" : "-3527",
-              "biome" : "mountain",
-              "mobility": "zeppelin"
-              },
-              {
-              "City_Name" : "Puerto Del Sol",
-              "Mayor"   : "Chache",
-              "x" : "2280",
-              "y" : "0",
-              "z" : "421",
-              "biome" : "plains_ocean, grove",
-              "mobility": "boat, trebuchet"
-              },
-              {
-              "City_Name" : "Rose Meadows",
-              "Mayor"   : "LeniOwo",
-              "x" : "13195",
-              "y" : "0",
-              "z" : "1990",
-              "biome" : "grassytwo, mediterranean",
-              "mobility": "boat"
-              },
-              {
-              "City_Name" : "Sacrementum",
-              "Mayor"   : "JeCel",
-              "x" : "6500",
-              "y" : "-21",
-              "z" : "10431",
-              "biome" : "boat",
-              "mobility": "mushroom_ocean, junglee_ocean"
-              },
-              {
-              "City_Name" : "Saturn",
-              "Mayor"   : "Jupiter, Jakob",
-              "x" : "2109",
-              "y" : "27",
-              "z" : "2327",
-              "biome" : "savanna",
-              "mobility": "none"
-              },
-              {
-              "City_Name" : "Streamhaven",
-              "Mayor"   : "Opensourcegaming",
-              "x" : "1800",
-              "y" : "0",
-              "z" : "2443",
-              "biome" : "plains",
-              "mobility": "zeppelin"
-              },
-              {
-              "City_Name" : "Suchers Berg",
-              "Mayor"   : "blueattire",
-              "x" : "13903",
-              "y" : "0",
-              "z" : "13749",
-              "biome" : "sakura, jungle",
-              "mobility": "boat"
-              },
-              {
-              "City_Name" : "Tenebris",
-              "Mayor"   : "Tour, Cepheus",
-              "x" : "6570",
-              "y" : "0",
-              "z" : "3077",
-              "biome" : "grassland, mushroom_ocean, sakura",
-              "mobility": "boat"
-              },
-              {
-              "City_Name" : "The Battle Royal Arena",
-              "Mayor"   : "AliasAlreadyTaken",
-              "x" : "-29017",
-              "y" : "0",
-              "z" : "-30704",
-              "biome" : "glacier",
-              "mobility": "zeppelin"
-              },
-              {
-              "City_Name" : "Venezia",
-              "Mayor"   : "Jakob",
-              "x" : "3273",
-              "y" : "0",
-              "z" : "-5951",
-              "biome" : "boat",
-              "mobility": "sakura"
-              },
-              {
-              "City_Name" : "Viskasteel",
-              "Mayor"   : "Darealbang, debian44",
-              "x" : "-1507",
-              "y" : "0",
-              "z" : "1518",
-              "biome" : "sakura",
-              "mobility": "boat"
-              },
-              {
-              "City_Name" : "Wynter",
-              "Mayor"   : "none",
-              "x" : "3250",
-              "y" : "76",
-              "z" : "540",
-              "biome" : "glacier",
-              "mobility": "none"
-              },
-              {
-              "City_Name" : "Zoo",
-              "Mayor"   : "Lupercus",
-              "x" : "40",
-              "y" : "0",
-              "z" : "1036",
-              "biome" : "mesa",
-              "mobility": "zeppelin"
-              }
-            ];
-
-            // For each cities we'll create some texts and stuff
-            for ( let i = 0; i < json_Cities.length; i++ ) {
-
-              // so we get our precious json
-              let obj = json_Cities[i];
-              const City_Name = obj.City_Name.toUpperCase();
-              const City_Mayor = obj.Mayor.toUpperCase();
-              const Biome = obj.biome.toUpperCase();
-              const Mobility = obj.mobility.toUpperCase();
-              // --- create City Names text at exact x/z position, y is forced +15 --- // "#1C3870"
-              eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": 90,"color": "#caaa55","position": {"x" : '+ obj.x +', "y" : 15, "z": '+ obj.z +'}});');
-              eval('mesh_CityName_'+ i +' = text_CityName_'+ i +'.getMesh();');
-              eval('mesh_CityName_'+ i +'.rotation.x = BABYLON.Tools.ToRadians(-90);');
-
-              // --- second line for Mayors name // "color": "#aa,aa,cc"
-              var Line2 = obj.z - 55;
-              eval('var text_Mayor'+ i +' = new Writer("'+ City_Mayor +'",{"anchor": "center","letter-height": 42,"color": "#777777","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line2 +'}});');
-
-              // --- third line for coords
-              var Line3 = obj.z - 100;
-              eval('var text_Coords'+ i +' = new Writer("[ '+ obj.x +' , '+ obj.y +' , '+ obj.z +' ]",{"anchor": "center","letter-height": 35,"color": "#25004a","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line3 +'}});');
-              /*eval('mesh_Coords_'+ i +' = text_Coords_'+ i +'.getMesh();');
-              eval('mesh_Coords_'+ i +'.rotation.x = BABYLON.Tools.ToRadians(-90);');*/
-
-              // --- third line for biome and mobility
-              var Line4 = obj.z - 140;
-              eval('var text_biome'+ i +' = new Writer("'+ Biome +' // '+ Mobility +'",{"anchor": "center","letter-height": 25,"color": "#25004a","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line4 +'}});');
-
-              // replacing city text with 3UI
-              // this works
-              /*
-              var button = new BABYLON.GUI.Button3D("btn_city");
-              manager.addControl(button);
-              button.linkToTransformNode(anchor);
-              button.position.z = -1.5;
-
-              button.onPointerUpObservable.add(function(){
-                donut.rotation.x = 0;
-              });
-
-              var text1 = new BABYLON.GUI.TextBlock();
-              text1.text = "Ville";
-              text1.color = "white";
-              text1.fontSize = 64;
-              button.content = text1;*/
-
-              eval('var button'+ i +' = new BABYLON.GUI.Button3D("btn_city'+ i +'");');
-              eval('manager.addControl(button'+ i +');');
-              eval('button'+ i +'.linkToTransformNode(origin);');
-              eval('button'+ i +'.position.x = '+ obj.x +';');
-              eval('button'+ i +'.position.y = 0;');
-              eval('button'+ i +'.position.z = '+ obj.z +';');
-
-              eval('button'+ i +'.onPointerUpObservable.add(function(){donut.rotation.x = 0;});');
-
-              eval('var text_button'+ i +' = new BABYLON.GUI.TextBlock();');
-              eval('text_button'+ i +'.text = obj.City_Name;');
-              eval('text_button'+ i +'.color = "white";');
-              eval('text_button'+ i +'.fontSize = 164;');
-              eval('button'+ i +'.content = text_button'+ i +';');
-
-              // Adding a disc at City position but forcing y:0
-              eval('var disc'+ i +' = BABYLON.MeshBuilder.CreateDisc("disc", {radius: 64 , arc: 1, tessellation: 24}, scene);');
-              eval('disc'+ i +'.rotation.x = BABYLON.Tools.ToRadians(90);');
-              eval('disc'+ i +'.position = new BABYLON.Vector3('+ obj.x +', 0, '+ obj.z+');');
-              const discCityMat = new BABYLON.StandardMaterial("discCityMat");
-              discCityMat.diffuseColor = new BABYLON.Color3(.8, 0, 0.3)
-              //discCityMat.emissiveColor = new BABYLON.Color3(.8, 0.4, 0.1)
-              eval('disc'+ i +'.material = discCityMat;');
+        // write all the initial 3D texts with MeshWriter
+        function write () {
+          /* -------------- CITIES LIST ------------ */
+          let json_Cities = [{
+            "City_Name" : "Aqueron",
+            "Mayor"   : "Skyisblue",
+            "x" : "1719",
+            "y" : "0",
+            "z" : "2735",
+            "biome" : "mushroom",
+            "mobility": "boat"
+            },
+            {
+            "City_Name" : "Atlantis",
+            "Mayor"   : "unknown",
+            "x" : "25138",
+            "y" : "-31",
+            "z" : "30535",
+            "biome" : "unknown",
+            "mobility": "unknown"
+            },
+            {
+            "City_Name" : "Aventiure",
+            "Mayor"   : "Arabella",
+            "x" : "-1000",
+            "y" : "0",
+            "z" : "-3014",
+            "biome" : "caves",
+            "mobility": "zeppelin"
+            },
+            {
+            "City_Name" : "Bahia de Balar",
+            "Mayor"   : "Ineva",
+            "x" : "296",
+            "y" : "0",
+            "z" : "1730",
+            "biome" : "grassland",
+            "mobility": "zeppelin"
+            },
+            {
+            "City_Name" : "Citadelle",
+            "Mayor"   : "Bizon",
+            "x" : "4951",
+            "y" : "0",
+            "z" : "4350",
+            "biome" : "grassland, mushroom",
+            "mobility": "boat"
+            },{
+            "City_Name" : "Eavesdown",
+            "Mayor"   : "Anaconda, Grey",
+            "x" : "-105",
+            "y" : "73",
+            "z" : "9282",
+            "biome" : "snow",
+            "mobility": "none"
+            },{
+            "City_Name" : "Egypt",
+            "Mayor"   : "Unelias",
+            "x" : "707",
+            "y" : "0",
+            "z" : "5776",
+            "biome" : "sandstone",
+            "mobility": "boat"
+            },{
+            "City_Name" : "Finntown",
+            "Mayor"   : "seppo",
+            "x" : "1734",
+            "y" : "0",
+            "z" : "3001",
+            "biome" : "mushroom",
+            "mobility": "boat"
+            },
+            {
+            "City_Name" : "Fort Glacier",
+            "Mayor"   : "Aristotle",
+            "x" : "448",
+            "y" : "178",
+            "z" : "20680",
+            "biome" : "glacier",
+            "mobility": "zeppelin"
+            },
+            {
+            "City_Name" : "FrostHall",
+            "Mayor"   : "jackofthebean000",
+            "x" : "2930",
+            "y" : "72",
+            "z" : "309",
+            "biome" : "glacier",
+            "mobility": "rail"
+            },{
+            "City_Name" : "Gond en Galad",
+            "Mayor"   : "Nobody24",
+            "x" : "1838",
+            "y" : "0",
+            "z" : "1789",
+            "biome" : "savanna",
+            "mobility": "zeppelin"
+            },{
+            "City_Name" : "Greenborough",
+            "Mayor"   : "Eraldemay",
+            "x" : "6106",
+            "y" : "0",
+            "z" : "5743",
+            "biome" : "grove, mushroom",
+            "mobility": "boat"
+            },{
+            "City_Name" : "Hanamura",
+            "Mayor"   : "Kur",
+            "x" : "1313",
+            "y" : "0",
+            "z" : "1446",
+            "biome" : "Mushroom",
+            "mobility": "boat"
+            },{
+            "City_Name" : "Haven",
+            "Mayor"   : "Hynek Svoboda (NPC)",
+            "x" : "2001",
+            "y" : "0",
+            "z" : "1153",
+            "biome" : "sandstone",
+            "mobility": "boat, zeppelin, rails"
+            },{
+            "City_Name" : "Isola Bella",
+            "Mayor"   : "Halina",
+            "x" : "28932",
+            "y" : "0",
+            "z" : "30147",
+            "biome" : "grove, mushroom",
+            "mobility": "boat"
+            },{
+            "City_Name" : "Lamorra",
+            "Mayor"   : "Ineva",
+            "x" : "27546",
+            "y" : "20",
+            "z" : "28939",
+            "biome" : "sakura",
+            "mobility": "zeppelin"
+            },{
+            "City_Name" : "Maravillosa",
+            "Mayor"   : "Sokomine",
+            "x" : "-38",
+            "y" : "0",
+            "z" : "22649",
+            "biome" : "jumble",
+            "mobility": "boat"
+            },
+            {
+            "City_Name" : "Meistrite Linn",
+            "Mayor"   : "Leet_Peet",
+            "x" : "777",
+            "y" : "0",
+            "z" : "2005",
+            "biome" : "plains",
+            "mobility": "zeppelin"
+            },
+            {
+            "City_Name" : "Monsabor",
+            "Mayor"   : "Dragoni_is_bored",
+            "x" : "7300",
+            "y" : "0",
+            "z" : "1001",
+            "biome" : "glacier",
+            "mobility": "zeppelin"
+            },
+            {
+            "City_Name" : "Netherlands",
+            "Mayor"   : "Ernesto",
+            "x" : "3187",
+            "y" : "0",
+            "z" : "4010",
+            "biome" : "taiga",
+            "mobility": "zeppelin"
+            },
+            {
+            "City_Name" : "Odonhull",
+            "Mayor"   : "alexandre2005, upie",
+            "x" : "1359",
+            "y" : "0",
+            "z" : "415",
+            "biome" : "mountain",
+            "mobility": "zeppelin"
+            },
+            {
+            "City_Name" : "Pluton",
+            "Mayor"   : "debiankaios, guiseppe",
+            "x" : "-1529",
+            "y" : "163",
+            "z" : "-3527",
+            "biome" : "mountain",
+            "mobility": "zeppelin"
+            },
+            {
+            "City_Name" : "Puerto Del Sol",
+            "Mayor"   : "Chache",
+            "x" : "2280",
+            "y" : "0",
+            "z" : "421",
+            "biome" : "plains_ocean, grove",
+            "mobility": "boat, trebuchet"
+            },
+            {
+            "City_Name" : "Rose Meadows",
+            "Mayor"   : "LeniOwo",
+            "x" : "13195",
+            "y" : "0",
+            "z" : "1990",
+            "biome" : "grassytwo, mediterranean",
+            "mobility": "boat"
+            },
+            {
+            "City_Name" : "Sacrementum",
+            "Mayor"   : "JeCel",
+            "x" : "6500",
+            "y" : "-21",
+            "z" : "10431",
+            "biome" : "boat",
+            "mobility": "mushroom_ocean, junglee_ocean"
+            },
+            {
+            "City_Name" : "Saturn",
+            "Mayor"   : "Jupiter, Jakob",
+            "x" : "2109",
+            "y" : "27",
+            "z" : "2327",
+            "biome" : "savanna",
+            "mobility": "none"
+            },
+            {
+            "City_Name" : "Streamhaven",
+            "Mayor"   : "Opensourcegaming",
+            "x" : "1800",
+            "y" : "0",
+            "z" : "2443",
+            "biome" : "plains",
+            "mobility": "zeppelin"
+            },
+            {
+            "City_Name" : "Suchers Berg",
+            "Mayor"   : "blueattire",
+            "x" : "13903",
+            "y" : "0",
+            "z" : "13749",
+            "biome" : "sakura, jungle",
+            "mobility": "boat"
+            },
+            {
+            "City_Name" : "Tenebris",
+            "Mayor"   : "Tour, Cepheus",
+            "x" : "6570",
+            "y" : "0",
+            "z" : "3077",
+            "biome" : "grassland, mushroom_ocean, sakura",
+            "mobility": "boat"
+            },
+            {
+            "City_Name" : "The Battle Royal Arena",
+            "Mayor"   : "AliasAlreadyTaken",
+            "x" : "-29017",
+            "y" : "0",
+            "z" : "-30704",
+            "biome" : "glacier",
+            "mobility": "zeppelin"
+            },
+            {
+            "City_Name" : "Venezia",
+            "Mayor"   : "Jakob",
+            "x" : "3273",
+            "y" : "0",
+            "z" : "-5951",
+            "biome" : "boat",
+            "mobility": "sakura"
+            },
+            {
+            "City_Name" : "Viskasteel",
+            "Mayor"   : "Darealbang, debian44",
+            "x" : "-1507",
+            "y" : "0",
+            "z" : "1518",
+            "biome" : "sakura",
+            "mobility": "boat"
+            },
+            {
+            "City_Name" : "Wynter",
+            "Mayor"   : "none",
+            "x" : "3250",
+            "y" : "76",
+            "z" : "540",
+            "biome" : "glacier",
+            "mobility": "none"
+            },
+            {
+            "City_Name" : "Zoo",
+            "Mayor"   : "Lupercus",
+            "x" : "40",
+            "y" : "0",
+            "z" : "1036",
+            "biome" : "mesa",
+            "mobility": "zeppelin"
             }
-            // obsolete, has been included in loop creation text
-            //mesh_CityName_13  = text_CityName_13.getMesh()
-            //mesh_CityName_13.rotation.x = BABYLON.Tools.ToRadians(-90);
+          ];
+          // For each cities we'll create some texts and stuff
+          for ( let i = 0; i < json_Cities.length; i++ ) {
+
+            // so we get our precious json
+            let obj = json_Cities[i];
+            // Capping all texts for now (2 letters badly encoded)
+            const City_Name = obj.City_Name.toUpperCase();
+            const City_Mayor = obj.Mayor.toUpperCase();
+            const Biome = obj.biome.toUpperCase();
+            const Mobility = obj.mobility.toUpperCase();
+
+            // Adding a disc at City position but forcing y:0
+            eval('var disc'+ i +' = BABYLON.MeshBuilder.CreateDisc("disc", {radius: 64 , arc: 1, tessellation: 24}, scene);');
+            eval('disc'+ i +'.rotation.x = BABYLON.Tools.ToRadians(90);');
+            eval('disc'+ i +'.position = new BABYLON.Vector3('+ obj.x +', 0, '+ obj.z+');');
+            const discCityMat = new BABYLON.StandardMaterial("discCityMat");
+            discCityMat.diffuseColor = new BABYLON.Color3(.8, 0, 0.3)
+            //discCityMat.emissiveColor = new BABYLON.Color3(.8, 0.4, 0.1)
+            eval('disc'+ i +'.material = discCityMat;');
+
+            // --- create City Names text at exact x/z position, y is forced +15 --- // "#1C3870"
+            eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": 90,"color": "#caaa55","position": {"x" : '+ obj.x +', "y" : 15, "z": '+ obj.z +'}});');
+            eval('mesh_CityName_'+ i +' = text_CityName_'+ i +'.getMesh();');
+            eval('mesh_CityName_'+ i +'.rotation.x = BABYLON.Tools.ToRadians(-90);');
+
+            // --- second line for Mayors name // "color": "#aa,aa,cc"
+            var Line2 = obj.z - 55;
+            eval('var text_Mayor'+ i +' = new Writer("'+ City_Mayor +'",{"anchor": "center","letter-height": 42,"color": "#777777","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line2 +'}});');
+
+            // --- third line for coords
+            var Line3 = obj.z - 100;
+            eval('var text_Coords'+ i +' = new Writer("[ '+ obj.x +' , '+ obj.y +' , '+ obj.z +' ]",{"anchor": "center","letter-height": 35,"color": "#25004a","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line3 +'}});');
+            /*eval('mesh_Coords_'+ i +' = text_Coords_'+ i +'.getMesh();');
+            eval('mesh_Coords_'+ i +'.rotation.x = BABYLON.Tools.ToRadians(-90);');*/
+
+            // --- third line for biome and mobility
+            var Line4 = obj.z - 140;
+            eval('var text_biome'+ i +' = new Writer("'+ Biome +' // '+ Mobility +'",{"anchor": "center","letter-height": 25,"color": "#25004a","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line4 +'}});');
+
+
           }
+        }
 
 
 
