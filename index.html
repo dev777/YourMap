@@ -521,7 +521,7 @@
             // Adding a disc at City position but forcing y:0
             eval('var disc'+ i +' = BABYLON.MeshBuilder.CreateDisc("disc", {radius: 64 , arc: 1, tessellation: 24}, scene);');
             eval('disc'+ i +'.rotation.x = BABYLON.Tools.ToRadians(90);');
-            eval('disc'+ i +'.position = new BABYLON.Vector3('+ obj.x +', 0, '+ obj.z+');');
+            eval('disc'+ i +'.position = new BABYLON.Vector3('+ obj.x +', 1, '+ obj.z+');');
             const discCityMat = new BABYLON.StandardMaterial("discCityMat");
             discCityMat.diffuseColor = new BABYLON.Color3(.8, 0, 0.3)
             //discCityMat.emissiveColor = new BABYLON.Color3(.8, 0.4, 0.1)
