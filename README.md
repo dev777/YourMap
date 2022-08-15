@@ -22,6 +22,8 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 
 --- TO DO ---
 * Many things...
+- [ ] add possibility to enter coords (jump to, check closest city)
+- [ ] display actual pointer position (projection invis plane ?)
 - [ ] separate Json file
 - [x] TXT : rotate them >> City names rotated 90°
 - [x] TXT : fix 'n' letter or use CAPS >> using caps for now
@@ -34,7 +36,8 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [x] change lightning and colors
 - [ ] think of hosting it somewhere else... with pass
 - [ ] test flythrough (city to city)
-- [ ] add icons for mobility
+- [x] add icons for mobility >> added 3D meshes : zep & boatMesh
+- [ ] add minecart meshes
 - [ ] UI : add layers displaying mobility paths (boat; zep; rails)
 - [ ] UI : display more cities datas (shields, quick description, state, alliance, farms, portals, church)
 - [ ] obtain a layer 0 of the world (only ocean, river) >> add water only (Global Blender Mesh)
