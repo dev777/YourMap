@@ -432,6 +432,7 @@
         // launch daz funxions
         write_CityInfos()
         zeppelination()
+        sailshipandfish()
 
       	return scene;
 
@@ -469,6 +470,38 @@
          });
         }
 
+        // Mass Zep deployement
+        function sailshipandfish() {
+          Promise.all([
+          BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "boat.gltf", scene).then(function (boat) {
+            boatMesh = boat.meshes[0];
+
+            //
+            for ( let i = 0; i < json_Cities.length; i++ ) {
+
+              // so we get our precious json
+              let obj = json_Cities[i];
+
+              if ( (obj.mobility.includes("boat")) && (!(obj.City_Name.includes("Haven")) )) {
+                eval('var boatclone_'+ i +' = boatMesh.clone("boatclone'+ i +'");');
+                eval ('boatclone_'+ i +'.position.x = '+ obj.x +'- 45;');
+                eval ('boatclone_'+ i +'.position.y = 195;');
+                eval ('boatclone_'+ i +'.position.z = '+ obj.z +';');
+                eval ('boatclone_'+ i +'.scaling.scaleInPlace(1.5);');
+                eval ('boatclone_'+ i +'.rotation = new BABYLON.Vector3(0, -1.57, 0);');
+              }
+
+            }
+            // Original one goes above Haven
+            boatMesh.position.x = 2160;
+            boatMesh.position.y = 10;
+            boatMesh.position.z = 1085;
+            boatMesh.scaling.scaleInPlace(3.3);
+            boatMesh.rotation = new BABYLON.Vector3(0, -1.9708, 0);
+          })]).then(() => {
+           console.log("3D Zep imported, cloned and positionned");
+         });
+        }
 
         // write all the initial 3D texts with MeshWriter
         function write_CityInfos () {
