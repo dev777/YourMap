@@ -450,10 +450,10 @@
               if ( (obj.mobility.includes("zeppelin")) && (!(obj.City_Name.includes("Haven")) )) {
                 eval('var zepclone_'+ i +' = zeppelinMesh.clone("zepclone'+ i +'");');
 
-                eval ('zepclone_'+ i +'.position.x = '+ obj.x +'+ 50;');
-                eval ('zepclone_'+ i +'.position.y = 130;');
+                eval ('zepclone_'+ i +'.position.x = '+ obj.x +'+ 45;');
+                eval ('zepclone_'+ i +'.position.y = 195;');
                 eval ('zepclone_'+ i +'.position.z = '+ obj.z +';');
-                eval ('zepclone_'+ i +'.scaling.scaleInPlace(1.5);');
+                eval ('zepclone_'+ i +'.scaling.scaleInPlace(1.75);');
                 eval ('zepclone_'+ i +'.rotation = new BABYLON.Vector3(0, -1.57, 0);');
               }
 
@@ -494,24 +494,26 @@
             //discCityMat.emissiveColor = new BABYLON.Color3(.8, 0.4, 0.1)
             eval('disc'+ i +'.material = discCityMat;');
 
-            // --- create City Names text at exact x/z position, y is forced +15 --- // "#1C3870"
-            eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": 90,"color": "#caaa55","position": {"x" : '+ obj.x +', "y" : 15, "z": '+ obj.z +'}});');
+            // --- create City Names text at exact x/z position, y is forced +15 --- // "#1C3870" // caaa55
+            eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": 90,"color": "#deaa35","position": {"x" : '+ obj.x +', "y" : 65, "z": '+ obj.z +'}});');
             eval('mesh_CityName_'+ i +' = text_CityName_'+ i +'.getMesh();');
             eval('mesh_CityName_'+ i +'.rotation.x = BABYLON.Tools.ToRadians(-90);');
 
             // --- second line for Mayors name // "color": "#aa,aa,cc"
-            var Line2 = obj.z - 55;
-            eval('var text_Mayor'+ i +' = new Writer("'+ City_Mayor +'",{"anchor": "center","letter-height": 42,"color": "#777777","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line2 +'}});');
+            var Line2 = 25;
+            eval('var text_Mayor_'+ i +' = new Writer("'+ City_Mayor +'",{"anchor": "center","letter-height": 40,"color": "#fff","position": {"x" : '+ obj.x +', "y" : '+ Line2 +', "z": '+ obj.z +'}});');
+            eval('mesh_text_Mayor_'+ i +' = text_Mayor_'+ i +'.getMesh();');
+            eval('mesh_text_Mayor_'+ i +'.rotation.x = BABYLON.Tools.ToRadians(-90);');
 
             // --- third line for coords
-            var Line3 = obj.z - 100;
-            eval('var text_Coords'+ i +' = new Writer("[ '+ obj.x +' , '+ obj.y +' , '+ obj.z +' ]",{"anchor": "center","letter-height": 35,"color": "#25004a","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line3 +'}});');
-            /*eval('mesh_Coords_'+ i +' = text_Coords_'+ i +'.getMesh();');
-            eval('mesh_Coords_'+ i +'.rotation.x = BABYLON.Tools.ToRadians(-90);');*/
+            var Line3 = 145;
+            eval('var text_Coords_'+ i +' = new Writer("[ '+ obj.x +' , '+ obj.y +' , '+ obj.z +' ]",{"anchor": "center","letter-height": 35,"color": "#5C9ac0","position": {"x" : '+ obj.x +', "y" : '+ Line3 +', "z": '+ obj.z +'}});');
+            eval('mesh_Coords_'+ i +' = text_Coords_'+ i +'.getMesh();');
+            eval('mesh_Coords_'+ i +'.rotation.x = BABYLON.Tools.ToRadians(-90);');
 
             // --- third line for biome and mobility
-            var Line4 = obj.z - 140;
-            eval('var text_biome'+ i +' = new Writer("'+ Biome +' // '+ Mobility +'",{"anchor": "center","letter-height": 25,"color": "#25004a","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line4 +'}});');
+            var Line4 = obj.z - 30;
+            eval('var text_biome'+ i +' = new Writer("'+ Biome +'",{"anchor": "center","letter-height": 25,"color": "#ffffff","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line4 +'}});');
 
 
           }
