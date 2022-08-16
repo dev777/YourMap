@@ -33,7 +33,7 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [ ] Add registered path (with multilines)
 - [x] UI : Side pannel with cities that focus on selected city with a local ArcCam >> wup wup wup, choosed JS/HTML menu for now
 - [ ] UI : choose cameras : free / top
-- [ ] reset cameras > now it loose panning > must fix
+- [x] reset cameras > now it loose panning > must fix >> ok must use target.position.clone() for it to works
 - [x] change lightning and colors
 - [ ] test flythrough (city to city)
 - [x] add icons for mobility >> added 3D meshes : zep & boatMesh
