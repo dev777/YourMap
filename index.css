@@ -58,13 +58,21 @@
   position: fixed;
   right: 0px;
   border-radius: 18px 0 0 18px;
+  bottom: 54px;
+}
+.btnInspector {
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #1111116e;
+  color: #f75c5cad;
+  padding: 8px 20px;
+  border: none;
+  position: fixed;
+  right: 0px;
+  border-radius: 18px 0 0 18px;
   bottom: 14px;
 }
 
-.openbtn:hover {
-  background-color: #444;
-}
-
-.btnResetCam:hover {
+.openbtn:hover, .btnResetCam:hover, .btnInspector:hover {
   background-color: #444;
 }

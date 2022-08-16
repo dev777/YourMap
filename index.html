@@ -35,6 +35,7 @@
   <!-- ************************************************************* GUI -->
   <button class="openbtn" onclick="openSideMenu()">&#9776; Cities</button>
   <button class="btnResetCam" onclick="resetCamera()">Reset Camera</button>
+  <button class="btnInspector" onclick="switchInspector()">Inspector</button>
 
   <div id="MenuSide1" class="sidepanel">
     <a href="javascript:void(0)" class="closebtn" onclick="closeSideMenu()">&times;</a>
@@ -406,7 +407,7 @@
       function closeSideMenu() {
         document.getElementById("MenuSide1").style.width = "0";
       }
-      /* ----------------------------------------------------------------------- CAMERAS Functions ------------------ */
+      /* ----------------------------------------------------------------------- Menus Functions ------------------ */
       function resetCamera(){
         var activCam = scene.activeCamera;
         var target = scene.getMeshByName("Balloon_primitive0");
@@ -426,6 +427,10 @@
         activCam.setTarget(target_pos);
         console.log("Camera focused on "+cityName);
       }
+      function switchInspector() {
+        scene.debugLayer.show();
+      }
+
       /* ----------------------------------------------------------------------- MAIN FUNCTION ------------ */
       var createScene = function() {
 
@@ -484,6 +489,16 @@
           eval('var text_Grid_'+ i +' = new Writer("'+ i +'", {"anchor": "left","letter-height": 50,"color": "#000000","position": {"x" : '+ i +', "y" : 0, "z": -15}});');
         }
 
+        // Haven beacon
+        const Haven_Beacon = BABYLON.MeshBuilder.CreateCylinder("Haven_Beacon", {diameter: 1, height: 5000});
+        Haven_Beacon.position.x = 2001;
+        Haven_Beacon.position.y = 2800;
+        Haven_Beacon.position.z = 1152;
+        const beaconMat = new BABYLON.StandardMaterial("beaconMat");
+        beaconMat.emissiveColor = new BABYLON.Color3(0, 0.63, 1);
+        Haven_Beacon.material = beaconMat;
+
+
         // GUI
         /*var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mapUI");
         var text_Disclaimer = new BABYLON.GUI.TextBlock();
@@ -509,8 +524,14 @@
         ]).then(() => {
            console.log("3D Grid imported");
         });
+        // Load Haven Island
+        /*Promise.all([
+        BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "island_Haven.gltf", scene).then(function (Haven_island) {
+        })
+      ]).then(() => {
 
-        //scene.debugLayer.show();
+           console.log("Haven Island imported");
+        });*/
 
         // launch daz funxions
         write_CityInfos()
@@ -611,7 +632,7 @@
             eval('disc'+ i +'.material = discCityMat;');
 
             // --- create City Names text at exact x/z position, y is forced +15 --- // "#1C3870" // caaa55
-            eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": 90,"color": "#deaa35","position": {"x" : '+ obj.x +', "y" : 65, "z": '+ obj.z +'}});');
+            eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": 85,"color": "#deaa35","position": {"x" : '+ obj.x +', "y" : 65, "z": '+ obj.z +'}});');
             eval('mesh_CityName_'+ i +' = text_CityName_'+ i +'.getMesh();');
             eval('mesh_CityName_'+ i +'.rotation.x = BABYLON.Tools.ToRadians(-90);');
 
