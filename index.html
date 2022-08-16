@@ -410,20 +410,20 @@
       function resetCamera(){
         var activCam = scene.activeCamera;
         var target = scene.getMeshByName("Balloon_primitive0");
+        // needed to preserve panning
+        target_pos = target.position.clone()
         activCam.position = new BABYLON.Vector3(2001, 900, -700);
-        activCam.setTarget(target);
-
+        activCam.setTarget(target_pos);
         console.log("Camera Resetted");
       }
       function camFocusCity(cityName){
         var activCam = scene.activeCamera;
         var disc_city = "disc_"+cityName.toUpperCase();
         var target = scene.getMeshByName(disc_city);
-        //activCam.position = new BABYLON.Vector3(2001, 1100, -300);
-        console.log("fzregerzol" + target);
-        activCam.position = new BABYLON.Vector3(target.position.x, 1100, target.position.z-1000);
-        activCam.setTarget(target);
-
+        // needed to preserve panning
+        target_pos = target.position.clone()
+        activCam.position = new BABYLON.Vector3(target.position.x, 900, target.position.z-1000);
+        activCam.setTarget(target_pos);
         console.log("Camera focused on "+cityName);
       }
       /* ----------------------------------------------------------------------- MAIN FUNCTION ------------ */
