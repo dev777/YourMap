@@ -31,10 +31,10 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [ ] add possibility to place grid origin at locations, with rotation
 - [ ] AND / OR add a ruler
 - [ ] Add registered path (with multilines)
-- [ ] UI : Side pannel with cities that focus on selected city with a local ArcCam
-- [ ] UI : choose cameras : free / top / reset_one
+- [x] UI : Side pannel with cities that focus on selected city with a local ArcCam >> wup wup wup, choosed JS/HTML menu for now
+- [ ] UI : choose cameras : free / top
+- [ ] reset cameras > now it loose panning > must fix
 - [x] change lightning and colors
-- [ ] think of hosting it somewhere else... with pass
 - [ ] test flythrough (city to city)
 - [x] add icons for mobility >> added 3D meshes : zep & boatMesh
 - [ ] add minecart meshes
