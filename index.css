@@ -1,0 +1,70 @@
+/* The sidepanel menu */
+.sidepanel {
+ height: 85%; /* Specify a height */
+ width: 0; /* 0 width - change this with JavaScript */
+ position: fixed; /* Stay in place */
+ z-index: 1; /* Stay on top */
+ top: 45px;
+ left: 0;
+ background-color: #111; /* Black*/
+ overflow-x: hidden; /* Disable horizontal scroll */
+ padding-top: 25px; /* Place content 60px from the top */
+ transition: 0.5s; /* 0.5 second transition effect to slide in the sidepanel */
+ font-family: arial;
+}
+
+/* The sidepanel links */
+.sidepanel a {
+ padding: 2px 0px 2px 20px;
+ text-decoration: none;
+ font-size: 20px;
+ color: #818181;
+ display: block;
+ transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidepanel a:hover {
+ color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidepanel .closebtn {
+ position: absolute;
+ top: -5px;
+ right: 6px;
+ font-size: 24px;
+ margin-left: 50px;
+ color: #ac4a4a;
+}
+
+/* Style the button that is used to open the sidepanel */
+.openbtn {
+   font-size: 20px;
+   cursor: pointer;
+   background-color: #111;
+   color: white;
+   padding: 10px 22px 12px 20px;
+   border: none;
+   position: fixed;
+}
+.btnResetCam {
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #1111116e;
+  color: #9ebfcd;
+  padding: 8px 20px;
+  border: none;
+  position: fixed;
+  right: 0px;
+  border-radius: 18px 0 0 18px;
+  bottom: 14px;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+.btnResetCam:hover {
+  background-color: #444;
+}

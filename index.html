@@ -13,7 +13,7 @@
         <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
         <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
         <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
-
+        <link rel="stylesheet" href="index.css"/>
         <style>
             html, body {
                 overflow: hidden;
@@ -21,18 +21,63 @@
                 height: 100%;
                 margin: 0;
                 padding: 0;
-            }
+              }
 
             #renderCanvas {
                 width: 100%;
                 height: 100%;
                 touch-action: none;
-            }
+              }
         </style>
+
     </head>
 <body>
+  <!-- ************************************************************* GUI -->
+  <button class="openbtn" onclick="openSideMenu()">&#9776; Cities</button>
+  <button class="btnResetCam" onclick="resetCamera()">Reset Camera</button>
+
+  <div id="MenuSide1" class="sidepanel">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSideMenu()">&times;</a>
+    <a href="#" onclick="camFocusCity('Aqueron')">Aqueron</a>
+    <a href="#" onclick="camFocusCity('Atlantis')">Atlantis</a>
+    <a href="#" onclick="camFocusCity('Aventiure')">Aventiure</a>
+    <a href="#" onclick="camFocusCity('Bahia de Balar')">Bahia de Balar</a>
+    <a href="#" onclick="camFocusCity('Citadelle')">Citadelle</a>
+    <a href="#" onclick="camFocusCity('Eavesdown')">Eavesdown</a>
+    <a href="#" onclick="camFocusCity('Egypt')">Egypt</a>
+    <a href="#" onclick="camFocusCity('Finntown')">Finntown</a>
+    <a href="#" onclick="camFocusCity('Fort Glacier')">Fort Glacier</a>
+    <a href="#" onclick="camFocusCity('FrostHall')">FrostHall</a>
+    <a href="#" onclick="camFocusCity('Gond en Galad')">Gond en Galad</a>
+    <a href="#" onclick="camFocusCity('Greenborough')">Greenborough</a>
+    <a href="#" onclick="camFocusCity('Hanamura')">Hanamura</a>
+    <a href="#" onclick="camFocusCity('Haven')">Haven</a>
+    <a href="#" onclick="camFocusCity('Isola Bella')">Isola Bella</a>
+    <a href="#" onclick="camFocusCity('Lamorra')">Lamorra</a>
+    <a href="#" onclick="camFocusCity('Maravillosa')">Maravillosa</a>
+    <a href="#" onclick="camFocusCity('Meistrite Linn')">Meistrite Linn</a>
+    <a href="#" onclick="camFocusCity('Monsabor')">Monsabor</a>
+    <a href="#" onclick="camFocusCity('Netherlands')">Netherlands</a>
+    <a href="#" onclick="camFocusCity('Odonhull')">Odonhull</a>
+    <a href="#" onclick="camFocusCity('Pluton')">Pluton</a>
+    <a href="#" onclick="camFocusCity('Puerto Del Sol')">Puerto Del Sol</a>
+    <a href="#" onclick="camFocusCity('Rose Meadows')">Rose Meadows</a>
+    <a href="#" onclick="camFocusCity('Sacrementum')">Sacrementum</a>
+    <a href="#" onclick="camFocusCity('Saturn')">Saturn</a>
+    <a href="#" onclick="camFocusCity('Streamhaven')">Streamhaven</a>
+    <a href="#" onclick="camFocusCity('Suchers Berg')">Suchers Berg</a>
+    <a href="#" onclick="camFocusCity('Tenebris')">Tenebris</a>
+    <a href="#" onclick="camFocusCity('The Battle Royal Arena')">The Battle Royal Arena</a>
+    <a href="#" onclick="camFocusCity('Venezia')">Venezia</a>
+    <a href="#" onclick="camFocusCity('Viskasteel')">Viskasteel</a>
+    <a href="#" onclick="camFocusCity('Wynter')">Wynter</a>
+    <a href="#" onclick="camFocusCity('Zoo')">Zoo</a>
+  </div>
 
     <canvas id="renderCanvas"></canvas>
+
+
+
     <script>
       // Cities datas Credits : alexandre2005, Bla, Boot, Chache, Mielle and probably many others (help makes this accurate please)
       let json_Cities = [{
@@ -46,12 +91,12 @@
         },
         {
         "City_Name" : "Atlantis",
-        "Mayor"   : "unknown",
+        "Mayor"   : "Kiyoko",
         "x" : "25138",
         "y" : "-31",
         "z" : "30535",
-        "biome" : "unknown",
-        "mobility": "unknown"
+        "biome" : "savanna_ocean",
+        "mobility": "boat"
         },
         {
         "City_Name" : "Aventiure",
@@ -332,6 +377,7 @@
         "mobility": "zeppelin"
         }
       ];
+
       // INIT SCENE
       var canvas = document.getElementById("renderCanvas");
       var startRenderLoop = function (engine, canvas) {
@@ -346,7 +392,41 @@
       var sceneToRender = null;
       var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
 
-      /* -------------- MAIN FUNCTION ------------ */
+      /* ----------------------------------------------------------------------- MENUS Functions -------------------- */
+      /* Set the width of the sidebar to 250px (show it) */
+      function openSideMenu() {
+        if (document.getElementById("MenuSide1").style.width == "250px") {
+          document.getElementById("MenuSide1").style.width = "0px";
+        } else {
+          document.getElementById("MenuSide1").style.width = "250px";
+        }
+      }
+
+      /* Set the width of the sidebar to 0 (hide it) */
+      function closeSideMenu() {
+        document.getElementById("MenuSide1").style.width = "0";
+      }
+      /* ----------------------------------------------------------------------- CAMERAS Functions ------------------ */
+      function resetCamera(){
+        var activCam = scene.activeCamera;
+        var target = scene.getMeshByName("Balloon_primitive0");
+        activCam.position = new BABYLON.Vector3(2001, 900, -700);
+        activCam.setTarget(target);
+
+        console.log("Camera Resetted");
+      }
+      function camFocusCity(cityName){
+        var activCam = scene.activeCamera;
+        var disc_city = "disc_"+cityName.toUpperCase();
+        var target = scene.getMeshByName(disc_city);
+        //activCam.position = new BABYLON.Vector3(2001, 1100, -300);
+        console.log("fzregerzol" + target);
+        activCam.position = new BABYLON.Vector3(target.position.x, 1100, target.position.z-1000);
+        activCam.setTarget(target);
+
+        console.log("Camera focused on "+cityName);
+      }
+      /* ----------------------------------------------------------------------- MAIN FUNCTION ------------ */
       var createScene = function() {
 
       	var scene   = new BABYLON.Scene(engine);
@@ -360,6 +440,7 @@
         camera_arc1.maxZ = 50000;
         camera_arc1.panningSensibility = 1;
         scene.activeCamera.position = new BABYLON.Vector3(0, 1500, -2500);
+
 
         // Universal Camera
         /*
@@ -381,7 +462,7 @@
         scene.clearColor = new BABYLON.Color3(0.2, 0.2, 0.298);
         //scene.ambientColor = new BABYLON.Color3(0.1, 0.0, 0.15);
         scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
-        scene.fogDensity = 0.0001;
+        scene.fogDensity = 0.00001;
 
         // light
         var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 10, 0), scene);
@@ -404,7 +485,7 @@
         }
 
         // GUI
-        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mapUI");
+        /*var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mapUI");
         var text_Disclaimer = new BABYLON.GUI.TextBlock();
         text_Disclaimer.text = "LEFT Mouse Button >> ROTATE View      RIGHT Mouse Button >> PAN View WHEEL Mouse >> ZOOM to pointer      F5 >> Restart";
         text_Disclaimer.color = "Orange";
@@ -414,7 +495,7 @@
         text_Disclaimer.lineSpacing = 7;
         text_Disclaimer.width = "680px";
         text_Disclaimer.height = "300px";
-        advancedTexture.addControl(text_Disclaimer);
+        advancedTexture.addControl(text_Disclaimer);*/
 
 
         // Create the 3D UI manager
@@ -429,6 +510,8 @@
            console.log("3D Grid imported");
         });
 
+        //scene.debugLayer.show();
+
         // launch daz funxions
         write_CityInfos()
         zeppelination()
@@ -436,28 +519,27 @@
 
       	return scene;
 
+        // ********************************************************************* CITIES INFOS FUNCTIONS
         // Mass Zep deployement
         function zeppelination() {
           Promise.all([
           BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "zeppelin.gltf", scene).then(function (zeppelin) {
             zeppelinMesh = zeppelin.meshes[0];
 
-            //
+            // Looping all cities
             for ( let i = 0; i < json_Cities.length; i++ ) {
 
               // so we get our precious json
               let obj = json_Cities[i];
 
               if ( (obj.mobility.includes("zeppelin")) && (!(obj.City_Name.includes("Haven")) )) {
-                eval('var zepclone_'+ i +' = zeppelinMesh.clone("zepclone'+ i +'");');
-
+                eval('var zepclone_'+ i +' = zeppelinMesh.clone("Zep_'+ obj.City_Name.toUpperCase() +'");');
                 eval ('zepclone_'+ i +'.position.x = '+ obj.x +'+ 45;');
                 eval ('zepclone_'+ i +'.position.y = 195;');
                 eval ('zepclone_'+ i +'.position.z = '+ obj.z +';');
                 eval ('zepclone_'+ i +'.scaling.scaleInPlace(1.75);');
                 eval ('zepclone_'+ i +'.rotation = new BABYLON.Vector3(0, -1.57, 0);');
               }
-
             }
             // Original one goes above Haven
             zeppelinMesh.position.x = 2001;
@@ -466,31 +548,32 @@
             zeppelinMesh.scaling.scaleInPlace(5);
             zeppelinMesh.rotation = new BABYLON.Vector3(0, 1.5708, 0);
           })]).then(() => {
-           console.log("3D Zep imported, cloned and positionned");
+           console.log("3D Boat imported, cloned and positionned");
          });
         }
 
-        // Mass Zep deployement
+
+        // So many boats
         function sailshipandfish() {
           Promise.all([
           BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "boat.gltf", scene).then(function (boat) {
             boatMesh = boat.meshes[0];
 
-            //
+            // Looping all Cities
             for ( let i = 0; i < json_Cities.length; i++ ) {
 
               // so we get our precious json
               let obj = json_Cities[i];
 
+              // Placing all boats, except Haven one
               if ( (obj.mobility.includes("boat")) && (!(obj.City_Name.includes("Haven")) )) {
-                eval('var boatclone_'+ i +' = boatMesh.clone("boatclone'+ i +'");');
+                eval('var boatclone_'+ i +' = boatMesh.clone("Boat_'+ obj.City_Name.toUpperCase() +'");');
                 eval ('boatclone_'+ i +'.position.x = '+ obj.x +'- 45;');
                 eval ('boatclone_'+ i +'.position.y = 195;');
                 eval ('boatclone_'+ i +'.position.z = '+ obj.z +';');
                 eval ('boatclone_'+ i +'.scaling.scaleInPlace(1.5);');
                 eval ('boatclone_'+ i +'.rotation = new BABYLON.Vector3(0, -1.57, 0);');
               }
-
             }
             // Original one goes above Haven
             boatMesh.position.x = 2160;
@@ -503,7 +586,7 @@
          });
         }
 
-        // write all the initial 3D texts with MeshWriter
+        // write all the initial 3D texts with MeshWriter and place discs at cities locations
         function write_CityInfos () {
           /* -------------- CITIES LIST ------------ */
 
@@ -519,7 +602,7 @@
             const Mobility = obj.mobility.toUpperCase();
 
             // Adding a disc at City position but forcing y:0
-            eval('var disc'+ i +' = BABYLON.MeshBuilder.CreateDisc("disc", {radius: 64 , arc: 1, tessellation: 24}, scene);');
+            eval('var disc'+ i +' = BABYLON.MeshBuilder.CreateDisc("disc_'+ City_Name +'", {radius: 64 , arc: 1, tessellation: 24}, scene);');
             eval('disc'+ i +'.rotation.x = BABYLON.Tools.ToRadians(90);');
             eval('disc'+ i +'.position = new BABYLON.Vector3('+ obj.x +', 1, '+ obj.z+');');
             const discCityMat = new BABYLON.StandardMaterial("discCityMat");
@@ -547,12 +630,9 @@
             // --- third line for biome and mobility
             var Line4 = obj.z - 30;
             eval('var text_biome'+ i +' = new Writer("'+ Biome +'",{"anchor": "center","letter-height": 25,"color": "#ffffff","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line4 +'}});');
-
-
           }
+          //camera_arc1.setTarget(disc13);
         }
-
-
 
 
             // 'fauxLoad' executes the contents of:  https://raw.githubusercontent.com/briantbutton/meshwriter/master/dist/meshwriter.min.js
