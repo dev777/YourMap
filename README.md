@@ -22,6 +22,7 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 
 --- TO DO ---
 * Many things...
+- [ ] add credits
 - [ ] add possibility to enter coords (jump to, check closest city)
 - [ ] display actual pointer position (projection invis plane ?)
 - [ ] separate Json file
@@ -45,3 +46,5 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [ ] EVENT : make city's discs clickable too > then option list (travel, info...)
 - [ ] add voice's attack spot and dates, add POVs category
 - [ ] add Tunnels / bridges
+- [ ] check all shadows / collision / lights to disablle
+- [ ] Parent city_infos to disc
