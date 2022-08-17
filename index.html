@@ -37,6 +37,7 @@
   <button class="btnResetCam" onclick="resetCamera()">Reset Camera</button>
   <button class="btnInspector" onclick="switchInspector()">Inspector</button>
 
+  <!-- Menu Cities -->
   <div id="MenuSide1" class="sidepanel">
     <a href="javascript:void(0)" class="closebtn" onclick="closeSideMenu()">&times;</a>
     <a href="#" onclick="camFocusCity('Aqueron')">Aqueron</a>
@@ -44,6 +45,7 @@
     <a href="#" onclick="camFocusCity('Aventiure')">Aventiure</a>
     <a href="#" onclick="camFocusCity('Bahia de Balar')">Bahia de Balar</a>
     <a href="#" onclick="camFocusCity('Citadelle')">Citadelle</a>
+    <a href="#" onclick="camFocusCity('Dracomoniton')">Dracomoniton</a>
     <a href="#" onclick="camFocusCity('Eavesdown')">Eavesdown</a>
     <a href="#" onclick="camFocusCity('Egypt')">Egypt</a>
     <a href="#" onclick="camFocusCity('Finntown')">Finntown</a>
@@ -125,6 +127,14 @@
         "z" : "4350",
         "biome" : "grassland, mushroom",
         "mobility": "boat"
+        },{
+        "City_Name" : "Dracomoniton",
+        "Mayor"   : "Digdeep",
+        "x" : "-714",
+        "y" : "3",
+        "z" : "22522",
+        "biome" : "prairie, grassytwo",
+        "mobility": "none"
         },{
         "City_Name" : "Eavesdown",
         "Mayor"   : "Anaconda, Grey",
@@ -488,7 +498,7 @@
         }
 
         // Haven beacon
-        const Haven_Beacon = BABYLON.MeshBuilder.CreateCylinder("Haven_Beacon", {diameter: 1, height: 5000});
+        const Haven_Beacon = BABYLON.MeshBuilder.CreateCylinder("Haven_Beacon", {diameter: 5, height: 5000});
         Haven_Beacon.position.x = 2001;
         Haven_Beacon.position.y = 2800;
         Haven_Beacon.position.z = 1152;
@@ -530,6 +540,14 @@
 
            console.log("Haven Island imported");
         });
+        // Load Sacrementum Island
+        Promise.all([
+        BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "island_Sacrementum.gltf", scene).then(function (Sacrementum_island) {
+        })
+      ]).then(() => {
+
+           console.log("Haven Island imported");
+        });
 
         // launch daz funxions
         write_CityInfos()
@@ -555,7 +573,7 @@
               if ( (obj.mobility.includes("zeppelin")) && (!(obj.City_Name.includes("Haven")) )) {
                 eval('var zepclone_'+ i +' = zeppelinMesh.clone("Zep_'+ obj.City_Name.toUpperCase() +'");');
                 eval ('zepclone_'+ i +'.position.x = '+ obj.x +'+ 45;');
-                eval ('zepclone_'+ i +'.position.y = 195;');
+                eval ('zepclone_'+ i +'.position.y = 260;');
                 eval ('zepclone_'+ i +'.position.z = '+ obj.z +';');
                 eval ('zepclone_'+ i +'.scaling.scaleInPlace(1.75);');
                 eval ('zepclone_'+ i +'.rotation = new BABYLON.Vector3(0, -1.57, 0);');
@@ -589,7 +607,7 @@
               if ( (obj.mobility.includes("boat")) && (!(obj.City_Name.includes("Haven")) )) {
                 eval('var boatclone_'+ i +' = boatMesh.clone("Boat_'+ obj.City_Name.toUpperCase() +'");');
                 eval ('boatclone_'+ i +'.position.x = '+ obj.x +'- 45;');
-                eval ('boatclone_'+ i +'.position.y = 195;');
+                eval ('boatclone_'+ i +'.position.y = 260;');
                 eval ('boatclone_'+ i +'.position.z = '+ obj.z +';');
                 eval ('boatclone_'+ i +'.scaling.scaleInPlace(1.5);');
                 eval ('boatclone_'+ i +'.rotation = new BABYLON.Vector3(0, -1.57, 0);');
@@ -631,17 +649,17 @@
             eval('disc'+ i +'.material = discCityMat;');
 
             var city_x = obj.x;
-            var city_y = 65;
+            var city_y = 120;
             var city_z = obj.z;
 
             if (obj.City_Name.includes("Haven")) {
-              city_y = city_y+200;
+              city_y = city_y+150;
               city_z = city_z-120;
               var Line2 = 225;
               var Line3 = 340;
             } else {
-              var Line2 = 25;
-              var Line3 = 145;
+              var Line2 = 80;
+              var Line3 = 200;
             }
             // --- create City Names text at exact x/z position, y is forced +15 --- // "#1C3870" // caaa55
             eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": 85,"color": "#fff","position": {"x" : '+ city_x +', "y" : '+ city_y +', "z": '+ city_z +'}});');
