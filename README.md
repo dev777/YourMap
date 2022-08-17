@@ -4,6 +4,7 @@ This is a little Babylon.js / MeshWriter first time experiment to generate a vis
 Datas has been collected by players other the years, and we recently updated it, reading books IG, and travelling IG world.
 
 Cities datas Credits : alexandre2005, AliasAlreadyTaken, Bla, Boot, Chache, LichBerry, Mielle and probably many others (help makes this accurate please)
+
 This project was really a test, and if it seems usefull then we'll see what to do with it.
 
 I personnaly needed a visual representation of the world, this may be usefull for others, but we also have to be cautious to not spoil new players or those who strictly prefer to not have more help than the game offers.
@@ -23,6 +24,7 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 --- TO DO ---
 * Many things, by priority :
 - [ ] UI : Put back help controls
+- [ ] FEATURE : add keyboard control to camera
 - [ ] CONTENT : add credits
 - [ ] PERF : take a few vacation days away
 - [x] TXT : rotate them >> City names rotated 90°
@@ -36,6 +38,7 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [ ] ORG :Parent city_infos to disc
 - [ ] FEATURE : add possibility to enter coords (jump to, check closest city)
 - [ ] FEATURE : choose cameras : free / top
+- [ ] FEATURE : constrain camera's Y axis
 - [ ] CODE : separate Json file
 - [x] PERF : replace circular grid with a 3D mesh instance
 - [ ] UI : Reorder buttons, make a bottom bar
