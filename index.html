@@ -394,7 +394,7 @@
       var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
 
       /* ----------------------------------------------------------------------- MENUS Functions -------------------- */
-      /* Set the width of the sidebar to 250px (show it) */
+      //
       function openSideMenu() {
         if (document.getElementById("MenuSide1").style.width == "250px") {
           document.getElementById("MenuSide1").style.width = "0px";
@@ -402,12 +402,14 @@
           document.getElementById("MenuSide1").style.width = "250px";
         }
       }
-
-      /* Set the width of the sidebar to 0 (hide it) */
+      //
       function closeSideMenu() {
         document.getElementById("MenuSide1").style.width = "0";
       }
-      /* ----------------------------------------------------------------------- Menus Functions ------------------ */
+      function switchInspector() {
+        scene.debugLayer.show();
+      }
+      /* ----------------------------------------------------------------------- Cameras Functions ------------------ */
       function resetCamera(){
         var activCam = scene.activeCamera;
         var target = scene.getMeshByName("Balloon_primitive0");
@@ -426,9 +428,6 @@
         activCam.position = new BABYLON.Vector3(target.position.x, 900, target.position.z-1000);
         activCam.setTarget(target_pos);
         console.log("Camera focused on "+cityName);
-      }
-      function switchInspector() {
-        scene.debugLayer.show();
       }
 
       /* ----------------------------------------------------------------------- MAIN FUNCTION ------------ */
@@ -551,6 +550,7 @@
             for ( let i = 0; i < json_Cities.length; i++ ) {
 
               // so we get our precious json
+
               let obj = json_Cities[i];
 
               if ( (obj.mobility.includes("zeppelin")) && (!(obj.City_Name.includes("Haven")) )) {

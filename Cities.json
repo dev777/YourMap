@@ -1,0 +1,296 @@
+let json_Cities = [{
+  "City_Name" : "Aqueron",
+  "Mayor"   : "Skyisblue",
+  "x" : "1719",
+  "y" : "0",
+  "z" : "2735",
+  "biome" : "mushroom",
+  "mobility": "boat"
+  },
+  {
+  "City_Name" : "Atlantis",
+  "Mayor"   : "Kiyoko",
+  "x" : "25138",
+  "y" : "-31",
+  "z" : "30535",
+  "biome" : "savanna_ocean",
+  "mobility": "boat"
+  },
+  {
+  "City_Name" : "Aventiure",
+  "Mayor"   : "Arabella",
+  "x" : "-1000",
+  "y" : "0",
+  "z" : "-3014",
+  "biome" : "caves",
+  "mobility": "zeppelin"
+  },
+  {
+  "City_Name" : "Bahia de Balar",
+  "Mayor"   : "Ineva",
+  "x" : "296",
+  "y" : "0",
+  "z" : "1730",
+  "biome" : "grassland",
+  "mobility": "zeppelin"
+  },
+  {
+  "City_Name" : "Citadelle",
+  "Mayor"   : "Bizon",
+  "x" : "4951",
+  "y" : "0",
+  "z" : "4350",
+  "biome" : "grassland, mushroom",
+  "mobility": "boat"
+  },{
+  "City_Name" : "Eavesdown",
+  "Mayor"   : "Anaconda, Grey",
+  "x" : "-105",
+  "y" : "73",
+  "z" : "9282",
+  "biome" : "snow",
+  "mobility": "none"
+  },{
+  "City_Name" : "Egypt",
+  "Mayor"   : "Unelias",
+  "x" : "707",
+  "y" : "0",
+  "z" : "5776",
+  "biome" : "sandstone",
+  "mobility": "boat"
+  },{
+  "City_Name" : "Finntown",
+  "Mayor"   : "seppo",
+  "x" : "1734",
+  "y" : "0",
+  "z" : "3001",
+  "biome" : "mushroom",
+  "mobility": "boat"
+  },
+  {
+  "City_Name" : "Fort Glacier",
+  "Mayor"   : "Aristotle",
+  "x" : "448",
+  "y" : "178",
+  "z" : "20680",
+  "biome" : "glacier",
+  "mobility": "zeppelin"
+  },
+  {
+  "City_Name" : "FrostHall",
+  "Mayor"   : "jackofthebean000",
+  "x" : "2930",
+  "y" : "72",
+  "z" : "309",
+  "biome" : "glacier",
+  "mobility": "rail"
+  },{
+  "City_Name" : "Gond en Galad",
+  "Mayor"   : "Nobody24",
+  "x" : "1838",
+  "y" : "0",
+  "z" : "1789",
+  "biome" : "savanna",
+  "mobility": "zeppelin"
+  },{
+  "City_Name" : "Greenborough",
+  "Mayor"   : "Eraldemay",
+  "x" : "6106",
+  "y" : "0",
+  "z" : "5743",
+  "biome" : "grove, mushroom",
+  "mobility": "boat"
+  },{
+  "City_Name" : "Hanamura",
+  "Mayor"   : "Kur",
+  "x" : "1313",
+  "y" : "0",
+  "z" : "1446",
+  "biome" : "Mushroom",
+  "mobility": "boat"
+  },{
+  "City_Name" : "Haven",
+  "Mayor"   : "Hynek Svoboda (NPC)",
+  "x" : "2001",
+  "y" : "0",
+  "z" : "1153",
+  "biome" : "sandstone",
+  "mobility": "boat, zeppelin, rails"
+  },{
+  "City_Name" : "Isola Bella",
+  "Mayor"   : "Halina",
+  "x" : "28932",
+  "y" : "0",
+  "z" : "30147",
+  "biome" : "grove, mushroom",
+  "mobility": "boat"
+  },{
+  "City_Name" : "Lamorra",
+  "Mayor"   : "Ineva",
+  "x" : "27546",
+  "y" : "20",
+  "z" : "28939",
+  "biome" : "sakura",
+  "mobility": "zeppelin"
+  },{
+  "City_Name" : "Maravillosa",
+  "Mayor"   : "Sokomine",
+  "x" : "-38",
+  "y" : "0",
+  "z" : "22649",
+  "biome" : "jumble",
+  "mobility": "boat"
+  },
+  {
+  "City_Name" : "Meistrite Linn",
+  "Mayor"   : "Leet_Peet",
+  "x" : "777",
+  "y" : "0",
+  "z" : "2005",
+  "biome" : "plains",
+  "mobility": "zeppelin"
+  },
+  {
+  "City_Name" : "Monsabor",
+  "Mayor"   : "Dragoni_is_bored",
+  "x" : "7300",
+  "y" : "0",
+  "z" : "1001",
+  "biome" : "glacier",
+  "mobility": "zeppelin"
+  },
+  {
+  "City_Name" : "Netherlands",
+  "Mayor"   : "Ernesto",
+  "x" : "3187",
+  "y" : "0",
+  "z" : "4010",
+  "biome" : "taiga",
+  "mobility": "zeppelin"
+  },
+  {
+  "City_Name" : "Odonhull",
+  "Mayor"   : "alexandre2005, upie",
+  "x" : "1359",
+  "y" : "0",
+  "z" : "415",
+  "biome" : "mountain",
+  "mobility": "zeppelin"
+  },
+  {
+  "City_Name" : "Pluton",
+  "Mayor"   : "debiankaios, guiseppe",
+  "x" : "-1529",
+  "y" : "163",
+  "z" : "-3527",
+  "biome" : "mountain",
+  "mobility": "zeppelin"
+  },
+  {
+  "City_Name" : "Puerto Del Sol",
+  "Mayor"   : "Chache",
+  "x" : "2280",
+  "y" : "0",
+  "z" : "421",
+  "biome" : "plains_ocean, grove",
+  "mobility": "boat, trebuchet"
+  },
+  {
+  "City_Name" : "Rose Meadows",
+  "Mayor"   : "LeniOwo",
+  "x" : "13195",
+  "y" : "0",
+  "z" : "1990",
+  "biome" : "grassytwo, mediterranean",
+  "mobility": "boat"
+  },
+  {
+  "City_Name" : "Sacrementum",
+  "Mayor"   : "JeCel",
+  "x" : "6500",
+  "y" : "-21",
+  "z" : "10431",
+  "biome" : "boat",
+  "mobility": "mushroom_ocean, junglee_ocean"
+  },
+  {
+  "City_Name" : "Saturn",
+  "Mayor"   : "Jupiter, Jakob",
+  "x" : "2109",
+  "y" : "27",
+  "z" : "2327",
+  "biome" : "savanna",
+  "mobility": "none"
+  },
+  {
+  "City_Name" : "Streamhaven",
+  "Mayor"   : "Opensourcegaming",
+  "x" : "1800",
+  "y" : "0",
+  "z" : "2443",
+  "biome" : "plains",
+  "mobility": "zeppelin"
+  },
+  {
+  "City_Name" : "Suchers Berg",
+  "Mayor"   : "blueattire",
+  "x" : "13903",
+  "y" : "0",
+  "z" : "13749",
+  "biome" : "sakura, jungle",
+  "mobility": "boat"
+  },
+  {
+  "City_Name" : "Tenebris",
+  "Mayor"   : "Tour, Cepheus",
+  "x" : "6570",
+  "y" : "0",
+  "z" : "3077",
+  "biome" : "grassland, mushroom_ocean, sakura",
+  "mobility": "boat"
+  },
+  {
+  "City_Name" : "The Battle Royal Arena",
+  "Mayor"   : "AliasAlreadyTaken",
+  "x" : "-29017",
+  "y" : "0",
+  "z" : "-30704",
+  "biome" : "glacier",
+  "mobility": "zeppelin"
+  },
+  {
+  "City_Name" : "Venezia",
+  "Mayor"   : "Jakob",
+  "x" : "3273",
+  "y" : "0",
+  "z" : "-5951",
+  "biome" : "boat",
+  "mobility": "sakura"
+  },
+  {
+  "City_Name" : "Viskasteel",
+  "Mayor"   : "Darealbang, debian44",
+  "x" : "-1507",
+  "y" : "0",
+  "z" : "1518",
+  "biome" : "sakura",
+  "mobility": "boat"
+  },
+  {
+  "City_Name" : "Wynter",
+  "Mayor"   : "none",
+  "x" : "3250",
+  "y" : "76",
+  "z" : "540",
+  "biome" : "glacier",
+  "mobility": "none"
+  },
+  {
+  "City_Name" : "Zoo",
+  "Mayor"   : "Lupercus",
+  "x" : "40",
+  "y" : "0",
+  "z" : "1036",
+  "biome" : "mesa",
+  "mobility": "zeppelin"
+  }]
