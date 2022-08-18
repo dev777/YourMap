@@ -303,8 +303,8 @@
         "x" : "6500",
         "y" : "-21",
         "z" : "10431",
-        "biome" : "boat",
-        "mobility": "mushroom_ocean, junglee_ocean"
+        "biome" : "mushroom_ocean, junglee_ocean",
+        "mobility": "boat"
         },
         {
         "City_Name" : "Saturn",
@@ -470,6 +470,23 @@
         camera.attachControl(true);
         scene.activeCamera.position = new BABYLON.Vector3(2001, 800, 0);*/
 
+        // SSAO
+        // Create SSAO and configure all properties (for the example)
+        var ssaoRatio = {
+            ssaoRatio: 0.9, // Ratio of the SSAO post-process, in a lower resolution
+            combineRatio:1 // Ratio of the combine post-process (combines the SSAO and the scene)
+        };
+
+        var ssao = new BABYLON.SSAORenderingPipeline("ssao", scene, ssaoRatio);
+        ssao.fallOff = 0.000001;
+        ssao.area = 1;
+        ssao.radius = 0.0001;
+        ssao.totalStrength = 1.0;
+        ssao.base = 0.5;
+
+        // Attach camera to the SSAO render pipeline
+        scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("ssao", camera_arc1);
+
         // Environment
         // (Background color)
         scene.clearColor = new BABYLON.Color3(0.2, 0.2, 0.298);
@@ -546,7 +563,7 @@
         })
       ]).then(() => {
 
-           console.log("Haven Island imported");
+           console.log("Sacrementum Island imported");
         });
 
         // launch daz funxions
@@ -555,6 +572,52 @@
         sailshipandfish()
 
       	return scene;
+        var createScene = function () {
+    // Create scene
+    var scene = new BABYLON.Scene(engine);
+    scene.clearColor = BABYLON.Color3.Black();
+
+    // Create camera
+    var camera = new BABYLON.FreeCamera("camera", new BABYLON.Vector3(29, 13, 23), scene);
+    camera.setTarget(new BABYLON.Vector3(0, 0, 0));
+    camera.attachControl(canvas);
+
+    // Create some boxes and deactivate lighting (specular color and back faces)
+    var boxMaterial = new BABYLON.StandardMaterial("boxMaterail", scene);
+    boxMaterial.diffuseTexture = new BABYLON.Texture("textures/ground.jpg", scene);
+    boxMaterial.specularColor = BABYLON.Color3.Black();
+    boxMaterial.emissiveColor = BABYLON.Color3.White();
+
+    for (var i = 0; i < 10; i++) {
+        for (var j = 0; j < 10; j++) {
+            var box = BABYLON.Mesh.CreateBox("box" + i + " - " + j, 5, scene);
+            box.position = new BABYLON.Vector3(i * 5, 2.5, j * 5);
+            box.rotation = new BABYLON.Vector3(i, i * j, j);
+            box.material = boxMaterial;
+        }
+    }
+
+    /* Working but needs antialias probably
+    // Create SSAO and configure all properties (for the example)
+    var ssaoRatio = {
+        ssaoRatio: 0.9, // Ratio of the SSAO post-process, in a lower resolution
+        combineRatio:1 // Ratio of the combine post-process (combines the SSAO and the scene)
+    };
+
+    var ssao = new BABYLON.SSAORenderingPipeline("ssao", scene, ssaoRatio);
+    ssao.fallOff = 0.000001;
+    ssao.area = 0.002;
+    ssao.radius = 0,0009;
+    ssao.totalStrength = 1.05;
+    ssao.base = 0.45;
+
+    // Attach camera to the SSAO render pipeline
+    scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("ssao", camera);
+    */
+
+
+	return scene;
+}
 
         // ********************************************************************* CITIES INFOS FUNCTIONS
         // Mass Zep deployement
@@ -567,7 +630,6 @@
             for ( let i = 0; i < json_Cities.length; i++ ) {
 
               // so we get our precious json
-
               let obj = json_Cities[i];
 
               if ( (obj.mobility.includes("zeppelin")) && (!(obj.City_Name.includes("Haven")) )) {
@@ -602,6 +664,7 @@
 
               // so we get our precious json
               let obj = json_Cities[i];
+              console.log("looping cities for boat, City : "+obj.City_Name);
 
               // Placing all boats, except Haven one
               if ( (obj.mobility.includes("boat")) && (!(obj.City_Name.includes("Haven")) )) {
@@ -611,6 +674,7 @@
                 eval ('boatclone_'+ i +'.position.z = '+ obj.z +';');
                 eval ('boatclone_'+ i +'.scaling.scaleInPlace(1.5);');
                 eval ('boatclone_'+ i +'.rotation = new BABYLON.Vector3(0, -1.57, 0);');
+                console.log("City have boat and isn't Haven : "+obj.City_Name);
               }
             }
             // Original one goes above Haven
@@ -680,7 +744,7 @@
             var Line4 = obj.z - 30;
             eval('var text_biome'+ i +' = new Writer("'+ Biome +'",{"anchor": "center","letter-height": 25,"color": "#2C2C2C","position": {"x" : '+ obj.x +', "y" : 10, "z": '+ Line4 +'}});');
           }
-          //camera_arc1.setTarget(disc13);
+          // test zone *
         }
 
 
