@@ -76,3 +76,6 @@
 .openbtn:hover, .btnResetCam:hover, .btnInspector:hover {
   background-color: #444;
 }
+.menu_cities {
+  color : ccc;
+}

@@ -472,7 +472,7 @@
 
         // SSAO
         // Create SSAO and configure all properties (for the example)
-        var ssaoRatio = {
+        /*var ssaoRatio = {
             ssaoRatio: 0.9, // Ratio of the SSAO post-process, in a lower resolution
             combineRatio:1 // Ratio of the combine post-process (combines the SSAO and the scene)
         };
@@ -485,7 +485,7 @@
         ssao.base = 0.5;
 
         // Attach camera to the SSAO render pipeline
-        scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("ssao", camera_arc1);
+        scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("ssao", camera_arc1);*/
 
         // Environment
         // (Background color)
@@ -582,20 +582,7 @@
     camera.setTarget(new BABYLON.Vector3(0, 0, 0));
     camera.attachControl(canvas);
 
-    // Create some boxes and deactivate lighting (specular color and back faces)
-    var boxMaterial = new BABYLON.StandardMaterial("boxMaterail", scene);
-    boxMaterial.diffuseTexture = new BABYLON.Texture("textures/ground.jpg", scene);
-    boxMaterial.specularColor = BABYLON.Color3.Black();
-    boxMaterial.emissiveColor = BABYLON.Color3.White();
 
-    for (var i = 0; i < 10; i++) {
-        for (var j = 0; j < 10; j++) {
-            var box = BABYLON.Mesh.CreateBox("box" + i + " - " + j, 5, scene);
-            box.position = new BABYLON.Vector3(i * 5, 2.5, j * 5);
-            box.rotation = new BABYLON.Vector3(i, i * j, j);
-            box.material = boxMaterial;
-        }
-    }
 
     /* Working but needs antialias probably
     // Create SSAO and configure all properties (for the example)
@@ -664,7 +651,6 @@
 
               // so we get our precious json
               let obj = json_Cities[i];
-              console.log("looping cities for boat, City : "+obj.City_Name);
 
               // Placing all boats, except Haven one
               if ( (obj.mobility.includes("boat")) && (!(obj.City_Name.includes("Haven")) )) {
@@ -674,7 +660,6 @@
                 eval ('boatclone_'+ i +'.position.z = '+ obj.z +';');
                 eval ('boatclone_'+ i +'.scaling.scaleInPlace(1.5);');
                 eval ('boatclone_'+ i +'.rotation = new BABYLON.Vector3(0, -1.57, 0);');
-                console.log("City have boat and isn't Haven : "+obj.City_Name);
               }
             }
             // Original one goes above Haven

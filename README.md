@@ -26,7 +26,6 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [ ] UI : Put back help controls
 - [ ] FEATURE : add keyboard control to camera
 - [ ] CONTENT : add credits
-- [ ] PERF : take a few vacation days away
 - [x] TXT : rotate them >> City names rotated 90°
 - [x] TXT : fix 'n' letter or use CAPS >> using caps for now
 - [x] UI : add icons for mobility >> added 3D meshes : zep & boatMesh
