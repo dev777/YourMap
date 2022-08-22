@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Show Json content in a human readable way</title>
+
+        <link rel="stylesheet" href="index.css"/>
+        <style>
+            html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+              }
+              #JSON_Result{
+                background-color:#1e1e1e;
+                color:#b6a78b;
+              }
+        </style>
+    </head>
+<body>
+      <div id="JSON_Result">Yo !</div>
+    <script>
+
+      // Cities datas Credits : alexandre2005, AliasAlreadyTaken, Bla, Boot, Chache, Mielle and probably many others (help makes this accurate please)
+
+        // ********************************************************************* CITIES INFOS FUNCTIONS
+        async function getCities() {
+            let url = 'Cities.json';
+            try {
+                let res = await fetch(url);
+                return await res.json();
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        async function write_CityInfos() {
+          let cities = await getCities();
+
+            // Looping all cities
+            for ( let i = 0; i < cities['Cities'].length; i++ ) {
+
+              // so we get our precious json
+              let obj = cities['Cities'][i];
+              /*var node = document.getElementById('JSON_Result');
+              node.innerHTML('<p>some dynamic html</p>');*/
+
+              var node = document.getElementById('JSON_Result');
+              var newNode = document.createElement('p');
+
+              /*var ts = new Date(1661187658000);
+              console.log(ts.toDateString());*/
+
+              if (!(obj.creationdate == "unknown")) {
+                var date = new Date(obj.creationdate);
+                console.log(obj.creationdate+" - "+date.toDateString());
+              }
+
+              //var date = creationdate_HR.getDate()+"/"+(creationdate_HR.getMonth()+1)+"/"+creationdate_HR.getFullYear()+" "+creationdate_HR.getHours()+":"+creationdate_HR.getMinutes()+":"+creationdate_HR.getSeconds();
+              newNode.appendChild(document.createTextNode(obj.City_Name+" - Mayor: "+obj.Mayor+" - coords ["+obj.city_x+","+obj.city_y+", "+obj.city_z+"] - mobility: "+obj.mobility+" - biomes: "+obj.biome+" - server CityName: "+obj.server_CityName+" - server owner: "+obj.server_Owner+" - Display on map: "+obj.display));
+              node.appendChild(newNode);
+
+            }
+          }
+
+
+          /*console.log("Date: "+creationdate_HR.getDate()+
+          "/"+(creationdate_HR.getMonth()+1)+
+          "/"+creationdate_HR.getFullYear()+
+          " "+creationdate_HR.getHours()+
+          ":"+creationdate_HR.getMinutes()+
+          ":"+creationdate_HR.getSeconds());*/
+
+
+          write_CityInfos();
+
+    </script>
+</body>
+</html>
