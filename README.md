@@ -23,6 +23,10 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 
 --- TO DO ---
 * Many things, by priority :
+- [x] CODE : Mix own and server JSON, add : server_Owner, server_CityName, display, creationdate, position0ifNot...
+- [x] CODE : Rewriting Json part
+- [ ] FEATURE : display cam x y z
+- [ ] FIX : Fix panning bug again (focuscam)
 - [ ] UI : Put back help controls
 - [ ] FEATURE : add keyboard control to camera
 - [ ] CONTENT : add credits

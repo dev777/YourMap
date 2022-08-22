@@ -76,6 +76,28 @@
 .openbtn:hover, .btnResetCam:hover, .btnInspector:hover {
   background-color: #444;
 }
-.menu_cities {
-  color : ccc;
+.menu_city {
+  color : #4b92a7;
+  font-size: 14px;
+  padding: 0 0 5px 0;
+  margin: 0 0 5px 0px;
+}
+.menu_coords {
+  color: #8ad7ed;
+}
+.menu_mayor {
+  color: #e19c1a;
+}
+.menu_CityName {
+  display: block ruby;
+}
+.menu_CityName img{
+  margin-top: -10px;
+}
+.menu_secondLine {
+  padding: 0px 5px 0 20px;
+}
+.menu_mobility {
+  padding: 0 10px 0 10px;
+  color: #4eae6b;
 }
