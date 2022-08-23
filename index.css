@@ -1,4 +1,6 @@
-
+#populous {
+  color: purple;
+}
 /* The sidepanel menu */
 .sidepanel {
  height: 85%; /* Specify a height */
@@ -19,7 +21,7 @@
  padding: 2px 0px 2px 20px;
  text-decoration: none;
  font-size: 20px;
- color: #818181;
+ color: #e19c1a;
  display: block;
  transition: 0.3s;
 }
@@ -87,12 +89,17 @@
   color: #8ad7ed;
 }
 .menu_mayor {
-  color: #e19c1a;
+  color: #d07373;
+  margin-left: 6px;
+}
+.menu_biome {
+  margin-left: 6px;
 }
 .menu_CityName {
   display: block ruby;
 }
 .menu_CityName img{
+  /*padding: 0 10px 0 10px;*/
   margin-top: -10px;
 }
 .menu_secondLine {

@@ -35,108 +35,19 @@
   <!-- ************************************************************* GUI -->
   <button class="openbtn" onclick="openSideMenu()">&#9776; Cities</button>
   <button class="btnResetCam" onclick="resetCamera()">Reset Camera</button>
-  <button class="btnInspector" onclick="switchInspector()">Inspector</button>
+  <!--<button class="btnInspector" onclick="switchInspector()">Inspector</button>-->
 
   <!-- Menu Cities -->
   <div id="MenuSide1" class="sidepanel">
     <a href="javascript:void(0)" class="closebtn" onclick="closeSideMenu()">&times;</a>
     <div id="populous"></div>
     <a href="#" onclick="camFocusCity('Aqualonia')">Aqualonia</a>
-    <div class="menu_city">
-      <div class="menu_CityName"><a href="#" onclick="camFocusCity('Aqueron')">Aqueron</a><span class="menu_mobility"><img src="img/icon_boat.png" alt="City Has Boat"></span></div>
-      <div class="menu_secondLine">
-        <span class="menu_coords">[ 1719, 000, 2765 ]</span>
-        <span class="menu_mayor">Skyisblue</span>
-        <span class="menu_biome">mushroom</span>
-      </div>
-    </div>
-    <div class="menu_city">
-      <div class="menu_CityName"><a href="#" onclick="camFocusCity('Atlantis')">Atlantis</a><span class="menu_mobility"><img src="img/icon_boat.png" alt="City Has Boat"></span></div>
-      <div class="menu_secondLine">
-        <span class="menu_coords">[ 1719, 000, 2765 ]</span>
-        <span class="menu_mayor">Kiyoko</span>
-        <span class="menu_biome">grassland, mushroom_ocean, sakura</span>
-      </div>
-    </div>
-    <a href="#" onclick="camFocusCity('Aventiure')">Aventiure</a>
-    <a href="#" onclick="camFocusCity('Azimut')">Azimut</a>
-    <a href="#" onclick="camFocusCity('Bahia de Balar')">Bahia de Balar</a>
-    <a href="#" onclick="camFocusCity('Bursa')">Bursa</a>
-    <a href="#" onclick="camFocusCity('Cairnwood City')">Cairnwood City</a>
-    <a href="#" onclick="camFocusCity('Citadelle')">Citadelle</a>
-    <a href="#" onclick="camFocusCity('Dracomoniton')">Dracomoniton</a>
-    <a href="#" onclick="camFocusCity('Easter Flower Hunt')">Easter Flower Hunt</a>
-    <a href="#" onclick="camFocusCity('Eavesdown')">Eavesdown</a>
-    <a href="#" onclick="camFocusCity('Egypt')">Egypt</a>
-    <a href="#" onclick="camFocusCity('El Gato')">El Gato</a>
-    <a href="#" onclick="camFocusCity('Finntown')">Finntown</a>
-    <a href="#" onclick="camFocusCity('Fort Glacier')">Fort Glacier</a>
-    <a href="#" onclick="camFocusCity('Freedom')">Freedom</a>
-    <a href="#" onclick="camFocusCity('FrostHall')">FrostHall</a>
-    <a href="#" onclick="camFocusCity('Galadhon')">Galadhon</a>
-    <a href="#" onclick="camFocusCity('Gond en Galad')">Gond en Galad</a>
-    <a href="#" onclick="camFocusCity('Gouden Wortel')">Gouden Wortel</a>
-    <a href="#" onclick="camFocusCity('Greenborough')">Greenborough</a>
-    <a href="#" onclick="camFocusCity('Hanamura')">Hanamura</a>
-    <a href="#" onclick="camFocusCity('Haven')">Haven</a>
-    <a href="#" onclick="camFocusCity('Isola Bella')">Isola Bella</a>
-    <a href="#" onclick="camFocusCity('Kedusriver')">Kedusriver</a>
-    <a href="#" onclick="camFocusCity('Lainelinn')">Lainelinn</a>
-    <a href="#" onclick="camFocusCity('Lamorra')">Lamorra</a>
-    <a href="#" onclick="camFocusCity('Lichtenfels')">Lichtenfels</a>
-    <a href="#" onclick="camFocusCity('Maravillosa')">Maravillosa</a>
-    <a href="#" onclick="camFocusCity('Meistrite Linn')">Meistrite Linn</a>
-    <a href="#" onclick="camFocusCity('Milton')">Milton</a>
-    <a href="#" onclick="camFocusCity('Monsabor')">Monsabor</a>
-    <a href="#" onclick="camFocusCity('Mooner Eclipse')">Mooner Eclipse</a>
-    <a href="#" onclick="camFocusCity('Netherlands')">Netherlands</a>
-    <a href="#" onclick="camFocusCity('New Hope')">New Hope</a>
-    <a href="#" onclick="camFocusCity('New Vadou City')">New Vadou City</a>
-    <a href="#" onclick="camFocusCity('Odonhull')">Odonhull</a>
-    <a href="#" onclick="camFocusCity('Owumi')">Owumi</a>
-    <a href="#" onclick="camFocusCity('Pluton')">Pluton</a>
-    <a href="#" onclick="camFocusCity('Lichberry')">Lichberry</a>
-    <a href="#" onclick="camFocusCity('Puerto Del Sol')">Puerto Del Sol</a>
-    <a href="#" onclick="camFocusCity('Riverdale')">Riverdale</a>
-    <a href="#" onclick="camFocusCity('Rose Meadows')">Rose Meadows</a>
-    <a href="#" onclick="camFocusCity('Sacrementum')">Sacrementum</a>
-    <a href="#" onclick="camFocusCity('Sandtown')">Sandtown</a>
-    <a href="#" onclick="camFocusCity('Saturn')">Saturn</a>
-    <a href="#" onclick="camFocusCity('Saxonia')">Saxonia</a>
-    <a href="#" onclick="camFocusCity('Streamhaven')">Streamhaven</a>
-    <a href="#" onclick="camFocusCity('Suchers Berg')">Suchers Berg</a>
-    <a href="#" onclick="camFocusCity('Superville')">Superville</a>
-    <a href="#" onclick="camFocusCity('Tenebris')">Tenebris</a>
-    <a href="#" onclick="camFocusCity('Terrania')">Terrania</a>
-    <div class="menu_city">
-      <div class="menu_CityName"><a href="#" onclick="camFocusCity('The Battle Royal Arena')">The Battle Royal Arena</a><span class="menu_mobility"><img src="img/icon_zep.png" alt="City Has Boat"></span></div>
-      <div class="menu_secondLine">
-        <span class="menu_coords">[ -29017, 000, -30704 ]</span>
-        <span class="menu_mayor">AliasAlreadyTaken</span>
-        <span class="menu_biome">glacier</span>
-      </div>
-    </div>
-    <a href="#" onclick="camFocusCity('VaultHelm')">VaultHelm</a>
-    <a href="#" onclick="camFocusCity('Venezia')">Venezia</a>
-    <a href="#" onclick="camFocusCity('Venutham')">Venutham</a>
-    <a href="#" onclick="camFocusCity('Viskasteel')">Viskasteel</a>
-    <a href="#" onclick="camFocusCity('Wynter')">Wynter</a>
-    <a href="#" onclick="camFocusCity('Zoo')">Zoo</a>
-    <a href="#" onclick="camFocusCity('_TITAN_')">_TITAN_</a>
   </div>
 
     <canvas id="renderCanvas"></canvas>
     <script>
 
-
-
-
-
-
       // Cities datas Credits : alexandre2005, AliasAlreadyTaken, Bla, Boot, Chache, Mielle and probably many others (help makes this accurate please)
-
-      // Init HTML menu_city
-      //var div = document.createElement('div');
 
       // INIT SCENE
       var canvas = document.getElementById("renderCanvas");
@@ -153,6 +64,7 @@
       var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
 
       /* ----------------------------------------------------------------------- MENUS Functions -------------------- */
+      //
       //
       function openSideMenu() {
         if (document.getElementById("MenuSide1").style.width == "290px") {
@@ -177,18 +89,6 @@
         activCam.position = new BABYLON.Vector3(0, 900, -1500);
         activCam.setTarget(target_pos);
         console.log("Camera Resetted");
-      }
-      function camFocusCity(cityName){
-        var activCam = scene.activeCamera;
-        var disc_city = "disc_"+cityName.toUpperCase();
-        var target = scene.getMeshByName(disc_city);
-
-        // needed to preserve panning ****************** NOT WORKING ANYMORE via Menu, no panning
-        target_pos = target.position.clone()
-
-        activCam.position = new BABYLON.Vector3(target.position.x, 900, target.position.z-1000);
-        activCam.setTarget(target);
-        console.log("Camera focused on "+cityName);
       }
 
       /* ----------------------------------------------------------------------- MAIN FUNCTION ------------ */
@@ -321,6 +221,7 @@
 
 
         // launch daz funxions
+        menuCities();
         write_CityInfos();
         zeppelination();
         sailshipandfish();
@@ -367,6 +268,100 @@
                 console.log(error);
             }
         }
+
+        async function menuCities() {
+          let cities = await getCities();
+
+          // Looping all cities
+          for ( let i = 0; i < cities['Cities'].length; i++ ) {
+            // so we get our precious json
+            let obj = cities['Cities'][i];
+
+            // Display item menu only for allowed city
+            if (obj.display=="true")  {
+              // Select DOM element to populate
+              const menu = document.getElementById("populous");
+              // Generate HMTL elements
+              // first the div menu_city as a container for one city dataset
+              const menu_entry_global = document.createElement("div");
+              menu_entry_global.classList.add('menu_city');
+              // Then a div for the first line
+              const menu_CityName = document.createElement("div");
+              menu_CityName.classList.add('menu_CityName');
+              // and a div for the second line
+              const menu_secondLine = document.createElement("div");
+              menu_secondLine.classList.add('menu_secondLine');
+
+              // FIRST LINE
+              // Link for city focus
+              var a_City = document.createElement('a');
+              var linkText = document.createTextNode(obj.City_Name);
+              a_City.appendChild(linkText);
+              a_City.href = "#";
+              // inline function for focusing on a city
+              a_City.onclick = function (){
+                var activCam = scene.activeCamera;
+                var disc_city = "disc_"+obj.City_Name.toUpperCase();
+                var target = scene.getMeshByName(disc_city);
+                // needed to preserve panning ****************** NOT WORKING ANYMORE via Menu, no panning
+                target_pos = target.position.clone()
+                activCam.position = new BABYLON.Vector3(target.position.x, 900, target.position.z-1000);
+                activCam.setTarget(target);
+                console.log("Camera focused on "+obj.City_Name);
+              };
+
+              // Span containing mobility Img
+              var mobility_span = document.createElement('span');
+              mobility_span.classList.add('menu_mobility');
+              // Test wich icon to create/display
+              if (obj.mobility.includes("boat")) {
+                var boat_icon = document.createElement('img');
+                boat_icon.src = "img/icon_boat.png";
+                mobility_span.appendChild(boat_icon);
+              }
+              if (obj.mobility.includes("zeppelin")) {
+                var zep_icon = document.createElement('img');
+                zep_icon.src = "img/icon_zep.png";
+                mobility_span.appendChild(zep_icon);
+              }
+
+              // SECOND Line
+              // Coords, case1 point IG, case2 area corner
+              var span_coords = document.createElement('span');
+              span_coords.classList.add('menu_coords');
+              if (!(obj.city_x == "none")) {
+                var text_coords = document.createTextNode('[ '+obj.city_x+', '+obj.city_y+', '+obj.city_z+' ]');
+              } else {
+                //var text_coords = document.createTextNode('[ unknown ]');
+                var text_coords = document.createTextNode('[ '+obj.pos1.x+', '+obj.pos1.y+', '+obj.pos1.z+' ]');
+              }
+              span_coords.appendChild(text_coords);
+
+              // Mayor
+              var span_mayor = document.createElement('span');
+              span_mayor.classList.add('menu_mayor');
+              var text_mayor = document.createTextNode(obj.Mayor);
+              span_mayor.appendChild(text_mayor);
+
+              // Biome
+              var span_biome = document.createElement('span');
+              span_biome.classList.add('menu_biome');
+              var text_biome = document.createTextNode(obj.biome);
+              span_biome.appendChild(text_biome);
+
+              // Appends elements
+              menu_CityName.appendChild(a_City);
+              menu_entry_global.appendChild(menu_CityName);
+              menu_CityName.appendChild(mobility_span);
+              //
+              menu_secondLine.appendChild(span_coords);
+              menu_secondLine.appendChild(span_mayor);
+              menu_secondLine.appendChild(span_biome);
+              menu_entry_global.appendChild(menu_secondLine);
+              menu.appendChild(menu_entry_global);
+
+            }
+          }}
 
         async function zeppelination() {
           let cities = await getCities();
@@ -553,17 +548,3 @@
     </script>
 </body>
 </html>
-
-<!-- TODO:
-- separate json from index.html
-- Add ui list of json_Cities (Stack panel, check Xml for objectlinking)
-- add cameras : top
-- test flythrough
-- replace circular grid with object.gltf > color / dupli scale offset
-- rotate those texts or replace with GuI
-- 3D Meshes for city names ?
-- add layers for mobility
-- fix the 'n' letter or use CAPS
-- add caves city IF using Y axis to position cities
-
--->
