@@ -33,8 +33,10 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [x] TXT : rotate them >> City names rotated 90°
 - [x] TXT : fix 'n' letter or use CAPS >> using caps for now
 - [x] UI : add icons for mobility >> added 3D meshes : zep & boatMesh
-- [ ] CODE : js generate cities menu
-- [ ] CODE / UI: add mobility/mayor/biome/coords infos
+- [x] CODE : js generate cities menu
+- [ ] CODE, UI : improve menu
+- [x] CODE / UI: add mobility/mayor/biome/coords infos
+- [ ] change TXT material to diffuse
 - [ ] UI : add minecart meshes
 - [x] FEATURE : Side pannel with cities that focus on selected city with a local ArcCam >> wup wup wup, choosed JS/HTML menu for now
 - [x] FIX : reset cameras > now it loose panning > must fix >> ok must use target.position.clone() for it to works
@@ -42,7 +44,7 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [ ] FEATURE : add possibility to enter coords (jump to, check closest city)
 - [ ] FEATURE : choose cameras : free / top
 - [ ] FEATURE : constrain camera's Y axis
-- [ ] CODE : separate Json file
+- [x] CODE : separate Json file
 - [x] PERF : replace circular grid with a 3D mesh instance
 - [ ] UI : Reorder buttons, make a bottom bar
 - [ ] PERF : use LOD
