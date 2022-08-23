@@ -123,7 +123,7 @@
 
         // SSAO
         // Create SSAO and configure all properties (for the example)
-        /*var ssaoRatio = {
+        var ssaoRatio = {
             ssaoRatio: 0.9, // Ratio of the SSAO post-process, in a lower resolution
             combineRatio:1 // Ratio of the combine post-process (combines the SSAO and the scene)
         };
@@ -135,8 +135,11 @@
         ssao.totalStrength = 1.0;
         ssao.base = 0.5;
 
+        // Testing antialias
+        new BABYLON.PassPostProcess("scale_pass", 2.0, camera_arc1, BABYLON.Texture.LINEAR_LINEAR_MIPNEAREST);
+
         // Attach camera to the SSAO render pipeline
-        scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("ssao", camera_arc1);*/
+        scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("ssao", camera_arc1);
 
         // Environment
         // (Background color)
@@ -217,6 +220,14 @@
       ]).then(() => {
 
            console.log("Sacrementum Island imported");
+        });
+        // Load Puerto Island
+        Promise.all([
+        BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "island_Puerto.gltf", scene).then(function (Puerto_island) {
+        })
+      ]).then(() => {
+
+           console.log("Puerto Del Sol Island imported");
         });
 
 

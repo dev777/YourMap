@@ -49,16 +49,25 @@
               var node = document.getElementById('JSON_Result');
               var newNode = document.createElement('p');
 
-              /*var ts = new Date(1661187658000);
+              /*var ts = new Date(1608577808);
               console.log(ts.toDateString());*/
 
-              if (!(obj.creationdate == "unknown")) {
+              /*if (!(obj.creationdate == "unknown")) {
                 var date = new Date(obj.creationdate);
                 console.log(obj.creationdate+" - "+date.toDateString());
+              }*/
+              if (!(obj.city_x == "none")) {
+                var text_coords = obj.city_x+', '+obj.city_y+', '+obj.city_z;
+              } else {
+                //var text_coords = document.createTextNode('[ unknown ]');
+                var text_coords = 'AREA POS1 '+obj.pos1.x+', '+obj.pos1.y+', '+obj.pos1.z;
               }
 
-              //var date = creationdate_HR.getDate()+"/"+(creationdate_HR.getMonth()+1)+"/"+creationdate_HR.getFullYear()+" "+creationdate_HR.getHours()+":"+creationdate_HR.getMinutes()+":"+creationdate_HR.getSeconds();
-              newNode.appendChild(document.createTextNode(obj.City_Name+" - Mayor: "+obj.Mayor+" - coords ["+obj.city_x+","+obj.city_y+", "+obj.city_z+"] - mobility: "+obj.mobility+" - biomes: "+obj.biome+" - server CityName: "+obj.server_CityName+" - server owner: "+obj.server_Owner+" - Display on map: "+obj.display));
+              var milli = obj.creationdate*1000;
+              var date = new Date(milli);
+              const humanDateFormat = date.toLocaleString()
+              newNode.appendChild(document.createTextNode(obj.City_Name+" - Mayor: "+obj.Mayor+" - coords ["+text_coords+"] - mobility: "+obj.mobility+" - biomes: "+obj.biome+" - creationdate: "+humanDateFormat+" - server CityName: "+obj.server_CityName+" - server owner: "+obj.server_Owner+" - state: "+obj.state+" - Display on map: "+obj.display));
+
               node.appendChild(newNode);
 
             }
