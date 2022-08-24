@@ -47,7 +47,7 @@
     <canvas id="renderCanvas"></canvas>
     <script>
 
-      // Cities datas Credits : alexandre2005, AliasAlreadyTaken, Bla, Boot, Chache, Mielle and probably many others (help makes this accurate please)
+      // Cities datas Credits : alexandre2005, AliasAlreadyTaken, Bla, Chache, Mielle and probably many others (help makes this accurate please)
 
       // INIT SCENE
       var canvas = document.getElementById("renderCanvas");
@@ -90,7 +90,20 @@
         activCam.setTarget(target_pos);
         console.log("Camera Resetted");
       }
+      /* ----------------------------------------------------------------------- Click Mesh functions ---------------- */
+      function clickTorch(){
+        var mesh = scene.getMeshByName("Collosus_Torch");
+        mesh.actionManager.registerAction(
+          new BABYLON.InterpolateValueAction(
+              BABYLON.ActionManager.OnPickTrigger,
+              lightHemi1,
+              'diffuse',
+              BABYLON.Color3.Black(),
+              1000
+    )
+);
 
+      }
       // ********************************************************************* CITIES INFOS FUNCTIONS
       async function getCities() {
           let url = 'Cities.json';
@@ -213,7 +226,7 @@
               if ((obj.mobility.includes("zeppelin")) && (!(obj.City_Name.includes("Haven"))) && (obj.display=="true") ) {
                 eval('var zepclone_'+ i +' = zeppelinMesh.clone("Zep_'+ obj.City_Name.toUpperCase() +'");');
                 eval ('zepclone_'+ i +'.position.x = '+ obj.city_x +'+ 45;');
-                eval ('zepclone_'+ i +'.position.y = 260;');
+                eval ('zepclone_'+ i +'.position.y = 300;');
                 eval ('zepclone_'+ i +'.position.z = '+ obj.city_z +';');
                 eval ('zepclone_'+ i +'.scaling.scaleInPlace(1.75);');
                 eval ('zepclone_'+ i +'.rotation = new BABYLON.Vector3(0, -1.57, 0);');
@@ -248,7 +261,7 @@
               if ((obj.mobility.includes("boat")) && (!(obj.City_Name.includes("Haven"))) && (obj.display=="true") ) {
                 eval('var boatclone_'+ i +' = boatMesh.clone("Boat_'+ obj.City_Name.toUpperCase() +'");');
                 eval ('boatclone_'+ i +'.position.x = '+ obj.city_x +'- 45;');
-                eval ('boatclone_'+ i +'.position.y = 260;');
+                eval ('boatclone_'+ i +'.position.y = 300;');
                 eval ('boatclone_'+ i +'.position.z = '+ obj.city_z +';');
                 eval ('boatclone_'+ i +'.scaling.scaleInPlace(1.5);');
                 eval ('boatclone_'+ i +'.rotation = new BABYLON.Vector3(0, -1.57, 0);');
@@ -265,7 +278,7 @@
         });
       }
 
-      async function write_CityInfos() {
+      async function write_CityInfos(discCityMat,Mat_NameCity,Mat_Mayor,Mat_Coords,Mat_Biomes) {
         let cities = await getCities();
 
           // Looping all cities
@@ -285,7 +298,7 @@
 
               // Temp checking x,y,z point position is unknown
               // Would be better to get area median point
-              var city_y = 120;
+              var city_y = 195;
               if (obj.city_x == "none" || obj.city_y == "none" || obj.city_z == "none") {
                 var city_x = obj.pos1.x;
                 var city_z = obj.pos1.z;
@@ -302,17 +315,11 @@
                 var Line2 = 225;
                 var Line3 = 340;
               } else {
-                var Line2 = 80;
-                var Line3 = 200;
+                var Line2 = 160;
+                var Line3 = 250;
               }
 
-
               // Adding a disc at City position but forcing y:0
-              // Material for discs
-              const discCityMat = new BABYLON.StandardMaterial("discCityMat");
-              discCityMat.diffuseColor = new BABYLON.Color3(.5, 0, 0.15)
-              //discCityMat.emissiveColor = new BABYLON.Color3(.8, 0.4, 0.1)
-
               // creating disc with eval to dynamically create variable names then storing that varname
               eval('var disc'+ i +' = BABYLON.MeshBuilder.CreateDisc("disc_'+ City_Name +'", {radius: 64 , arc: 1, tessellation: 24}, scene);');
               eval('var index_city = disc'+ i +';');
@@ -322,25 +329,37 @@
               index_city.position = new BABYLON.Vector3(city_x, 1, city_z);
               index_city.material = discCityMat;
 
-
               // --- create City Names text at exact x/z position, y is forced +15 --- // "#1C3870" // caaa55
-              eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": 85,"color": "#fff","position": {"x" : '+ city_x +', "y" : '+ city_y +', "z": '+ city_z +'}});');
-              eval('mesh_CityName_'+ i +' = text_CityName_'+ i +'.getMesh();');
-              eval('mesh_CityName_'+ i +'.rotation.x = BABYLON.Tools.ToRadians(-90);');
+              eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": 55,"letter-thickness":5, "color": "#fff","position": {"x" : '+ city_x +', "y" : '+ city_y +', "z": '+ city_z +'}});');
+              eval('mesh_CityName = text_CityName_'+ i +'.getMesh();');
+              mesh_CityName.rotation.x = BABYLON.Tools.ToRadians(-90);
+              var temp_mat = mesh_CityName.material;
+              temp_mat.dispose(true, true);
+              mesh_CityName.material = Mat_NameCity;
 
               // --- second line for Mayors name // "color": "#aa,aa,cc"
-              eval('var text_Mayor_'+ i +' = new Writer("'+ City_Mayor +'",{"anchor": "center","letter-height": 40,"color": "#3b073c","position": {"x" : '+ city_x +', "y" : '+ Line2 +', "z": '+ city_z +'}});');
-              eval('mesh_text_Mayor_'+ i +' = text_Mayor_'+ i +'.getMesh();');
-              eval('mesh_text_Mayor_'+ i +'.rotation.x = BABYLON.Tools.ToRadians(-90);');
+              eval('var text_Mayor_'+ i +' = new Writer("'+ City_Mayor +'",{"anchor": "center","letter-height": 35,"color": "#3b073c","position": {"x" : '+ city_x +', "y" : '+ Line2 +', "z": '+ city_z +'}});');
+              eval('mesh_text_Mayor = text_Mayor_'+ i +'.getMesh();');
+              mesh_text_Mayor.rotation.x = BABYLON.Tools.ToRadians(-90);
+              var temp_mat = mesh_text_Mayor.material;
+              temp_mat.dispose(true, true);
+              mesh_text_Mayor.material = Mat_Mayor;
 
               // --- third line for coords
-              eval('var text_Coords_'+ i +' = new Writer("[ '+ city_x +' , 0 , '+ city_z +' ]",{"anchor": "center","letter-height": 35,"color": "#1C4ab0","position": {"x" : '+ city_x +', "y" : '+ Line3 +', "z": '+ city_z +'}});');
-              eval('mesh_Coords_'+ i +' = text_Coords_'+ i +'.getMesh();');
-              eval('mesh_Coords_'+ i +'.rotation.x = BABYLON.Tools.ToRadians(-90);');
+              eval('var text_Coords_'+ i +' = new Writer("[ '+ city_x +' , 0 , '+ city_z +' ]",{"anchor": "center","letter-height": 30,"color": "#1C4ab0","position": {"x" : '+ city_x +', "y" : '+ Line3 +', "z": '+ city_z +'}});');
+              eval('mesh_Coords = text_Coords_'+ i +'.getMesh();');
+              mesh_Coords.rotation.x = BABYLON.Tools.ToRadians(-90);
+              var temp_mat = mesh_Coords.material;
+              temp_mat.dispose(true, true);
+              mesh_Coords.material = Mat_Coords;
 
               // --- third line for biomes
               var Line4 = city_z - 30;
               eval('var text_biome'+ i +' = new Writer("'+ Biome +'",{"anchor": "center","letter-height": 25,"color": "#2C2C2C","position": {"x" : '+ city_x +', "y" : 10, "z": '+ Line4 +'}});');
+              eval('text_biome = text_biome'+ i +'.getMesh();');
+              var temp_mat = text_biome.material;
+              temp_mat.dispose(true, true);
+              text_biome.material = Mat_Biomes;
             }
           }
           // test zone *
@@ -404,8 +423,8 @@
         scene.fogDensity = 0.00001;
 
         // light
-        /*var lightDirect1 = new BABYLON.DirectionalLight("lightDirect1", new BABYLON.Vector3(25, -60, 35), scene);
-        lightDirect1.intensity = 1;*/
+        var lightDirect1 = new BABYLON.DirectionalLight("lightDirect1", new BABYLON.Vector3(25, -60, 35), scene);
+        lightDirect1.intensity = 1;
         var lightHemi1 = new BABYLON.HemisphericLight("lightHemi1", new BABYLON.Vector3(0,10,0), scene);
         lightHemi1.intensity = 1;
 
@@ -416,9 +435,35 @@
         // Init Writer for 3D text
         Writer = BABYLON.MeshWriter(scene, {scale:scale,defaultFont:"Arial"});
 
+        // --------------------------------------------------------------------- Materials ------
+        // Material for discs
+        const discCityMat = new BABYLON.StandardMaterial("discCityMat");
+        discCityMat.diffuseColor = new BABYLON.Color3(.5, 0, 0.15)
+        // Materials for City texts 47B01C
+        const Mat_NameCity = new BABYLON.StandardMaterial("Mat_NameCity");
+        Mat_NameCity.diffuseColor = new BABYLON.Color3.FromHexString("#ffaf00");
+        Mat_NameCity.specularColor = new BABYLON.Color3.FromHexString("#000000");
+        const Mat_Mayor = new BABYLON.StandardMaterial("Mat_Mayor");
+        Mat_Mayor.diffuseColor = new BABYLON.Color3.FromHexString("#99475F");
+        Mat_Mayor.specularColor = new BABYLON.Color3.FromHexString("#aaaaaa");
+        const Mat_Coords = new BABYLON.StandardMaterial("Mat_Coords");
+        Mat_Coords.diffuseColor = new BABYLON.Color3.FromHexString("#8CC5E0");
+        Mat_Coords.specularColor = new BABYLON.Color3.FromHexString("#111111");
+        const Mat_Biomes = new BABYLON.StandardMaterial("Mat_Coords");
+        Mat_Biomes.diffuseColor = new BABYLON.Color3.FromHexString("#ffffff");
+        Mat_Biomes.specularColor = new BABYLON.Color3.FromHexString("#000000");
+        // text distances along +z axis
+        const Mat_grid_numbers = new BABYLON.StandardMaterial("Mat_grid_numbers");
+        Mat_grid_numbers.diffuseColor = new BABYLON.Color3.FromHexString("#333333");
+        Mat_grid_numbers.specularColor = new BABYLON.Color3.FromHexString("#000000");
+        // Haven beacon
+        const beaconMat = new BABYLON.StandardMaterial("beaconMat");
+        beaconMat.emissiveColor = new BABYLON.Color3(0, 0.63, 1);
+        beaconMat.diffuseColor = new BABYLON.Color3.FromHexString("#00E4FF");
+
         // launch daz funxions
         menuCities();
-        write_CityInfos();
+        write_CityInfos(discCityMat,Mat_NameCity,Mat_Mayor,Mat_Coords,Mat_Biomes);
         zeppelination();
         sailshipandfish();
 
@@ -428,7 +473,16 @@
 
         // text distances along +z axis
         for ( let i = 500; i < 40000; i += 500) {
-          eval('var text_Grid_'+ i +' = new Writer("'+ i +'", {"anchor": "left","letter-height": 50, "color": "#0f0000" ,"position": {"x" : '+ i +', "y" : 0, "z": -15}});');
+          eval('var text_Grid_'+ i +' = new Writer("'+ i +'", {"anchor": "left","letter-height": 50, "color": {"diffuse": "black", "specular": "black", "ambient": "black", "emissive": "black"},"position": {"x" : '+ i +', "y" : 0, "z": -15}});');
+          eval('textMesh  = text_Grid_'+ i +'.getMesh()');
+          textMesh.name = ("text_Grid_"+ i);
+          textMesh.id = ("text_Grid_"+ i);
+          var temp_mat = textMesh.material;
+          temp_mat.dispose(true, true);
+          textMesh.material = Mat_grid_numbers;
+
+
+
         }
 
         // Haven beacon
@@ -436,8 +490,6 @@
         Haven_Beacon.position.x = 2001;
         Haven_Beacon.position.y = 2800;
         Haven_Beacon.position.z = 1152;
-        const beaconMat = new BABYLON.StandardMaterial("beaconMat");
-        beaconMat.emissiveColor = new BABYLON.Color3(0, 0.63, 1);
         Haven_Beacon.material = beaconMat;
 
 
