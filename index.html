@@ -57,6 +57,15 @@
     </div>
   </div>
 
+  <div id="loading_screen">
+    <p class="centerText">Yourland WebMap</p>
+    <p class="centerText"> - - - - - - - - - - - - - - LOADING - - - - - - - - - - - - - -</p>
+    <p class="centerText"> Please Wait :)</p>
+    <div id="loading_tips">
+      <p class="centerText">LEFT Mouse Button >> ROTATE View<br />RIGHT Mouse Button >> PAN View<br />WHEEL Mouse >> ZOOM to pointer<br />F5 >> Restart</p>
+      <p class="centerText">Cities datas collected by:<br/> alexandre2005, AliasAlreadyTaken, Bla, Chache, Lichberry, Mielle<br /> and probably many others.</p>
+    </div>
+  </div>
     <script>
 
       // Cities datas Credits : alexandre2005, AliasAlreadyTaken, Bla, Chache, Mielle and probably many others (help makes this accurate please)
@@ -78,6 +87,13 @@
 
       /* ----------------------------------------------------------------------- MENUS Functions -------------------- */
       //
+      /*
+      add click listener sur main_submenu
+      if display: block > display none
+      if click inside (then it must be visible already) > display none
+      if click outside > display none too...
+
+      */
       function main_submenu_visibility(element) {
         // Displays or not
         if (document.getElementById("main_submenu").style.display == "block") {
@@ -416,7 +432,7 @@
 
         function scene_ready(){
           console.log("Scene ready");
-          //advancedTexture.dispose(text_Disclaimer);
+          document.getElementById("loading_screen").style.display = "none";
         }
 
 

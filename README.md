@@ -26,19 +26,19 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [x] CODE : Mix own and server JSON, add : server_Owner, server_CityName, display, creationdate, position0ifNot...
 - [x] CODE : Rewriting Json part
 - [x] PERF : reassign txt materials, purge generated ones
-- [ ] UI / CODE : add a loading screen or something, mb credits until loaded
+- [x] UI / CODE : add a loading screen or something, mb credits until loaded
 - [ ] FEATURE : display cam x y z
 - [ ] FIX : Fix panning bug again (focuscam)
-- [ ] UI : Put back help controls
+- [x] UI : Put back help controls
 - [ ] FEATURE : add keyboard control to camera
-- [ ] CONTENT : add credits
+- [x] CONTENT : add credits
 - [x] TXT : rotate them >> City names rotated 90°
 - [x] TXT : fix 'n' letter or use CAPS >> using caps for now
 - [x] UI : add icons for mobility >> added 3D meshes : zep & boatMesh
 - [x] CODE : js generate cities menu
-- [ ] CODE, UI : improve menu
+- [ ] CODE, UI : improve side menu
 - [x] CODE / UI: add mobility/mayor/biome/coords infos
-- [ ] change TXT material to diffuse
+- [x] change TXT material to diffuse
 - [ ] UI : add minecart meshes
 - [x] FEATURE : Side pannel with cities that focus on selected city with a local ArcCam >> wup wup wup, choosed JS/HTML menu for now
 - [x] FIX : reset cameras > now it loose panning > must fix >> ok must use target.position.clone() for it to works
@@ -48,7 +48,7 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [ ] FEATURE : constrain camera's Y axis
 - [x] CODE : separate Json file
 - [x] PERF : replace circular grid with a 3D mesh instance
-- [ ] UI : Reorder buttons, make a bottom bar
+- [x] UI : Reorder buttons, make a bottom bar
 - [ ] PERF : use LOD
 - [ ] PERF : check all shadows / collision / lights to disable
 - [ ] UI : display actual pointer position (projection invis plane ?)

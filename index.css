@@ -160,3 +160,20 @@ h2 {
 .centerText {
   text-align: center;
 }
+#loading_screen {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  background-color: #000000d1;
+  top: 52px;
+  margin-left: 1%;
+  margin-right: auto;
+  left: 148px;
+  color: white;
+  /*padding: 26px 0px 0px 50px;*/
+  font-size: 48px;
+  border-radius: 75px;
+}
+#loading_tips {
+  font-size: 37px;
+}
