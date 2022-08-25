@@ -21,6 +21,7 @@
                 height: 100%;
                 margin: 0;
                 padding: 0;
+                font-family: arial;
               }
 
             #renderCanvas {
@@ -41,10 +42,54 @@
   <div id="MenuSide1" class="sidepanel">
     <a href="javascript:void(0)" class="closebtn" onclick="closeSideMenu()">&times;</a>
     <div id="populous"></div>
-    <a href="#" onclick="camFocusCity('Aqualonia')">Aqualonia</a>
   </div>
 
     <canvas id="renderCanvas"></canvas>
+    <div id="menu_main">
+      <div class ="menu_lvl1"><a href="#" onclick="main_submenu_visibility()">HELP</a></div>
+      <div class ="menu_lvl1">CAMERA</div>
+      <div class ="menu_lvl1">TOOLS</div>
+      <div class ="menu_lvl1">PREFS</div>
+      <div class ="menu_lvl1">DATAVIZ</div>
+      <div id ="main_submenu">
+        <h2>Controls</h2>
+        <p class="centerText">
+          LEFT Mouse Button >> ROTATE View
+        <br />
+          RIGHT Mouse Button >> PAN View
+        <br />
+          WHEEL Mouse >> ZOOM to pointer
+        <br />
+          F5 >> Restart
+        </p>
+        <h2>Credits</h2>
+        <p>
+          Cities datas: alexandre2005, AliasAlreadyTaken, Bla, Chache, Lichberry, Mielle and probably many others. (help makes this accurate please)
+        </p>
+        <p>
+          All informations on cities has been first gathered through ingame explorations, reading ingame adventurer's books, then compiled through various supports
+          by El Famoso Puerto Del Sol's Governor : Chache, and Mielle "from far away".
+        </p>
+        <p>
+           Then dailies updates on both sides helped us keeping our own databases synchronized somehow, Chache wrote the En'City'clopedia in game,
+           4 books describing in details all knowed informations on cities and some interresting places, plus usefull research about Heraldry and YourLand historical organisations.
+        </p>
+        <p>
+            At night, secretly, AliasAlreadyTaken extracted datas from the server and pasted it to an happy JSON martyr. This file contained new cities to explore and register in our precious new monster file.
+        </p>
+        <p>
+          Curious tho, some cities weren't on the server list, could it be a Voice tactics to hide crucials areas ? Alias can have... No, don't think of this...
+        <p>
+          Anyway, we're now fine with the list, it needs ameliorations, mostly for details and that means : EXPLORATION !
+        </p>
+        <p>
+          I advise you to visit Puerto Del Sol at will, the Academy may be built and there you may find the Cartographer quarter.
+          We heard they plan to give prizes for some informations, meanwhile you still can help gather more precise informations,
+          and mail Chache and Mielle in game :)
+        </p>
+
+      </div>
+    </div>
     <script>
 
       // Cities datas Credits : alexandre2005, AliasAlreadyTaken, Bla, Chache, Mielle and probably many others (help makes this accurate please)
@@ -66,6 +111,14 @@
 
       /* ----------------------------------------------------------------------- MENUS Functions -------------------- */
       //
+      function main_submenu_visibility() {
+        if (document.getElementById("main_submenu").style.display == "block") {
+          document.getElementById("main_submenu").style.display = "none";
+        } else {
+          document.getElementById("main_submenu").style.display = "block";
+        }
+
+      }
       function openSideMenu() {
         if (document.getElementById("MenuSide1").style.width == "290px") {
           document.getElementById("MenuSide1").style.width = "0px";
@@ -280,7 +333,7 @@
         });
       }
 
-      async function write_CityInfos(discCityMat,Mat_NameCity,Mat_Mayor,Mat_Coords,Mat_Biomes,advancedTexture) {
+      async function write_CityInfos(discCityMat,Mat_NameCity,Mat_Mayor,Mat_Coords,Mat_Biomes) {
         let cities = await getCities();
           scene.blockfreeActiveMeshesAndRenderingGroups = true;
           // Looping all cities
@@ -315,10 +368,12 @@
                 city_y = 270;
                 city_z = 1023;
                 var Line2 = 225;
-                var Line3 = 340;
+                var Line3 = 345;
+                var fontNameSize = 75;
               } else {
                 var Line2 = 160;
                 var Line3 = 250;
+                var fontNameSize = 55;
               }
 
               // Adding a disc at City position but forcing y:0
@@ -332,15 +387,16 @@
               index_city.material = discCityMat;
 
               // --- create City Names text at exact x/z position, y is forced +15 --- // "#1C3870" // caaa55
-              eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": 55,"letter-thickness":5, "color": "#fff","position": {"x" : '+ city_x +', "y" : '+ city_y +', "z": '+ city_z +'}});');
+              eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": '+fontNameSize+',"letter-thickness":5, "color": "#fff","position": {"x" : '+ city_x +', "y" : '+ city_y +', "z": '+ city_z +'}});');
               eval('mesh_CityName = text_CityName_'+ i +'.getMesh();');
               mesh_CityName.rotation.x = BABYLON.Tools.ToRadians(-90);
               var temp_mat = mesh_CityName.material;
               temp_mat.dispose(true, true);
               mesh_CityName.material = Mat_NameCity;
+              //eval('mesh_CityName.name = text_CityName_'+ i+'');
 
               // --- second line for Mayors name // "color": "#aa,aa,cc"
-              eval('var text_Mayor_'+ i +' = new Writer("'+ City_Mayor +'",{"anchor": "center","letter-height": 35,"color": "#3b073c","position": {"x" : '+ city_x +', "y" : '+ Line2 +', "z": '+ city_z +'}});');
+              eval('var text_Mayor_'+ i +' = new Writer("'+ City_Mayor +'",{"anchor": "center","letter-height": 35,"letter-thickness":3, "color": "#3b073c","position": {"x" : '+ city_x +', "y" : '+ Line2 +', "z": '+ city_z +'}});');
               eval('mesh_text_Mayor = text_Mayor_'+ i +'.getMesh();');
               mesh_text_Mayor.rotation.x = BABYLON.Tools.ToRadians(-90);
               var temp_mat = mesh_text_Mayor.material;
@@ -357,11 +413,12 @@
 
               // --- third line for biomes
               var Line4 = city_z - 30;
-              eval('var text_biome'+ i +' = new Writer("'+ Biome +'",{"anchor": "center","letter-height": 25,"color": "#2C2C2C","position": {"x" : '+ city_x +', "y" : 10, "z": '+ Line4 +'}});');
-              eval('text_biome = text_biome'+ i +'.getMesh();');
-              var temp_mat = text_biome.material;
+              eval('var text_biome'+ i +' = new Writer("'+ Biome +'",{"anchor": "center","letter-height": 20,"color": "#2C2C2C","position": {"x" : '+ city_x +', "y" : '+ Line2 +'-30, "z": '+ city_z +'}});');
+              eval('mesh_Biome = text_biome'+ i +'.getMesh();');
+              mesh_Biome.rotation.x = BABYLON.Tools.ToRadians(-90);
+              var temp_mat = mesh_Biome.material;
               temp_mat.dispose(true, true);
-              text_biome.material = Mat_Biomes;
+              mesh_Biome.material = Mat_Biomes;
             }
           }
           // test zone *
@@ -466,16 +523,16 @@
         Writer = BABYLON.MeshWriter(scene, {scale:scale,defaultFont:"Arial"});
 
         // GUI
-        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mapUI");
+        /*var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mapUI");
         var text_Disclaimer = new BABYLON.GUI.TextBlock();
         text_Disclaimer.text = "__________ LOADING __________  LEFT Mouse Button >> ROTATE View      RIGHT Mouse Button >> PAN View WHEEL Mouse >> ZOOM to pointer      F5 >> Restart";
         text_Disclaimer.color = "white";
-        text_Disclaimer.fontSize = 32;
+        text_Disclaimer.fontNameSize = 32;
         text_Disclaimer.top = -100;
         text_Disclaimer.textWrapping= true;
         text_Disclaimer.lineSpacing = 7;
         text_Disclaimer.width = "600px";
-        text_Disclaimer.height = "300px";
+        text_Disclaimer.height = "300px";*/
         //advancedTexture.addControl(text_Disclaimer);
         //advancedTexture.dispose(text_Disclaimer);
 
@@ -485,19 +542,20 @@
         // --------------------------------------------------------------------- Materials ------
         // Material for discs
         const discCityMat = new BABYLON.StandardMaterial("discCityMat");
-        discCityMat.diffuseColor = new BABYLON.Color3(.5, 0, 0.15)
-        // Materials for City texts 47B01C
+        //discCityMat.diffuseColor = new BABYLON.Color3(.5, 0, 0.15)
+        discCityMat.diffuseColor = new BABYLON.Color3.FromHexString("#193D24");
+        // Materials for City texts 47B01C FF9A00 ffaf00
         const Mat_NameCity = new BABYLON.StandardMaterial("Mat_NameCity");
-        Mat_NameCity.diffuseColor = new BABYLON.Color3.FromHexString("#ffaf00");
+        Mat_NameCity.diffuseColor = new BABYLON.Color3.FromHexString("#FF9A00");
         Mat_NameCity.specularColor = new BABYLON.Color3.FromHexString("#000000");
         const Mat_Mayor = new BABYLON.StandardMaterial("Mat_Mayor");
-        Mat_Mayor.diffuseColor = new BABYLON.Color3.FromHexString("#99475F");
+        Mat_Mayor.diffuseColor = new BABYLON.Color3.FromHexString("#B3214C");
         Mat_Mayor.specularColor = new BABYLON.Color3.FromHexString("#aaaaaa");
         const Mat_Coords = new BABYLON.StandardMaterial("Mat_Coords");
         Mat_Coords.diffuseColor = new BABYLON.Color3.FromHexString("#8CC5E0");
         Mat_Coords.specularColor = new BABYLON.Color3.FromHexString("#111111");
-        const Mat_Biomes = new BABYLON.StandardMaterial("Mat_Coords");
-        Mat_Biomes.diffuseColor = new BABYLON.Color3.FromHexString("#ffffff");
+        const Mat_Biomes = new BABYLON.StandardMaterial("Mat_Biomes");
+        Mat_Biomes.diffuseColor = new BABYLON.Color3.FromHexString("#eeeeee");
         Mat_Biomes.specularColor = new BABYLON.Color3.FromHexString("#000000");
         // text distances along +z axis
         const Mat_grid_numbers = new BABYLON.StandardMaterial("Mat_grid_numbers");
@@ -515,7 +573,7 @@
         scene.useMaterialMeshMap = true;
         // launch daz funxions
         menuCities();
-        write_CityInfos(discCityMat,Mat_NameCity,Mat_Mayor,Mat_Coords,Mat_Biomes,advancedTexture);
+        write_CityInfos(discCityMat,Mat_NameCity,Mat_Mayor,Mat_Coords,Mat_Biomes);
         zeppelination();
         sailshipandfish();
 
