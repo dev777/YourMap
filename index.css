@@ -142,7 +142,10 @@ h2 {
   border-radius: 10px;
   padding: 21px 20px 0 20px;
   border: 2px solid white;
+  scrollbar-color: orange red;
+  scrollbar-width: 4px;
 }
+
 #main_submenu p {
   font-size: 20px;
   margin: 11px 0 14px 0px;

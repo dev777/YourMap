@@ -33,6 +33,7 @@
 
     </head>
 <body>
+  <div id="container">
   <!-- ************************************************************* GUI -->
   <button class="openbtn" onclick="openSideMenu()">&#9776; Cities</button>
   <button class="btnResetCam" onclick="resetCamera()">Reset Camera</button>
@@ -45,51 +46,17 @@
   </div>
 
     <canvas id="renderCanvas"></canvas>
+
     <div id="menu_main">
-      <div class ="menu_lvl1"><a href="#" onclick="main_submenu_visibility()">HELP</a></div>
-      <div class ="menu_lvl1">CAMERA</div>
+      <div class ="menu_lvl1"><a href="#" onclick="main_submenu_visibility(this)">HELP</a></div>
+      <div class ="menu_lvl1"><a href="#" onclick="main_submenu_visibility(this)">CAMERA</a></div>
       <div class ="menu_lvl1">TOOLS</div>
       <div class ="menu_lvl1">PREFS</div>
-      <div class ="menu_lvl1">DATAVIZ</div>
-      <div id ="main_submenu">
-        <h2>Controls</h2>
-        <p class="centerText">
-          LEFT Mouse Button >> ROTATE View
-        <br />
-          RIGHT Mouse Button >> PAN View
-        <br />
-          WHEEL Mouse >> ZOOM to pointer
-        <br />
-          F5 >> Restart
-        </p>
-        <h2>Credits</h2>
-        <p>
-          Cities datas: alexandre2005, AliasAlreadyTaken, Bla, Chache, Lichberry, Mielle and probably many others. (help makes this accurate please)
-        </p>
-        <p>
-          All informations on cities has been first gathered through ingame explorations, reading ingame adventurer's books, then compiled through various supports
-          by El Famoso Puerto Del Sol's Governor : Chache, and Mielle "from far away".
-        </p>
-        <p>
-           Then dailies updates on both sides helped us keeping our own databases synchronized somehow, Chache wrote the En'City'clopedia in game,
-           4 books describing in details all knowed informations on cities and some interresting places, plus usefull research about Heraldry and YourLand historical organisations.
-        </p>
-        <p>
-            At night, secretly, AliasAlreadyTaken extracted datas from the server and pasted it to an happy JSON martyr. This file contained new cities to explore and register in our precious new monster file.
-        </p>
-        <p>
-          Curious tho, some cities weren't on the server list, could it be a Voice tactics to hide crucials areas ? Alias can have... No, don't think of this...
-        <p>
-          Anyway, we're now fine with the list, it needs ameliorations, mostly for details and that means : EXPLORATION !
-        </p>
-        <p>
-          I advise you to visit Puerto Del Sol at will, the Academy may be built and there you may find the Cartographer quarter.
-          We heard they plan to give prizes for some informations, meanwhile you still can help gather more precise informations,
-          and mail Chache and Mielle in game :)
-        </p>
-
-      </div>
+      <div class ="menu_lvl1">DATAVIZ></div>
+      <div id ="main_submenu"></div>
     </div>
+  </div>
+
     <script>
 
       // Cities datas Credits : alexandre2005, AliasAlreadyTaken, Bla, Chache, Mielle and probably many others (help makes this accurate please)
@@ -111,14 +78,35 @@
 
       /* ----------------------------------------------------------------------- MENUS Functions -------------------- */
       //
-      function main_submenu_visibility() {
+      function main_submenu_visibility(element) {
+        // Displays or not
         if (document.getElementById("main_submenu").style.display == "block") {
           document.getElementById("main_submenu").style.display = "none";
         } else {
           document.getElementById("main_submenu").style.display = "block";
         }
-
+        // Assign content to the div according to clicked menu item
+        switch (element.text) {
+          case "HELP":
+            document.getElementById("main_submenu").innerHTML = '<h2>Controls</h2><p class="centerText">LEFT Mouse Button >> ROTATE View<br />RIGHT Mouse Button >> PAN View<br />WHEEL Mouse >> ZOOM to pointer<br />F5 >> Restart</p><h2>Credits</h2><p>Cities datas: alexandre2005, AliasAlreadyTaken, Bla, Chache, Lichberry, Mielle and probably many others. (help makes this accurate please)</p><p>All informations on cities has been first gathered through ingame explorations, reading ingame adventurer\'s books, then compiled through various supports by El Famoso Puerto Del Sol\'s Governor : Chache, and Mielle "from far away".</p><p>Then dailies updates on both sides helped us keeping our own databases synchronized somehow, Chache wrote the En\'City\'clopedia in game, 4 books describing in details all knowed informations on cities and some interresting places, plus usefull research about Heraldry and YourLand historical organisations.</p><p>At night, secretly, AliasAlreadyTaken extracted datas from the server and pasted it to an happy JSON martyr. This file contained new cities to explore and register in our precious new monster file.</p><p>Curious tho, some cities weren\'t on the server list, could it be a Voice tactics to hide crucials areas ? Alias can have... No, don\'t think of this...<p>Anyway, we\'re now fine with the list, it needs ameliorations, mostly for details and that means : Exploration !</p><p>I advise you to visit Puerto Del Sol at will, the Academy may be built and there you may find the Cartographer quarter.We heard they plan to give prizes for some informations, meanwhile you still can help gather more precise informations, and mail Chache and Mielle in game :)</p>';
+            break;
+          case "CAMERA":
+            document.getElementById("main_submenu").innerHTML = '<h2>Cameras</h2><p class="centerText">Hin hin hin,<br />You didn\'t say the magic word !</p><p>Ahem,<br /> camera features and improvements are planned.</p><p>Actually there is only one ArcCamera, and there\'s a bug wich cameback with its latest version : when you click on a city name in the left menu, the focus on the city works but you loose the panning ability</p><p>That\'s why there\'s a "Reset Camera" button on the right bottom screen.</p><p>Another camera is planned, keyboard movements should be revamped too, atm it\'s a bit hard to navigate, so good luck :p.</p><p class ="centerText">Hin Hin Hiinnn</p>';
+            break;
+          case "TOOLS":
+            //console.log("TOOLS was clicked");
+            break;
+          case "PREFS":
+            //console.log("PREFS was clicked");
+            break;
+          case "DATAVIZ":
+            //console.log("DATAVIZ was clicked");
+            break;
+          default:
+            console.log("Ma qué passo ?");
+        }
       }
+
       function openSideMenu() {
         if (document.getElementById("MenuSide1").style.width == "290px") {
           document.getElementById("MenuSide1").style.width = "0px";
