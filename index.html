@@ -35,7 +35,9 @@
 <body>
   <div id="container">
   <!-- ************************************************************* GUI -->
-  <button class="openbtn" onclick="openSideMenu()">&#9776; Cities</button>
+  <div id="menu_top">
+    <button class="openbtn" onclick="openSideMenu()">&#9776; Cities</button>
+  </div>
   <button class="btnResetCam" onclick="resetCamera()">Reset Camera</button>
   <!--<button class="btnInspector" onclick="switchInspector()">Inspector</button>-->
 
@@ -58,7 +60,7 @@
 
     <div id="loading_screen">
       <p class="centerText">Yourland WebMap</p>
-      <p class="centerText"> - - - - - - - - - - - - - - LOADING - - - - - - - - - - - - - -</p>
+      <p class="centerText"> - - - - - - -  LOADING- - - - - - -  </p>
       <p class="centerText"> Please Wait :)</p>
       <div id="loading_tips">
         <p class="centerText">LEFT Mouse Button >> ROTATE View<br />RIGHT Mouse Button >> PAN View<br />WHEEL Mouse >> ZOOM to pointer<br />F5 >> Restart</p>

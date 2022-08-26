@@ -175,12 +175,17 @@ h2 {
   left: 50%;
   margin: 0 auto;
   transform: translate(-50%, 0);
-
   color: white;
-  /*padding: 26px 0px 0px 50px;*/
-  font-size: 48px;
+  font-size: 2.5em;
   border-radius: 75px;
 }
 #loading_tips {
-  font-size: 37px;
+  font-size: 0.8em;
+}
+#menu_top {
+  /*background: #0000004d;*/
+  width: 100%;
+  height: 28px;
+  float: left;
+  position: fixed;
 }
