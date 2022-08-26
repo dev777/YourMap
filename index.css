@@ -116,6 +116,8 @@ h2 {
 .menu_mobility {
   padding: 0 10px 0 10px;
   color: #4eae6b;
+  position: relative;
+  top: 4px;
 }
 /* MAIN MENU*/
 #menu_main{
