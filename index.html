@@ -3,7 +3,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Unofficial YourLandMap</title>
-
         <!-- Babylon.js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
         <script src="https://preview.babylonjs.com/babylon.js"></script>
@@ -14,67 +13,21 @@
         <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
         <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
         <link rel="stylesheet" href="index.css"/>
-        <style>
-            html, body {
-                overflow: hidden;
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 0;
-                font-family: arial;
-                background-color:black;
-              }
-
-            #renderCanvas {
-                width: 100%;
-                height: 100%;
-                touch-action: none;
-              }
-              @keyframes spinner {
-        0% {
-          transform: translate3d(-50%, -50%, 0) rotate(0deg);
-        }
-        100% {
-          transform: translate3d(-50%, -50%, 0) rotate(360deg);
-        }
-      }
-      .spin::before {
-        animation: 4s linear infinite spinner;
-          animation-play-state: running;
-        animation-play-state: running;
-        animation-play-state: inherit;
-        border: solid 6px #212121;
-          border-bottom-color: rgb(33, 33, 33);
-        border-bottom-color: rgb(33, 33, 33);
-        border-bottom-color: #66e410;
-        border-radius: 46%;
-        content: "";
-        height: 65%;
-        width: 32%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate3d(-50%, -50%, 0);
-        will-change: transform;
-        z-index: -1;
-      }
-        </style>
-
     </head>
 <body>
   <div id="container">
   <!-- ************************************************************* GUI -->
-  <div id="menu_top">
-    <button class="openbtn" onclick="openSideMenu()">&#9776; Cities</button>
-  </div>
-  <button class="btnResetCam" onclick="resetCamera()">Reset Camera</button>
-  <!--<button class="btnInspector" onclick="switchInspector()">Inspector</button>-->
-
-  <!-- Menu Cities -->
-  <div id="MenuSide1" class="sidepanel">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeSideMenu()">&times;</a>
-    <div id="populous"></div>
-  </div>
+    <div id="menu_top">
+      <button class="openbtn" onclick="openSideMenu()">&#9776; Cities</button>
+    </div>
+    <!-- Menu Cities -->
+    <div id="MenuSide1" class="sidepanel">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeSideMenu()">&times;</a>
+      <div id="populous"></div>
+    </div>
+    <!-- right side buttons -->
+    <button class="btnResetCam" onclick="resetCamera()">Reset Camera</button>
+    <!--<button class="btnInspector" onclick="switchInspector()">Inspector</button>-->
 
     <canvas id="renderCanvas"></canvas>
 
@@ -83,7 +36,7 @@
       <div class ="menu_lvl1"><a href="#" onclick="main_submenu_visibility(this)">CAMERA</a></div>
       <div class ="menu_lvl1">TOOLS</div>
       <div class ="menu_lvl1">PREFS</div>
-      <div class ="menu_lvl1">DATAVIZ></div>
+      <div class ="menu_lvl1">ACADEMY></div>
       <div id ="main_submenu"></div>
     </div>
 
@@ -97,10 +50,7 @@
         <p class="centerText">Cities datas collected by:<br/> alexandre2005, AliasAlreadyTaken, Bla, Chache, Lichberry, Mielle<br /> and probably many others.</p>
       </div>
     </div>
-
   </div>
-
-
 
     <script>
 
@@ -120,16 +70,7 @@
       var sceneToRender = null;
       var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
 
-
       /* ----------------------------------------------------------------------- MENUS Functions -------------------- */
-      //
-      /*
-      add click listener sur main_submenu
-      if display: block > display none
-      if click inside (then it must be visible already) > display none
-      if click outside > display none too...
-
-      */
       function main_submenu_visibility(element) {
         // Displays or not
         if (document.getElementById("main_submenu").style.display == "block") {
@@ -143,7 +84,7 @@
             document.getElementById("main_submenu").innerHTML = '<h2>Controls</h2><p class="centerText">LEFT Mouse Button >> ROTATE View<br />RIGHT Mouse Button >> PAN View<br />WHEEL Mouse >> ZOOM to pointer<br />F5 >> Restart</p><h2>Credits</h2><p>Cities datas: alexandre2005, AliasAlreadyTaken, Bla, Chache, Lichberry, Mielle and probably many others. (help makes this accurate please)</p><p>All informations on cities has been first gathered through ingame explorations, reading ingame adventurer\'s books, then compiled through various supports by El Famoso Puerto Del Sol\'s Governor : Chache, and Mielle "from far away".</p><p>Then dailies updates on both sides helped us keeping our own databases synchronized somehow, Chache wrote the En\'City\'clopedia in game, 4 books describing in details all knowed informations on cities and some interresting places, plus usefull research about Heraldry and YourLand historical organisations.</p><p>At night, secretly, AliasAlreadyTaken extracted datas from the server and pasted it to an happy JSON martyr. This file contained new cities to explore and register in our precious new monster file.</p><p>Curious tho, some cities weren\'t on the server list, could it be a Voice tactics to hide crucials areas ? Alias can have... No, don\'t think of this...<p>Anyway, we\'re now fine with the list, it needs ameliorations, mostly for details and that means : Exploration !</p><p>I advise you to visit Puerto Del Sol at will, the Academy may be built and there you may find the Cartographer quarter.We heard they plan to give prizes for some informations, meanwhile you still can help gather more precise informations, and mail Chache and Mielle in game :)</p>';
             break;
           case "CAMERA":
-            document.getElementById("main_submenu").innerHTML = '<h2>Cameras</h2><p class="centerText">Hin hin hin,<br />You didn\'t say the magic word !</p><p>Ahem,<br /> camera features and improvements are planned.</p><p>Actually there is only one ArcCamera, and there\'s a bug wich cameback with its latest version : when you click on a city name in the left menu, the focus on the city works but you loose the panning ability</p><p>That\'s why there\'s a "Reset Camera" button on the right bottom screen.</p><p>Another camera is planned, keyboard movements should be revamped too, atm it\'s a bit hard to navigate, so good luck :p.</p><p class ="centerText">Hin Hin Hiinnn</p>';
+            document.getElementById("main_submenu").innerHTML = '<h2>Cameras</h2><p>For now there are 2 cameras, the initial one loose panning on City focus.</p><p>The second one can be controlled with arrow keys but do not work well with city focus yet.</p><p>That\'s why there\'s a "Reset Camera" button on the right bottom screen.</p><p>Good luck :p.</p><button class="" onclick="toggleCam()">Toggle Camera</button>';
             break;
           case "TOOLS":
             //console.log("TOOLS was clicked");
@@ -151,8 +92,8 @@
           case "PREFS":
             //console.log("PREFS was clicked");
             break;
-          case "DATAVIZ":
-            //console.log("DATAVIZ was clicked");
+          case "ACADEMY":
+            //console.log("ACADEMY was clicked");
             break;
           default:
             console.log("Ma qué passo ?");
@@ -183,20 +124,20 @@
         activCam.setTarget(target_pos);
         console.log("Camera Resetted");
       }
-      /* ----------------------------------------------------------------------- Click Mesh functions ---------------- */
-      function clickTorch(){
-        var mesh = scene.getMeshByName("Collosus_Torch");
-        mesh.actionManager.registerAction(
-          new BABYLON.InterpolateValueAction(
-              BABYLON.ActionManager.OnPickTrigger,
-              lightHemi1,
-              'diffuse',
-              BABYLON.Color3.Black(),
-              1000
-    )
-);
-
+      function toggleCam() {
+        /*scene.activeCamera.dettach(canvas, true);*/
+      //  camera_univ1.attachControl(canvas, true);
+      //scene.cameras.push(camera_univ1);
+      console.log(scene.cameras);
+      if ( scene.activeCamera == scene.cameras[0] ) {
+        scene.activeCamera = scene.cameras[1];
+        scene.cameras[1].attachControl(canvas, true);
+        } else {
+        scene.activeCamera = scene.cameras[0];
+        scene.cameras[0].attachControl(canvas, true);
+        }
       }
+
       // ********************************************************************* CITIES INFOS FUNCTIONS
       async function getCities() {
           let url = 'Cities.json';
@@ -254,15 +195,33 @@
             var mobility_span = document.createElement('span');
             mobility_span.classList.add('menu_mobility');
             // Test wich icon to create/display
-            if (obj.mobility.includes("boat")) {
+
+            if (!(obj.City_Name == "Haven")) {
+              if (obj.mobility.includes("boat")) {
+                var boat_icon = document.createElement('img');
+                boat_icon.src = "img/icon_boat.png";
+                mobility_span.appendChild(boat_icon);
+              }
+              if (obj.mobility.includes("zeppelin")) {
+                var zep_icon = document.createElement('img');
+                zep_icon.src = "img/icon_zep.png";
+                mobility_span.appendChild(zep_icon);
+              }
+              if (obj.mobility.includes("rail")) {
+                var cart_icon = document.createElement('img');
+                cart_icon.src = "img/icon_cart.png";
+                mobility_span.appendChild(cart_icon);
+              }
+            } else {
               var boat_icon = document.createElement('img');
               boat_icon.src = "img/icon_boat.png";
               mobility_span.appendChild(boat_icon);
-            }
-            if (obj.mobility.includes("zeppelin")) {
               var zep_icon = document.createElement('img');
               zep_icon.src = "img/icon_zep.png";
               mobility_span.appendChild(zep_icon);
+              var cart_icon = document.createElement('img');
+              cart_icon.src = "img/icon_cart.png";
+              mobility_span.appendChild(cart_icon);
             }
 
             // SECOND Line
@@ -287,7 +246,7 @@
             var span_biome = document.createElement('span');
             span_biome.classList.add('menu_biome');
             var text_biome = document.createTextNode(obj.biome);
-            //span_biome.appendChild(text_biome);
+            span_biome.appendChild(text_biome);
 
             // Appends elements
             menu_CityName.appendChild(a_City);
@@ -337,7 +296,6 @@
         });
       }
 
-
       async function sailshipandfish() {
         let cities = await getCities();
 
@@ -370,6 +328,40 @@
         })]).then(() => {
          console.log("3D Boat imported, cloned and positionned");
          scene_ready();
+        });
+      }
+
+      async function minecartization() {
+        let cities = await getCities();
+
+        Promise.all([
+        BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "minecart.gltf", scene)
+          .then(function (minecart) {
+            minecartMesh = minecart.meshes[0];
+
+            // Looping all cities
+            for ( let i = 0; i < cities['Cities'].length; i++ ) {
+
+              // so we get our precious json
+              let obj = cities['Cities'][i];
+
+              if ((obj.mobility.includes("rail")) && (!(obj.City_Name.includes("Haven"))) && (obj.display=="true") ) {
+                eval('var minecart_'+ i +' = minecartMesh.clone("Minecart_'+ obj.City_Name.toUpperCase() +'");');
+                eval ('minecart_'+ i +'.position.x = '+ obj.city_x +'+ 85;');
+                eval ('minecart_'+ i +'.position.y = 300;');
+                eval ('minecart_'+ i +'.position.z = '+ obj.city_z +';');
+                eval ('minecart_'+ i +'.scaling.scaleInPlace(1.75);');
+                eval ('minecart_'+ i +'.rotation = new BABYLON.Vector3(0, -1.57, 0);');
+              }
+            }
+          // Original one goes above Haven
+          minecartMesh.position.x = 1965;
+          minecartMesh.position.y = 35;
+          minecartMesh.position.z = 940;
+          minecartMesh.scaling.scaleInPlace(2);
+          minecartMesh.rotation = new BABYLON.Vector3(0, 1.5208, 0);
+        })]).then(() => {
+         console.log("3D Minecart imported, cloned and positionned");
         });
       }
 
@@ -471,7 +463,6 @@
           document.getElementById("loading_screen").style.display = "none";
         }
 
-
       /* ----------------------------------------------------------------------- MAIN FUNCTION ------------ */
       var createScene = function() {
 
@@ -499,7 +490,11 @@
 
         // Arc Cameras
         var camera_arc1  = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/4, 50, BABYLON.Vector3.Zero(), scene);
-      	camera_arc1.attachControl(canvas, true);
+        /*camera_arc1.keysUp = [84]; // T
+        camera_arc1.keysDown = [66]; // B
+        camera_arc1.keysLeft = [70]; // F
+        camera_arc1.keysRight = [72]; // H*/
+        camera_arc1.attachControl(canvas, true);
         camera_arc1.zoomToMouseLocation = true;
         camera_arc1.wheelDeltaPercentage = 0.02;
         camera_arc1.maxZ = 50000;
@@ -508,6 +503,9 @@
         scene.activeCamera.position = new BABYLON.Vector3(0, 1500, -2500);
 
         // Universal Camera
+        var camera_univ1 = new BABYLON.FreeCamera("camera_univ1", new BABYLON.Vector3(0, 250, -700), scene);
+        camera_univ1.speed = 50;
+        camera_univ1.inputs.addMouseWheel();
         /*
         var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
         // Enable mouse wheel inputs.
@@ -606,17 +604,15 @@
         beaconMat.emissiveColor = new BABYLON.Color3(0, 0.63, 1);
         beaconMat.diffuseColor = new BABYLON.Color3.FromHexString("#00E4FF");
 
-
-
-        //
+        // optimization
         scene.useGeometryIdsMap = true;
         scene.useMaterialMeshMap = true;
         // launch daz funxions
         menuCities();
         write_CityInfos(discCityMat,Mat_NameCity,Mat_Mayor,Mat_Coords,Mat_Biomes);
         zeppelination();
+        minecartization();
         sailshipandfish();
-
 
         // ORIGIN
         // Place a txt at origin
@@ -672,7 +668,7 @@
         })
       ]).then(() => {
             console.log("Puerto Del Sol Island imported");
-            var Torch = scene.getMeshByUniqueID(12265);
+            var Torch = scene.getMeshByName("Collosus_Torch");
             Torch.actionManager = new BABYLON.ActionManager(scene);
             Torch.actionManager.registerAction(
               new BABYLON.InterpolateValueAction(
@@ -695,12 +691,7 @@
         });
 
         //var gl = new BABYLON.GlowLayer("glow", scene);
-
-
-
-
-
-      	return scene;
+    	return scene;
             // 'fauxLoad' executes the contents of:  https://raw.githubusercontent.com/briantbutton/meshwriter/master/dist/meshwriter.min.js
             // jQuery would not fetch it, so I just put the contents inline
             function fauxLoad(){
@@ -730,5 +721,6 @@
             engine.resize();
         });
     </script>
+
 </body>
 </html>
