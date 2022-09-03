@@ -444,13 +444,13 @@
               mesh_Coords.material = Mat_Coords;
 
               // --- third line for biomes
-              var Line4 = city_z - 30;
+              /*var Line4 = city_z - 30;
               eval('var text_biome'+ i +' = new Writer("'+ Biome +'",{"anchor": "center","letter-height": 20,"color": "#2C2C2C","position": {"x" : '+ city_x +', "y" : '+ Line2 +'-30, "z": '+ city_z +'}});');
               eval('mesh_Biome = text_biome'+ i +'.getMesh();');
               mesh_Biome.rotation.x = BABYLON.Tools.ToRadians(-90);
               var temp_mat = mesh_Biome.material;
               temp_mat.dispose(true, true);
-              mesh_Biome.material = Mat_Biomes;
+              mesh_Biome.material = Mat_Biomes;*/
             }
           }
           // test zone *
@@ -469,31 +469,8 @@
       	var scene   = new BABYLON.Scene(engine);
         var scale   = 1, MeshWriter;
 
-        // Loading screen test
-        function CustomLoadingScreen( /* variables needed, for example:*/ text) {
-            //init the loader
-            this.loadingUIText = text;
-          }
-          CustomLoadingScreen.prototype.displayLoadingUI = function() {
-            alert(this.loadingUIText);
-          };
-          CustomLoadingScreen.prototype.hideLoadingUI = function() {
-            alert("Loaded!");
-          };
-
-        var loadingScreen = new CustomLoadingScreen("I'm loading!!");
-        // replace the default loading screen
-        engine.loadingScreen = loadingScreen;
-        // show the loading screen
-        //engine.displayLoadingUI();
-        //engine.hideLoadingUI();
-
         // Arc Cameras
         var camera_arc1  = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/4, 50, BABYLON.Vector3.Zero(), scene);
-        /*camera_arc1.keysUp = [84]; // T
-        camera_arc1.keysDown = [66]; // B
-        camera_arc1.keysLeft = [70]; // F
-        camera_arc1.keysRight = [72]; // H*/
         camera_arc1.attachControl(canvas, true);
         camera_arc1.zoomToMouseLocation = true;
         camera_arc1.wheelDeltaPercentage = 0.02;
@@ -653,6 +630,14 @@
       ]).then(() => {
 
            console.log("Haven Island imported");
+        });
+        // Load Odonhull Island
+        Promise.all([
+        BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "island_Odonhull.gltf", scene).then(function (Odonhull_island) {
+        })
+      ]).then(() => {
+
+           console.log("Odonhull Island imported");
         });
         // Load Sacrementum Island
         Promise.all([
