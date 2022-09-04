@@ -29,7 +29,8 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [x] UI / CODE : add a loading screen or something, mb credits until loaded
 - [ ] FEATURE : display cam x y z
 - [ ] FIX : Fix panning bug again (focuscam)
-- [x] CODE : using Y value for cities 
+- [x] CODE : using Y value for cities
+- [x] FEATURE : Academy list v1
 - [x] UI : Put back help controls
 - [x] FEATURE : add keyboard control to camera >> default for universal camera
 - [x] CONTENT : add credits

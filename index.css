@@ -163,7 +163,7 @@ h2 {
   text-align: center;
   margin: 2px;
 }
-#main_submenu {
+.main_submenu {
   display: none;
   background-color: #d4d4d4;
   overflow: scroll;
@@ -173,9 +173,24 @@ h2 {
   border-radius: 10px;
   padding: 21px 20px 0 20px;
   border: 2px solid white;
-  scrollbar-color: orange red;
+  scrollbar-color: #0c0c0c #beff30;
   scrollbar-width: 4px;
   width: 94%;
+}
+.main_submenuWide {
+  display: none;
+  background-color: #d4d4d4;
+  overflow: scroll;
+  position: fixed;
+  width: 90%;
+  height: 90%;
+  top: 1%;
+  left: 4%;
+  border-radius: 10px;
+  padding: 21px 20px 0 20px;
+  border: 2px solid white;
+  scrollbar-color: #0c0c0c #beff30;
+  scrollbar-width: 4px;
 }
 
 #main_submenu p {
@@ -235,4 +250,12 @@ h2 {
   transform: translate3d(-50%, -50%, 0);
   will-change: transform;
   z-index: -1;
+}
+.Academy_list {
+  background: #a2a2a2;
+  padding: 12px;
+  margin: 2px;
+}
+.Academy_list p {
+  margin:0;
 }

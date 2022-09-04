@@ -31,13 +31,14 @@
 
     <canvas id="renderCanvas"></canvas>
 
+    <!-- Main menu bottom screen -->
     <div id="menu_main">
       <div class ="menu_lvl1"><a href="#" onclick="main_submenu_visibility(this)">HELP</a></div>
       <div class ="menu_lvl1"><a href="#" onclick="main_submenu_visibility(this)">CAMERA</a></div>
       <div class ="menu_lvl1">TOOLS</div>
       <div class ="menu_lvl1">PREFS</div>
-      <div class ="menu_lvl1">ACADEMY></div>
-      <div id ="main_submenu"></div>
+      <div id="menu_lvl1_academy" class ="menu_lvl1">ACADEMY</div>
+      <div id ="main_submenu" class="main_submenu"></div>
     </div>
 
     <div id="loading_screen">
@@ -73,10 +74,19 @@
       /* ----------------------------------------------------------------------- MENUS Functions -------------------- */
       function main_submenu_visibility(element) {
         // Displays or not
+        // HIDE
         if (document.getElementById("main_submenu").style.display == "block") {
           document.getElementById("main_submenu").style.display = "none";
+          document.getElementById("main_submenu").classList.remove('main_submenuWide');
         } else {
+        // SHOW
           document.getElementById("main_submenu").style.display = "block";
+          if (element.text == "ACADEMY") {
+            document.getElementById("main_submenu").classList.add('main_submenuWide');
+            document.getElementById("main_submenu").classList.remove('main_submenu');
+          } else {
+            document.getElementById("main_submenu").classList.add('main_submenu');
+          }
         }
         // Assign content to the div according to clicked menu item
         switch (element.text) {
@@ -93,7 +103,46 @@
             //console.log("PREFS was clicked");
             break;
           case "ACADEMY":
-            //console.log("ACADEMY was clicked");
+            document.getElementById("main_submenu").innerHTML = '<h2>Academy</h2><p>Here datas from the JSON file, still needs some styling... Tell me wich displayed informations you want.</p><p>Regarding City names, owners and coords, there are duplications to allow our collected datas and server file datas at same time.</p><p>For example, for coordinates, it display our manually collected datas or the /area_pos1 corner from the server file list.</p><p>Next step is to display simple statistics and update Cities status</p>';
+            fetch('./Cities.json').then(response => {
+              return response.json();
+            }).then(datas => {
+              for ( let i = 0; i < datas['Cities'].length; i++ ) {
+                let obj = datas['Cities'][i];
+
+                var node = document.getElementById('main_submenu');
+
+
+                // Displaying manual coords or area_pos1
+                if (!(obj.city_x == "none")) {
+                  var text_coords = obj.city_x+', '+obj.city_y+', '+obj.city_z;
+                } else {
+                  var text_coords = 'AREA POS1: '+obj.pos1.x+', '+obj.pos1.y+', '+obj.pos1.z;
+                }
+                // Converting dates
+                var milli = obj.creationdate*1000;
+                var date = new Date(milli);
+                const humanDateFormat = date.toLocaleString()
+
+                var div_cont = document.createElement('div');
+                var elem1 = document.createElement('p');
+                var elem2 = document.createElement('p');
+                var elem3 = document.createElement('p');
+                elem1.appendChild(document.createTextNode(obj.City_Name+" - server CityName: "+obj.server_CityName+" - Mayor: "+obj.Mayor+" - server owner: "+obj.server_Owner));
+                elem2.appendChild(document.createTextNode("coords ["+text_coords+"] - mobility: "+obj.mobility+" - biomes: "+obj.biome+" - creationdate: "+humanDateFormat));
+                elem3.appendChild(document.createTextNode("has3Dmesh: "+obj.has3Dmesh+" - state: "+obj.state+" - Display on map: "+obj.display));
+
+                div_cont.classList.add('Academy_list');
+                div_cont.appendChild(elem1);
+                div_cont.appendChild(elem2);
+                div_cont.appendChild(elem3);
+                node.appendChild(div_cont);
+
+              }
+            }).catch(err => {
+              console.log("Menu Academy - can't read json file");
+            });
+
             break;
           default:
             console.log("Ma qué passo ?");
@@ -114,6 +163,8 @@
       function switchInspector() {
         scene.debugLayer.show();
       }
+
+
       /* ----------------------------------------------------------------------- Cameras Functions ------------------ */
       function resetCamera(){
         var activCam = scene.activeCamera;
@@ -503,7 +554,7 @@
         camera_arc1.attachControl(canvas, true);
         camera_arc1.zoomToMouseLocation = true;
         camera_arc1.wheelDeltaPercentage = 0.02;
-        camera_arc1.maxZ = 50000;
+        camera_arc1.maxZ = 80000;
         camera_arc1.panningSensibility = 1;
         //camera_arc1.useAutoRotationBehavior = true;
         scene.activeCamera.position = new BABYLON.Vector3(0, 1500, -2500);
@@ -553,6 +604,22 @@
         scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
         scene.fogDensity = 0.00001;
 
+        // Sky material
+      	/*var skyboxMaterial = new BABYLON.SkyMaterial("skyMaterial", scene);
+        skyboxMaterial.backFaceCulling = false;
+      	// Sky mesh (box)
+        var skybox = BABYLON.Mesh.CreateBox("skyBox", 70000.0, scene);
+        skybox.material = skyboxMaterial;
+        skyboxMaterial.turbidity = 45;
+        skyboxMaterial.luminance = 0.86;
+        skyboxMaterial.inclination = 0;
+        skyboxMaterial.mieDirectionalG = 0.8;
+        skyboxMaterial.mieCoefficient = 0.005;
+        // Manually set the sun position
+        skyboxMaterial.useSunPosition = true; // Do not set sun position from azimuth and inclination
+        skyboxMaterial.sunPosition = new BABYLON.Vector3(50, 100, -20);*/
+
+
         // light
         var lightDirect1 = new BABYLON.DirectionalLight("lightDirect1", new BABYLON.Vector3(25, -60, 35), scene);
         lightDirect1.intensity = 1;
@@ -586,8 +653,11 @@
         // --------------------------------------------------------------------- Materials ------
         // Material for discs
         const discCityMat = new BABYLON.StandardMaterial("discCityMat");
-        //discCityMat.diffuseColor = new BABYLON.Color3(.5, 0, 0.15)
         discCityMat.diffuseColor = new BABYLON.Color3.FromHexString("#193D24");
+        // ground
+        const Mat_Ground = new BABYLON.StandardMaterial("Mat_Ground");
+        Mat_Ground.diffuseColor = new BABYLON.Color3.FromHexString("#17331F");
+        Mat_Ground.specularColor = new BABYLON.Color3.FromHexString("#000000");
         // Materials for City texts 47B01C FF9A00 ffaf00
         const Mat_NameCity = new BABYLON.StandardMaterial("Mat_NameCity");
         Mat_NameCity.diffuseColor = new BABYLON.Color3.FromHexString("#FF9A00");
@@ -603,7 +673,7 @@
         Mat_Biomes.specularColor = new BABYLON.Color3.FromHexString("#000000");
         // text distances along +z axis
         const Mat_grid_numbers = new BABYLON.StandardMaterial("Mat_grid_numbers");
-        Mat_grid_numbers.diffuseColor = new BABYLON.Color3.FromHexString("#333333");
+        Mat_grid_numbers.diffuseColor = new BABYLON.Color3.FromHexString("#3D3D3D");
         Mat_grid_numbers.specularColor = new BABYLON.Color3.FromHexString("#000000");
         // Haven beacon
         const beaconMat = new BABYLON.StandardMaterial("beaconMat");
@@ -628,7 +698,7 @@
         // text distances along +z axis
         scene.blockfreeActiveMeshesAndRenderingGroups = true;
         for ( let i = 500; i < 40000; i += 500) {
-          eval('var text_Grid_'+ i +' = new Writer("'+ i +'", {"anchor": "left","letter-height": 50, "color": {"diffuse": "black", "specular": "black", "ambient": "black", "emissive": "black"},"position": {"x" : '+ i +', "y" : 0, "z": -15}});');
+          eval('var text_Grid_'+ i +' = new Writer("'+ i +'", {"anchor": "left","letter-height": 50, "color": {"diffuse": "black", "specular": "black", "ambient": "black", "emissive": "black"},"position": {"x" : '+ i +', "y" : 1, "z": -15}});');
           eval('textMesh  = text_Grid_'+ i +'.getMesh()');
           textMesh.name = ("text_Grid_"+ i);
           textMesh.id = ("text_Grid_"+ i);
@@ -645,13 +715,17 @@
         Haven_Beacon.position.z = 1152;
         Haven_Beacon.material = beaconMat;
 
+        // ground plane 17331F
+        /*const ground = BABYLON.MeshBuilder.CreateGround("ground", {height: 80000, width: 80000, subdivisions: 4});
+        ground.material = Mat_Ground;*/
 
         // Load Circular_Grid Mesh
         Promise.all([
         BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "Circular_Grid.gltf", scene).then(function (Circular_Grid) {
         })
         ]).then(() => {
-           console.log("3D Grid imported");
+
+          console.log("3D Grid imported");
         });
         // Load Haven Island
         Promise.all([
@@ -692,12 +766,13 @@
             var Torch = scene.getMeshByName("Collosus_Torch");
             Torch.actionManager = new BABYLON.ActionManager(scene);
             Torch.actionManager.registerAction(
-              new BABYLON.InterpolateValueAction(
+              new BABYLON.ExecuteCodeAction(
                 BABYLON.ActionManager.OnPickTrigger,
-                Torch,
-                'visibility',
-                0.2,
-                1000
+                function (evt) {
+                  const sourceMesh = evt.meshUnderPointer;
+                  //sourceMesh.scaling = new BABYLON.Vector3(2, 2, 2);
+                  document.getElementById("menu_lvl1_academy").innerHTML = '<a href="#" onclick="main_submenu_visibility(this)">ACADEMY</a>';
+                }
               )
             )
             .then(
@@ -710,6 +785,8 @@
               )
             );
         });
+
+
 
         //var gl = new BABYLON.GlowLayer("glow", scene);
     	return scene;
