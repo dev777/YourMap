@@ -29,8 +29,9 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [x] UI / CODE : add a loading screen or something, mb credits until loaded
 - [ ] FEATURE : display cam x y z
 - [ ] FIX : Fix panning bug again (focuscam)
+- [x] CODE : using Y value for cities 
 - [x] UI : Put back help controls
-- [ ] FEATURE : add keyboard control to camera
+- [x] FEATURE : add keyboard control to camera >> default for universal camera
 - [x] CONTENT : add credits
 - [x] TXT : rotate them >> City names rotated 90°
 - [x] TXT : fix 'n' letter or use CAPS >> using caps for now
@@ -39,7 +40,7 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [ ] CODE, UI : improve side menu
 - [x] CODE / UI: add mobility/mayor/biome/coords infos
 - [x] change TXT material to diffuse
-- [ ] UI : add minecart meshes
+- [x] UI : add minecart meshes
 - [x] FEATURE : Side pannel with cities that focus on selected city with a local ArcCam >> wup wup wup, choosed JS/HTML menu for now
 - [x] FIX : reset cameras > now it loose panning > must fix >> ok must use target.position.clone() for it to works
 - [ ] ORG :Parent city_infos to disc

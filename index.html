@@ -181,7 +181,7 @@
             // inline function for focusing on a city
             a_City.onclick = function (){
               var activCam = scene.activeCamera;
-              var disc_city = "disc_"+obj.City_Name.toUpperCase();
+              var disc_city = "city_origin_"+obj.City_Name.toUpperCase();
               var target = scene.getMeshByName(disc_city);
               // needed to preserve panning ****************** NOT WORKING ANYMORE via Menu, no panning
               target_pos = target.position.clone()
@@ -277,9 +277,16 @@
               let obj = cities['Cities'][i];
 
               if ((obj.mobility.includes("zeppelin")) && (!(obj.City_Name.includes("Haven"))) && (obj.display=="true") ) {
+                if (obj.city_x == "none" || obj.city_y == "none" || obj.city_z == "none") {
+                  var save_city_y = parseInt( obj.pos1.y, 10 ) + 250;
+                } else {
+                  // cities have manual gathered coords
+                  var save_city_y = parseInt( obj.city_y, 10 )  + 250;
+                }
+
                 eval('var zepclone_'+ i +' = zeppelinMesh.clone("Zep_'+ obj.City_Name.toUpperCase() +'");');
                 eval ('zepclone_'+ i +'.position.x = '+ obj.city_x +'+ 45;');
-                eval ('zepclone_'+ i +'.position.y = 300;');
+                eval ('zepclone_'+ i +'.position.y = '+ save_city_y +';');
                 eval ('zepclone_'+ i +'.position.z = '+ obj.city_z +';');
                 eval ('zepclone_'+ i +'.scaling.scaleInPlace(1.75);');
                 eval ('zepclone_'+ i +'.rotation = new BABYLON.Vector3(0, -1.57, 0);');
@@ -311,9 +318,15 @@
 
               // Placing all boats, except Haven one
               if ((obj.mobility.includes("boat")) && (!(obj.City_Name.includes("Haven"))) && (obj.display=="true") ) {
+                if (obj.city_x == "none" || obj.city_y == "none" || obj.city_z == "none") {
+                  var save_city_y = parseInt( obj.pos1.y, 10 ) + 250;
+                } else {
+                  // cities have manual gathered coords
+                  var save_city_y = parseInt( obj.city_y, 10 )  + 250;
+                }
                 eval('var boatclone_'+ i +' = boatMesh.clone("Boat_'+ obj.City_Name.toUpperCase() +'");');
                 eval ('boatclone_'+ i +'.position.x = '+ obj.city_x +'- 45;');
-                eval ('boatclone_'+ i +'.position.y = 300;');
+                eval ('boatclone_'+ i +'.position.y = '+ save_city_y +';');
                 eval ('boatclone_'+ i +'.position.z = '+ obj.city_z +';');
                 eval ('boatclone_'+ i +'.scaling.scaleInPlace(1.5);');
                 eval ('boatclone_'+ i +'.rotation = new BABYLON.Vector3(0, -1.57, 0);');
@@ -346,9 +359,15 @@
               let obj = cities['Cities'][i];
 
               if ((obj.mobility.includes("rail")) && (!(obj.City_Name.includes("Haven"))) && (obj.display=="true") ) {
+                if (obj.city_x == "none" || obj.city_y == "none" || obj.city_z == "none") {
+                  var save_city_y = parseInt( obj.pos1.y, 10 ) + 250;
+                } else {
+                  // cities have manual gathered coords
+                  var save_city_y = parseInt( obj.city_y, 10 )  + 250;
+                }
                 eval('var minecart_'+ i +' = minecartMesh.clone("Minecart_'+ obj.City_Name.toUpperCase() +'");');
                 eval ('minecart_'+ i +'.position.x = '+ obj.city_x +'+ 85;');
-                eval ('minecart_'+ i +'.position.y = 300;');
+                eval ('minecart_'+ i +'.position.y = '+ save_city_y +';');
                 eval ('minecart_'+ i +'.position.z = '+ obj.city_z +';');
                 eval ('minecart_'+ i +'.scaling.scaleInPlace(1.75);');
                 eval ('minecart_'+ i +'.rotation = new BABYLON.Vector3(0, -1.57, 0);');
@@ -385,41 +404,52 @@
 
               // Temp checking x,y,z point position is unknown
               // Would be better to get area median point
-              var city_y = 195;
+
               if (obj.city_x == "none" || obj.city_y == "none" || obj.city_z == "none") {
                 var city_x = obj.pos1.x;
+                var save_city_y = obj.pos1.y;
                 var city_z = obj.pos1.z;
               } else {
+                // cities have manual gathered coords
                 var city_x = obj.city_x;
+                var save_city_y = obj.city_y;
                 var city_z = obj.city_z;
               }
 
               // Exception for Haven text positionning
               if (obj.City_Name.includes("Haven")) {
                 city_x = 2001;
-                city_y = 270;
+                txt_city_y = 270;
+                var save_city_y = 32;
                 city_z = 1023;
                 var Line2 = 225;
                 var Line3 = 345;
                 var fontNameSize = 75;
               } else {
-                var Line2 = 160;
-                var Line3 = 250;
+                var txt_city_y = 145 + parseInt( save_city_y, 10 );
+                //var txt_city_y = 195;
+
+                var Line2 = 110 + parseInt( save_city_y, 10 );
+                var Line3 = 200 + parseInt( save_city_y, 10 );
                 var fontNameSize = 55;
               }
 
+              //console.log(City_Name+' - save:'+save_city_y+' - txt:'+txt_city_y);
+              //txt_city_y = txt_city_y + save_city_y;
               // Adding a disc at City position but forcing y:0
               // creating disc with eval to dynamically create variable names then storing that varname
-              eval('var disc'+ i +' = BABYLON.MeshBuilder.CreateDisc("disc_'+ City_Name +'", {radius: 64 , arc: 1, tessellation: 24}, scene);');
-              eval('var index_city = disc'+ i +';');
+              //eval('var disc'+ i +' = BABYLON.MeshBuilder.CreateDisc("disc_'+ City_Name +'", {radius: 64 , height: 5000, arc: 1, tessellation: 24}, scene);');
 
+              eval('var city_origin_'+ i +' = BABYLON.MeshBuilder.CreateCylinder("city_origin_'+ City_Name +'", {diameter: 48, height: '+ save_city_y +'}, scene);');
+              eval('var index_city = city_origin_'+ i +';');
               // Positionning the discs and assigning material
-              index_city.rotation.x = BABYLON.Tools.ToRadians(90);
-              index_city.position = new BABYLON.Vector3(city_x, 1, city_z);
+              //index_city.rotation.x = BABYLON.Tools.ToRadians(90);
+              var y_cylinder = parseInt( save_city_y, 10 )/2;
+              index_city.position = new BABYLON.Vector3(city_x, y_cylinder, city_z);
               index_city.material = discCityMat;
 
               // --- create City Names text at exact x/z position, y is forced +15 --- // "#1C3870" // caaa55
-              eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": '+fontNameSize+',"letter-thickness":5, "color": "#fff","position": {"x" : '+ city_x +', "y" : '+ city_y +', "z": '+ city_z +'}});');
+              eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": '+fontNameSize+',"letter-thickness":5, "color": "#fff","position": {"x" : '+ city_x +', "y" : '+ txt_city_y +', "z": '+ city_z +'}});');
               eval('mesh_CityName = text_CityName_'+ i +'.getMesh();');
               mesh_CityName.rotation.x = BABYLON.Tools.ToRadians(-90);
               var temp_mat = mesh_CityName.material;
@@ -436,7 +466,7 @@
               mesh_text_Mayor.material = Mat_Mayor;
 
               // --- third line for coords
-              eval('var text_Coords_'+ i +' = new Writer("[ '+ city_x +' , 0 , '+ city_z +' ]",{"anchor": "center","letter-height": 30,"color": "#1C4ab0","position": {"x" : '+ city_x +', "y" : '+ Line3 +', "z": '+ city_z +'}});');
+              eval('var text_Coords_'+ i +' = new Writer("[ '+ city_x +' , '+ save_city_y +' , '+ city_z +' ]",{"anchor": "center","letter-height": 30,"color": "#1C4ab0","position": {"x" : '+ city_x +', "y" : '+ Line3 +', "z": '+ city_z +'}});');
               eval('mesh_Coords = text_Coords_'+ i +'.getMesh();');
               mesh_Coords.rotation.x = BABYLON.Tools.ToRadians(-90);
               var temp_mat = mesh_Coords.material;
