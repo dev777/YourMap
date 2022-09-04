@@ -488,8 +488,7 @@
 
               // Adding a disc at City position but forcing y:0
               // creating disc with eval to dynamically create variable names then storing that varname
-              //eval('var disc'+ i +' = BABYLON.MeshBuilder.CreateDisc("disc_'+ City_Name +'", {radius: 64 , height: 5000, arc: 1, tessellation: 24}, scene);');
-              if (obj.has3Dmesh == "no") {
+              //if (obj.has3Dmesh == "no") {
                 eval('var city_origin_'+ i +' = BABYLON.MeshBuilder.CreateCylinder("city_origin_'+ City_Name +'", {diameter: 48, height: '+ save_city_y +'}, scene);');
                 eval('var index_city = city_origin_'+ i +';');
                 // Positionning the discs and assigning material** disc been replaced by a cylinder
@@ -497,7 +496,7 @@
                 var y_cylinder = parseInt( save_city_y, 10 )/2;
                 index_city.position = new BABYLON.Vector3(city_x, y_cylinder, city_z);
                 index_city.material = discCityMat;
-              }
+              //}
 
               // --- create City Names text at exact x/z position, y is forced +15 --- // "#1C3870" // caaa55
               eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": '+fontNameSize+',"letter-thickness":5, "color": "#fff","position": {"x" : '+ city_x +', "y" : '+ txt_city_y +', "z": '+ city_z +'}});');
