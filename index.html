@@ -477,19 +477,26 @@
                 var Line3 = 345;
                 var fontNameSize = 75;
               } else {
-                var txt_city_y = 145 + parseInt( save_city_y, 10 );
-                //var txt_city_y = 195;
-
-                var Line2 = 110 + parseInt( save_city_y, 10 );
-                var Line3 = 200 + parseInt( save_city_y, 10 );
+                // psitionning text / lines
                 var fontNameSize = 55;
+                if (parseInt( save_city_y, 10 ) >= 0) {
+                  var txt_city_y = 145 + parseInt( save_city_y, 10 );
+                  var Line2 = 110 + parseInt( save_city_y, 10 );
+                  var Line3 = 200 + parseInt( save_city_y, 10 );
+                } else {
+                  // underground cities
+                  var txt_city_y = parseInt( save_city_y, 10 ) - 145;
+                  var Line2 = parseInt( save_city_y, 10 ) - 190;
+                  var Line3 = parseInt( save_city_y, 10 ) - 85;
+
+                }
               }
 
 
               // Adding a disc at City position but forcing y:0
               // creating disc with eval to dynamically create variable names then storing that varname
               //if (obj.has3Dmesh == "no") {
-                eval('var city_origin_'+ i +' = BABYLON.MeshBuilder.CreateCylinder("city_origin_'+ City_Name +'", {diameter: 48, height: '+ save_city_y +'}, scene);');
+                eval('var city_origin_'+ i +' = BABYLON.MeshBuilder.CreateCylinder("city_origin_'+ City_Name +'", {diameter: 48, height: '+Math.abs( save_city_y) +'}, scene);');
                 eval('var index_city = city_origin_'+ i +';');
                 // Positionning the discs and assigning material** disc been replaced by a cylinder
                 //index_city.rotation.x = BABYLON.Tools.ToRadians(90);
@@ -624,6 +631,9 @@
         lightDirect1.intensity = 1;
         var lightHemi1 = new BABYLON.HemisphericLight("lightHemi1", new BABYLON.Vector3(0,10,0), scene);
         lightHemi1.intensity = 1;
+
+        // JSON get
+
 
         // required to load Meshwriter
         if ( typeof TYPE === "undefined" ) {
