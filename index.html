@@ -17,9 +17,17 @@
 <body>
   <div id="container">
   <!-- ************************************************************* GUI -->
-    <div id="menu_top">
-      <button class="openbtn" onclick="openSideMenu()">&#9776; Cities</button>
-    </div>
+    <button class="openbtn" onclick="openSideMenu()">&#9776; Cities</button>
+    <!--<div id="menu_top">
+      <div></div>
+      <div id="cam_coords">
+        Cam pos :
+        <div id="Cam_X">X: 36254</div>
+        <div id="Cam_Y">Y: 1254</div>
+        <div id="Cam_Z">Z: -10254</div>
+      </div>
+      <div></div>
+    </div>-->
     <!-- Menu Cities -->
     <div id="MenuSide1" class="sidepanel">
       <a href="javascript:void(0)" class="closebtn" onclick="closeSideMenu()">&times;</a>
@@ -27,7 +35,7 @@
     </div>
     <!-- right side buttons -->
     <button class="btnResetCam" onclick="resetCamera()">Reset Camera</button>
-    <!--<button class="btnInspector" onclick="switchInspector()">Inspector</button>-->
+    <button class="btnToggleCam" onclick="toggleCam()">Toggle Camera</button>
 
     <canvas id="renderCanvas"></canvas>
 
@@ -179,7 +187,7 @@
         /*scene.activeCamera.dettach(canvas, true);*/
       //  camera_univ1.attachControl(canvas, true);
       //scene.cameras.push(camera_univ1);
-      console.log(scene.cameras);
+
       if ( scene.activeCamera == scene.cameras[0] ) {
         scene.activeCamera = scene.cameras[1];
         scene.cameras[1].attachControl(canvas, true);
@@ -554,6 +562,13 @@
 
       	var scene   = new BABYLON.Scene(engine);
         var scale   = 1, MeshWriter;
+
+        // Observables
+        /*scene.onBeforeRenderObservable.add(function () {
+          document.getElementById("Cam_X").innerHTML = "X : "+ parseInt( scene.activeCamera.position.x, 10 )+" - ";
+          document.getElementById("Cam_Y").innerHTML = "Y : "+ parseInt( scene.activeCamera.position.y, 10 )+" - ";
+          document.getElementById("Cam_Z").innerHTML = "Z : "+ parseInt( scene.activeCamera.position.z, 10 );
+        });*/
 
         // Arc Cameras
         var camera_arc1  = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/4, 50, BABYLON.Vector3.Zero(), scene);
