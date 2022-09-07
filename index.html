@@ -563,6 +563,19 @@
       	var scene   = new BABYLON.Scene(engine);
         var scale   = 1, MeshWriter;
 
+        window.onload = function(){
+            var hideMe = document.getElementById('main_submenu');
+            var menu = document.getElementById('menu_main');
+            hideMe.onclick = function(elem){
+               //if ( elem.target.id == 'hideMe' ) {
+                  hideMe.style.display = 'none';
+              // }
+            };
+            var babylon_canva = document.getElementById("renderCanvas");
+            babylon_canva.onclick = function(e){
+              hideMe.style.display = 'none';
+            }
+         };
         // Observables
         /*scene.onBeforeRenderObservable.add(function () {
           document.getElementById("Cam_X").innerHTML = "X : "+ parseInt( scene.activeCamera.position.x, 10 )+" - ";
