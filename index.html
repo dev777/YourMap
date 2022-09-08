@@ -18,16 +18,16 @@
   <div id="container">
   <!-- ************************************************************* GUI -->
     <button class="openbtn" onclick="openSideMenu()">&#9776; Cities</button>
-    <!--<div id="menu_top">
+    <div id="menu_top">
       <div></div>
       <div id="cam_coords">
-        Cam pos :
-        <div id="Cam_X">X: 36254</div>
-        <div id="Cam_Y">Y: 1254</div>
-        <div id="Cam_Z">Z: -10254</div>
+        Camera :&nbsp;
+        <div id="Cam_X">X: 0</div>
+        <div id="Cam_Y">Y: 0</div>
+        <div id="Cam_Z">Z: 0</div>
       </div>
       <div></div>
-    </div>-->
+    </div>
     <!-- Menu Cities -->
     <div id="MenuSide1" class="sidepanel">
       <a href="javascript:void(0)" class="closebtn" onclick="closeSideMenu()">&times;</a>
@@ -44,7 +44,7 @@
       <div class ="menu_lvl1"><a href="#" onclick="main_submenu_visibility(this)">HELP</a></div>
       <div class ="menu_lvl1"><a href="#" onclick="main_submenu_visibility(this)">CAMERA</a></div>
       <div class ="menu_lvl1">TOOLS</div>
-      <div class ="menu_lvl1">PREFS</div>
+      <div class ="menu_lvl1"><a href="#" onclick="main_submenu_visibility(this)">PREFS</a></div>
       <div id="menu_lvl1_academy" class ="menu_lvl1">ACADEMY</div>
       <div id ="main_submenu" class="main_submenu"></div>
     </div>
@@ -80,6 +80,37 @@
       var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
 
       /* ----------------------------------------------------------------------- MENUS Functions -------------------- */
+      function toggle_groundSky() {
+        //var test_ground = BABYLON.getMeshByName('ground');
+        if (scene.getMeshByName('ground')) {
+          scene.getMeshByName('ground').dispose(true,true);
+          scene.getMeshByName('skyBox').dispose(true,true);
+        } else {
+          // ground
+          const Mat_Ground = new BABYLON.StandardMaterial("Mat_Ground");
+          Mat_Ground.diffuseColor = new BABYLON.Color3.FromHexString("#18311F");
+          Mat_Ground.specularColor = new BABYLON.Color3.FromHexString("#000000");
+          const ground = BABYLON.MeshBuilder.CreateGround("ground", {height: 80000, width: 80000, subdivisions: 4});
+          ground.material = Mat_Ground;
+          // Sky material
+          var skyboxMaterial = new BABYLON.SkyMaterial("skyMaterial", scene);
+          skyboxMaterial.backFaceCulling = false;
+          // Sky mesh (box)
+          var skybox = BABYLON.Mesh.CreateBox("skyBox", 70000.0, scene);
+          skybox.material = skyboxMaterial;
+          skyboxMaterial.turbidity = 45;
+          skyboxMaterial.luminance = 0.86;
+          skyboxMaterial.inclination = 0;
+          skyboxMaterial.mieDirectionalG = 0.8;
+          skyboxMaterial.mieCoefficient = 0.005;
+          // Manually set the sun position
+          skyboxMaterial.useSunPosition = true; // Do not set sun position from azimuth and inclination
+          skyboxMaterial.sunPosition = new BABYLON.Vector3(50, 100, -20);
+        }
+
+      }
+
+
       function main_submenu_visibility(element) {
         // Displays or not
         // HIDE
@@ -105,10 +136,11 @@
             document.getElementById("main_submenu").innerHTML = '<h2>Cameras</h2><p>For now there are 2 cameras, the initial one loose panning on City focus.</p><p>The second one can be controlled with arrow keys but do not work well with city focus yet.</p><p>That\'s why there\'s a "Reset Camera" button on the right bottom screen.</p><p>Good luck :p.</p><button class="" onclick="toggleCam()">Toggle Camera</button>';
             break;
           case "TOOLS":
-            //console.log("TOOLS was clicked");
+            // dfrfg
             break;
           case "PREFS":
-            //console.log("PREFS was clicked");
+            // <p>Those are planned switchable properties, the display camera coords can slow you browser...</p><button class="" onclick="display_cam_coords()">Display Camera position</button>
+            document.getElementById("main_submenu").innerHTML = '<h2>PREFERENCES</h2><button class="" onclick="toggle_groundSky()">Toggle Ground & Sky</button>';
             break;
           case "ACADEMY":
             document.getElementById("main_submenu").innerHTML = '<h2>Academy</h2><p>Here datas from the JSON file, still needs some styling... Tell me wich displayed informations you want.</p><p>Regarding City names, owners and coords, there are duplications to allow our collected datas and server file datas at same time.</p><p>For example, for coordinates, it display our manually collected datas or the /area_pos1 corner from the server file list.</p><p>Next step is to display simple statistics and update Cities status</p>';
@@ -195,6 +227,15 @@
         scene.activeCamera = scene.cameras[0];
         scene.cameras[0].attachControl(canvas, true);
         }
+      }
+      // -------------------------------------
+      function display_cam_coords(){
+        document.getElementById("cam_coords").style.display = "flex";
+        /*scene.onBeforeRenderObservable.add(function () {
+          document.getElementById("Cam_X").innerHTML = "X:&nbsp;<span class='coords'>"+ Math.round(scene.activeCamera.position.x)+"</span>&nbsp;&nbsp;";
+          document.getElementById("Cam_Y").innerHTML = "Y:&nbsp;<span class='coords'>"+Math.round(scene.activeCamera.position.y)+"</span>&nbsp;&nbsp;";
+          document.getElementById("Cam_Z").innerHTML = "Z:&nbsp;<span class='coords'>"+Math.round(scene.activeCamera.position.z)+"</span>";
+        });*/
       }
 
       // ********************************************************************* CITIES INFOS FUNCTIONS
@@ -563,25 +604,35 @@
       	var scene   = new BABYLON.Scene(engine);
         var scale   = 1, MeshWriter;
 
+
         window.onload = function(){
             var hideMe = document.getElementById('main_submenu');
             var menu = document.getElementById('menu_main');
-            hideMe.onclick = function(elem){
-               //if ( elem.target.id == 'hideMe' ) {
-                  hideMe.style.display = 'none';
-              // }
-            };
             var babylon_canva = document.getElementById("renderCanvas");
+
+            // hiding div content from main menu when clicked in or ouside
+            hideMe.onclick = function(elem){
+              hideMe.style.display = 'none';
+            };
             babylon_canva.onclick = function(e){
               hideMe.style.display = 'none';
+              document.getElementById("main_submenu").classList.remove('main_submenuWide');
+              document.getElementById("main_submenu").classList.add('main_submenu');
             }
          };
+
         // Observables
         /*scene.onBeforeRenderObservable.add(function () {
-          document.getElementById("Cam_X").innerHTML = "X : "+ parseInt( scene.activeCamera.position.x, 10 )+" - ";
-          document.getElementById("Cam_Y").innerHTML = "Y : "+ parseInt( scene.activeCamera.position.y, 10 )+" - ";
-          document.getElementById("Cam_Z").innerHTML = "Z : "+ parseInt( scene.activeCamera.position.z, 10 );
+          document.getElementById("Cam_X").innerHTML = "X:&nbsp;<span class='coords'>"+ Math.round(scene.activeCamera.position.x)+"</span>&nbsp;&nbsp;";
+          document.getElementById("Cam_Y").innerHTML = "Y:&nbsp;<span class='coords'>"+ Math.round(scene.activeCamera.position.y)+"</span>&nbsp;&nbsp;";
+          document.getElementById("Cam_Z").innerHTML = "Z:&nbsp;<span class='coords'>"+ Math.round(scene.activeCamera.position.z)+"</span>&nbsp;&nbsp;";
         });*/
+
+        /*scene.registerAfterRender(function () {
+          document.getElementById("Cam_X").innerHTML = "X:&nbsp;<span class='coords'>"+ Math.round(scene.activeCamera.position.x)+"</span>&nbsp;&nbsp;";
+          document.getElementById("Cam_Y").innerHTML = "Y:&nbsp;<span class='coords'>"+ Math.round(scene.activeCamera.position.y)+"</span>&nbsp;&nbsp;";
+          document.getElementById("Cam_Z").innerHTML = "Z:&nbsp;<span class='coords'>"+ Math.round(scene.activeCamera.position.z)+"</span>&nbsp;&nbsp;";
+        })*/
 
         // Arc Cameras
         var camera_arc1  = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/4, 50, BABYLON.Vector3.Zero(), scene);
@@ -638,29 +689,12 @@
         scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
         scene.fogDensity = 0.00001;
 
-        // Sky material
-      	/*var skyboxMaterial = new BABYLON.SkyMaterial("skyMaterial", scene);
-        skyboxMaterial.backFaceCulling = false;
-      	// Sky mesh (box)
-        var skybox = BABYLON.Mesh.CreateBox("skyBox", 70000.0, scene);
-        skybox.material = skyboxMaterial;
-        skyboxMaterial.turbidity = 45;
-        skyboxMaterial.luminance = 0.86;
-        skyboxMaterial.inclination = 0;
-        skyboxMaterial.mieDirectionalG = 0.8;
-        skyboxMaterial.mieCoefficient = 0.005;
-        // Manually set the sun position
-        skyboxMaterial.useSunPosition = true; // Do not set sun position from azimuth and inclination
-        skyboxMaterial.sunPosition = new BABYLON.Vector3(50, 100, -20);*/
-
 
         // light
         var lightDirect1 = new BABYLON.DirectionalLight("lightDirect1", new BABYLON.Vector3(25, -60, 35), scene);
         lightDirect1.intensity = 1;
         var lightHemi1 = new BABYLON.HemisphericLight("lightHemi1", new BABYLON.Vector3(0,10,0), scene);
         lightHemi1.intensity = 1;
-
-        // JSON get
 
 
         // required to load Meshwriter
@@ -672,17 +706,32 @@
 
         // GUI
         /*var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mapUI");
-        var text_Disclaimer = new BABYLON.GUI.TextBlock();
-        text_Disclaimer.text = "__________ LOADING __________  LEFT Mouse Button >> ROTATE View      RIGHT Mouse Button >> PAN View WHEEL Mouse >> ZOOM to pointer      F5 >> Restart";
-        text_Disclaimer.color = "white";
-        text_Disclaimer.fontNameSize = 32;
-        text_Disclaimer.top = -100;
-        text_Disclaimer.textWrapping= true;
-        text_Disclaimer.lineSpacing = 7;
-        text_Disclaimer.width = "600px";
-        text_Disclaimer.height = "300px";*/
-        //advancedTexture.addControl(text_Disclaimer);
-        //advancedTexture.dispose(text_Disclaimer);
+        var panelTop = new BABYLON.GUI.StackPanel();
+        advancedTexture.addControl(panelTop);
+        panelTop.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        panelTop.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+
+        var gui_camposx = new BABYLON.GUI.TextBlock();
+        gui_camposx.text = scene.activeCamera.position;
+        gui_camposx.color = "white";
+        gui_camposx.fontSize = 24;
+        advancedTexture.addControl(gui_camposx);*/
+
+
+        /*var button = BABYLON.GUI.Button.CreateSimpleButton("but", "Click Me");
+        button.width = 0.2;
+        button.height = "40px";
+        button.color = "white";
+        button.background = "green";
+        panelTop.addControl(button);
+
+        var button2 = BABYLON.GUI.Button.CreateSimpleButton("but2", "Click Me also!");
+        button2.width = 0.2;
+        button2.height = "40px";
+        button2.color = "white";
+        button2.background = "green";
+        panelTop.addControl(button2);*/
+
 
         // Create the 3D UI manager
         //var manager = new BABYLON.GUI.GUI3DManager(scene);
@@ -691,10 +740,7 @@
         // Material for discs
         const discCityMat = new BABYLON.StandardMaterial("discCityMat");
         discCityMat.diffuseColor = new BABYLON.Color3.FromHexString("#193D24");
-        // ground
-        const Mat_Ground = new BABYLON.StandardMaterial("Mat_Ground");
-        Mat_Ground.diffuseColor = new BABYLON.Color3.FromHexString("#17331F");
-        Mat_Ground.specularColor = new BABYLON.Color3.FromHexString("#000000");
+
         // Materials for City texts 47B01C FF9A00 ffaf00
         const Mat_NameCity = new BABYLON.StandardMaterial("Mat_NameCity");
         Mat_NameCity.diffuseColor = new BABYLON.Color3.FromHexString("#FF9A00");
@@ -762,7 +808,7 @@
         })
         ]).then(() => {
 
-          console.log("3D Grid imported");
+          //console.log("3D Grid imported");
         });
         // Load Haven Island
         Promise.all([
@@ -770,7 +816,7 @@
         })
       ]).then(() => {
 
-           console.log("Haven Island imported");
+           //console.log("Haven Island imported");
         });
         // Load Odonhull Island
         Promise.all([
@@ -778,7 +824,7 @@
         })
       ]).then(() => {
 
-           console.log("Odonhull Island imported");
+           //console.log("Odonhull Island imported");
            // proceduralTextures
            /*const Mat_Mountain_stone = scene.getMaterialByName("Mountain_stone");
            console.log(Mat_Mountain_stone);
@@ -792,7 +838,7 @@
         })
       ]).then(() => {
 
-           console.log("Sacrementum Island imported");
+           //console.log("Sacrementum Island imported");
         });
         // Load Puerto Island
         Promise.all([
@@ -822,8 +868,6 @@
               )
             );
         });
-
-
 
         //var gl = new BABYLON.GlowLayer("glow", scene);
     	return scene;
