@@ -88,9 +88,9 @@
         } else {
           // ground
           const Mat_Ground = new BABYLON.StandardMaterial("Mat_Ground");
-          Mat_Ground.diffuseColor = new BABYLON.Color3.FromHexString("#18311F");
+          Mat_Ground.diffuseColor = new BABYLON.Color3.FromHexString("#122E1A");
           Mat_Ground.specularColor = new BABYLON.Color3.FromHexString("#000000");
-          const ground = BABYLON.MeshBuilder.CreateGround("ground", {height: 80000, width: 80000, subdivisions: 4});
+          const ground = BABYLON.MeshBuilder.CreateGround("ground", {height: 100000, width: 100000, subdivisions: 4});
           ground.material = Mat_Ground;
           // Sky material
           var skyboxMaterial = new BABYLON.SkyMaterial("skyMaterial", scene);
@@ -107,7 +107,14 @@
           skyboxMaterial.useSunPosition = true; // Do not set sun position from azimuth and inclination
           skyboxMaterial.sunPosition = new BABYLON.Vector3(50, 100, -20);
         }
+      }
 
+      function toggle_Fog() {
+        if (scene.fogMode == BABYLON.Scene.FOGMODE_EXP2){
+          scene.fogMode = BABYLON.Scene.FOGMODE_NONE;
+        } else {
+          scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
+        }
       }
 
 
@@ -140,7 +147,7 @@
             break;
           case "PREFS":
             // <p>Those are planned switchable properties, the display camera coords can slow you browser...</p><button class="" onclick="display_cam_coords()">Display Camera position</button>
-            document.getElementById("main_submenu").innerHTML = '<h2>PREFERENCES</h2><button class="" onclick="toggle_groundSky()">Toggle Ground & Sky</button>';
+            document.getElementById("main_submenu").innerHTML = '<h2>PREFERENCES</h2><button class="" onclick="toggle_groundSky()">Toggle Ground & Sky</button><button class="" onclick="toggle_Fog()">Toggle Fog</button>';
             break;
           case "ACADEMY":
             document.getElementById("main_submenu").innerHTML = '<h2>Academy</h2><p>Here datas from the JSON file, still needs some styling... Tell me wich displayed informations you want.</p><p>Regarding City names, owners and coords, there are duplications to allow our collected datas and server file datas at same time.</p><p>For example, for coordinates, it display our manually collected datas or the /area_pos1 corner from the server file list.</p><p>Next step is to display simple statistics and update Cities status</p>';
@@ -621,6 +628,8 @@
             }
          };
 
+
+
         // Observables
         /*scene.onBeforeRenderObservable.add(function () {
           document.getElementById("Cam_X").innerHTML = "X:&nbsp;<span class='coords'>"+ Math.round(scene.activeCamera.position.x)+"</span>&nbsp;&nbsp;";
@@ -687,7 +696,7 @@
         scene.clearColor = new BABYLON.Color3(0.2, 0.2, 0.298);
         scene.ambientColor = new BABYLON.Color3(0.25, 0.2, 0.15);
         scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
-        scene.fogDensity = 0.00001;
+        scene.fogDensity = 0.000035;
 
 
         // light
@@ -776,7 +785,7 @@
 
         // ORIGIN
         // Place a txt at origin
-        var text_Origin = new Writer("ORIGIN", {"anchor": "center","letter-height": 60,"color": "#0f0000","position": {"x" : 0, "y" : 0, "z": -20}});
+        var text_Origin = new Writer("ORIGIN", {"anchor": "center","letter-height": 60,"color": "#0f0000","position": {"x" : 0, "y" : 1, "z": -20}});
 
         // text distances along +z axis
         scene.blockfreeActiveMeshesAndRenderingGroups = true;
