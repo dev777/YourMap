@@ -383,15 +383,17 @@
               }
             }
           // Original one goes above Haven
-          zeppelinMesh.position.x = 1920;
+          /*zeppelinMesh.position.x = 1920;
           zeppelinMesh.position.y = 500;
-          zeppelinMesh.position.z = 1253;
+          zeppelinMesh.position.z = 1253;*/
           zeppelinMesh.scaling.scaleInPlace(5);
-          zeppelinMesh.rotation = new BABYLON.Vector3(0, 1.5208, 0);
-          var TN_HavenRot = scene.getMeshByName('TN_HavenRot');
-          zeppelinMesh.parent = TN_HavenRot;
-          console.log(zeppelinMesh.name);
         })]).then(() => {
+          zeppelinMesh.rotation = new BABYLON.Vector3(0, 0.0, 0);
+          var TN_HavenRot_counterclockwise = scene.getNodeByName('TN_HavenRot_counterclockwise');
+          zeppelinMesh.parent = TN_HavenRot_counterclockwise;
+          zeppelinMesh.position.x = -250;
+          zeppelinMesh.position.y = 250;
+          zeppelinMesh.position.z = 0;
          console.log("3D Zep imported, cloned and positionned");
         });
       }
@@ -424,14 +426,18 @@
                 eval ('boatclone_'+ i +'.rotation = new BABYLON.Vector3(0, -1.57, 0);');
               }
             }
-            // Original one goes above Haven
-            boatMesh.position.x = 2200;
-            boatMesh.position.y = 10;
-            boatMesh.position.z = 810;
-            boatMesh.scaling.scaleInPlace(3.3);
-            boatMesh.rotation = new BABYLON.Vector3(0, -1.9708, 0);
+
         })]).then(() => {
          console.log("3D Boat imported, cloned and positionned");
+         // Original one goes above Haven
+         boatMesh.scaling.scaleInPlace(3.3);
+         //boatMesh.rotation = new BABYLON.Vector3(0, -1.9708, 0);
+         boatMesh.rotation = new BABYLON.Vector3(0, 1.5708, 0);
+         var TN_HavenRot_clockwise = scene.getNodeByName('TN_HavenRot_clockwise');
+         boatMesh.parent = TN_HavenRot_clockwise;
+         boatMesh.position.x = 0;
+         boatMesh.position.y = -135;
+         boatMesh.position.z = -370;
          scene_ready();
         });
       }
@@ -477,7 +483,7 @@
       async function write_CityInfos(discCityMat,Mat_NameCity,Mat_Mayor,Mat_Coords,Mat_Biomes) {
         let cities = await getCities();
           scene.blockfreeActiveMeshesAndRenderingGroups = true;
-          var TN_HavenRot = scene.getMeshByName('TN_HavenRot');
+          var TN_HavenRot_clockwise = scene.getMeshByName('TN_HavenRot_clockwise');
           // Looping all cities
           for ( let i = 0; i < cities['Cities'].length; i++ ) {
 
@@ -542,7 +548,7 @@
                 var y_cylinder = parseInt( save_city_y, 10 )/2;
                 index_city.position = new BABYLON.Vector3(city_x, y_cylinder, city_z);
                 index_city.material = discCityMat;
-                y_cylinder.parent = TN_HavenRot;
+                y_cylinder.parent = TN_HavenRot_clockwise;
 
               // --- create City Names text at exact x/z position, y is forced +15 --- // "#1C3870" // caaa55
               eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": '+fontNameSize+',"letter-thickness":5, "color": "#fff","position": {"x" : '+ city_x +', "y" : '+ txt_city_y +', "z": '+ city_z +'}});');
@@ -600,11 +606,16 @@
           document.getElementById("Cam_Y").innerHTML = "Y:&nbsp;<span class='coords'>"+ Math.round(scene.activeCamera.position.y)+"</span>&nbsp;&nbsp;";
           document.getElementById("Cam_Z").innerHTML = "Z:&nbsp;<span class='coords'>"+ Math.round(scene.activeCamera.position.z)+"</span>&nbsp;&nbsp;";
         });*/
-        var TN_HavenRot = new BABYLON.TransformNode("TN_HavenRot");
-        TN_HavenRot.position.x = 2001;
-        TN_HavenRot.position.y = 150;
-        TN_HavenRot.position.z = 1152;
         var TN_Origin = new BABYLON.TransformNode("TN_Origin");
+        var TN_HavenRot_clockwise = new BABYLON.TransformNode("TN_HavenRot_clockwise");
+        TN_HavenRot_clockwise.position.x = 2056;
+        TN_HavenRot_clockwise.position.y = 150;
+        TN_HavenRot_clockwise.position.z = 1094;
+        var TN_HavenRot_counterclockwise = new BABYLON.TransformNode("TN_HavenRot_counterclockwise");
+        TN_HavenRot_counterclockwise.position.x = 2056;
+        TN_HavenRot_counterclockwise.position.y = 400;
+        TN_HavenRot_counterclockwise.position.z = 1094;
+
 
 
         scene.registerAfterRender(function () {
@@ -614,9 +625,9 @@
           gui_camposz.text = Math.round(scene.activeCamera.position.z);
           // Rotate Haven Boat
           var axis = new BABYLON.Vector3(0, 1, 0);
-          //var TN_HavenRot = scene.getMeshByName('TN_HavenRot');
-          TN_HavenRot.rotate(axis, 0.01, BABYLON.Space.WORLD);
-          TN_Origin.rotate(axis, 0.0007, BABYLON.Space.WORLD);
+          TN_HavenRot_clockwise.rotate(axis, 0.005, BABYLON.Space.WORLD);
+          TN_HavenRot_counterclockwise.rotate(axis, -0.009, BABYLON.Space.WORLD);
+          TN_Origin.rotate(axis, 0.0005, BABYLON.Space.WORLD);
         })
 
         // Arc Cameras

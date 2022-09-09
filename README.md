@@ -57,6 +57,7 @@ POSTPONNED
 - [ ] FEATURE / CONTENT : display more cities datas (shields, quick description, state, alliance, farms, portals, church)
 Will have to stop somewhere...
 DONE
+- [x] CONTENT : added Haven's Zep & Boat animations 
 - [x] CONTENT : added clouds
 - [x] FIX : reset cameras > now it loose panning > must fix >> ok must use target.position.clone() for it to works
 - [x] CODE : Mix own and server JSON, add : server_Owner, server_CityName, display, creationdate, position0ifNot...
