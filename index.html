@@ -604,11 +604,7 @@
         TN_HavenRot.position.x = 2001;
         TN_HavenRot.position.y = 150;
         TN_HavenRot.position.z = 1152;
-        /*var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter:25}, scene);
-        sphere.parent = TN_HavenRot;
-        sphere.position.x = 300;
-        sphere.position.y = 150;
-        sphere.position.z = 0;*/
+        var TN_Origin = new BABYLON.TransformNode("TN_Origin");
 
 
         scene.registerAfterRender(function () {
@@ -620,6 +616,7 @@
           var axis = new BABYLON.Vector3(0, 1, 0);
           //var TN_HavenRot = scene.getMeshByName('TN_HavenRot');
           TN_HavenRot.rotate(axis, 0.01, BABYLON.Space.WORLD);
+          TN_Origin.rotate(axis, 0.001, BABYLON.Space.WORLD);
         })
 
         // Arc Cameras
@@ -801,6 +798,7 @@
         var text_Origin = new Writer("ORIGIN", {"anchor": "center","letter-height": 60,"color": "#0f0000","position": {"x" : 0, "y" : 1, "z": -20}});
         text_Origin.material = Mat_grid_numbers;
 
+
         // text distances along +z axis
         scene.blockfreeActiveMeshesAndRenderingGroups = true;
         for ( let i = 500; i < 40000; i += 500) {
@@ -836,6 +834,14 @@
         })
         ]).then(() => {
           console.log("Landscape around imported");
+        });
+        Promise.all([
+        BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "Cloudz.gltf", scene).then(function (Cloudz) {
+        })
+        ]).then(() => {
+          //
+          var Cloudz = scene.getNodeByName("Cloudz");
+          Cloudz.parent = TN_Origin;
         });
         // Load Haven Island
         Promise.all([
@@ -893,7 +899,7 @@
             );
         });
 
-        //var gl = new BABYLON.GlowLayer("glow", scene);
+      //var gl = new BABYLON.GlowLayer("glow", scene);
     	return scene;
             // 'fauxLoad' executes the contents of:  https://raw.githubusercontent.com/briantbutton/meshwriter/master/dist/meshwriter.min.js
             // jQuery would not fetch it, so I just put the contents inline
