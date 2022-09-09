@@ -27,6 +27,9 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [ ] CODE: rewrite textCities infos with 3DGUI OR test with POVs generations
 - [ ] FIX : Fix panning bug again (focuscam)
 - [ ] UI : improve academy display
+- [ ] FEATURE : related to above task, add city statistics
+- [ ] FEATURE : add a camera collision container OR use the skybox directly
+- [ ] PERF : fix duplicated imported materials
 - [ ] CODE: cleaning JSON from server infos ? (needs manual pos)
 - [ ] CODE: improve underground cities handling
 - [ ] CODE/FEATURE: seperate POVs from Cities, default is "hidden"
