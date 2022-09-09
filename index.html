@@ -664,7 +664,7 @@
         // GUI
         var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mapUI");
         var panelTop = new BABYLON.GUI.StackPanel();
-        panelTop.height = "30px";
+        panelTop.height = "28px";
 
         panelTop.isVertical = false;
         advancedTexture.addControl(panelTop);
@@ -679,8 +679,10 @@
         var gui_campos_label = new BABYLON.GUI.TextBlock();
         gui_campos_label.text = "CAM  POS";
         gui_campos_label.color = "grey";
-        gui_campos_label.fontSize = 12;
+        gui_campos_label.fontSize = 11;
         gui_campos_label.width = coords_with;
+        gui_campos_label.verticalAlignment = 3;
+        gui_campos_label.paddingLeft = "10px";
         panelTop.addControl(gui_campos_label);
         var gui_camposx = new BABYLON.GUI.TextBlock();
         gui_camposx.text = "X";
