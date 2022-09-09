@@ -53,11 +53,8 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [ ] IDEA : test flythrough (city to city)
 - [ ] IDEA / 3D : obtain a layer 0 of the world (only ocean, river) >> add water only (Global Blender Mesh)
 
-POSTPONNED
-- [ ] FEATURE / CONTENT : display more cities datas (shields, quick description, state, alliance, farms, portals, church)
-Will have to stop somewhere...
 DONE
-- [x] CONTENT : added Haven's Zep & Boat animations 
+- [x] CONTENT : added Haven's Zep & Boat animations
 - [x] CONTENT : added clouds
 - [x] FIX : reset cameras > now it loose panning > must fix >> ok must use target.position.clone() for it to works
 - [x] CODE : Mix own and server JSON, add : server_Owner, server_CityName, display, creationdate, position0ifNot...
@@ -88,3 +85,7 @@ DONE
 - [x] UI : change lightning and colors
 - [x] CONTENT : try manual carto Haven Island > tedious
 - [x] FIX : replace city names with Blender objects ? >> Nope, got text meshes finally
+
+POSTPONNED
+- [ ] FEATURE / CONTENT : display more cities datas (shields, quick description, state, alliance, farms, portals, church)
+Will have to stop somewhere...
