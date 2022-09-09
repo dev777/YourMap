@@ -18,16 +18,6 @@
   <div id="container">
   <!-- ************************************************************* GUI -->
     <button class="openbtn" onclick="openSideMenu()">&#9776; Cities</button>
-    <div id="menu_top">
-      <div></div>
-      <div id="cam_coords">
-        Camera :&nbsp;
-        <div id="Cam_X">X: 0</div>
-        <div id="Cam_Y">Y: 0</div>
-        <div id="Cam_Z">Z: 0</div>
-      </div>
-      <div></div>
-    </div>
     <!-- Menu Cities -->
     <div id="MenuSide1" class="sidepanel">
       <a href="javascript:void(0)" class="closebtn" onclick="closeSideMenu()">&times;</a>
@@ -62,9 +52,7 @@
   </div>
 
     <script>
-
       // Cities datas Credits : alexandre2005, AliasAlreadyTaken, Bla, Chache, Mielle and probably many others (help makes this accurate please)
-
       // INIT SCENE
       var canvas = document.getElementById("renderCanvas");
       var startRenderLoop = function (engine, canvas) {
@@ -80,44 +68,33 @@
       var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
 
       /* ----------------------------------------------------------------------- MENUS Functions -------------------- */
-      function toggle_groundSky() {
-        //var test_ground = BABYLON.getMeshByName('ground');
-        if (scene.getMeshByName('ground')) {
-          scene.getMeshByName('ground').dispose(true,true);
-          scene.getMeshByName('skyBox').dispose(true,true);
+
+      function openSideMenu() {
+        if (document.getElementById("MenuSide1").style.width == "290px") {
+          document.getElementById("MenuSide1").style.width = "0px";
         } else {
-          // ground
-          const Mat_Ground = new BABYLON.StandardMaterial("Mat_Ground");
-          Mat_Ground.diffuseColor = new BABYLON.Color3.FromHexString("#122E1A");
-          Mat_Ground.specularColor = new BABYLON.Color3.FromHexString("#000000");
-          const ground = BABYLON.MeshBuilder.CreateGround("ground", {height: 100000, width: 100000, subdivisions: 4});
-          ground.material = Mat_Ground;
-          // Sky material
-          var skyboxMaterial = new BABYLON.SkyMaterial("skyMaterial", scene);
-          skyboxMaterial.backFaceCulling = false;
-          // Sky mesh (box)
-          var skybox = BABYLON.Mesh.CreateBox("skyBox", 70000.0, scene);
-          skybox.material = skyboxMaterial;
-          skyboxMaterial.turbidity = 45;
-          skyboxMaterial.luminance = 0.86;
-          skyboxMaterial.inclination = 0;
-          skyboxMaterial.mieDirectionalG = 0.8;
-          skyboxMaterial.mieCoefficient = 0.005;
-          // Manually set the sun position
-          skyboxMaterial.useSunPosition = true; // Do not set sun position from azimuth and inclination
-          skyboxMaterial.sunPosition = new BABYLON.Vector3(50, 100, -20);
+          document.getElementById("MenuSide1").style.width = "290px";
         }
       }
-
-      function toggle_Fog() {
-        if (scene.fogMode == BABYLON.Scene.FOGMODE_EXP2){
-          scene.fogMode = BABYLON.Scene.FOGMODE_NONE;
-        } else {
-          scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
-        }
+      function closeSideMenu() {
+        document.getElementById("MenuSide1").style.width = "0";
       }
+      window.onload = function(){
+          var hideMe = document.getElementById('main_submenu');
+          var menu = document.getElementById('menu_main');
+          var babylon_canva = document.getElementById("renderCanvas");
 
-
+          // hiding div content from main menu when clicked in or ouside
+          hideMe.onclick = function(elem){
+            hideMe.style.display = 'none';
+          };
+          // outside means the whole babylonr render canvas too
+          babylon_canva.onclick = function(e){
+            hideMe.style.display = 'none';
+            document.getElementById("main_submenu").classList.remove('main_submenuWide');
+            document.getElementById("main_submenu").classList.add('main_submenu');
+          }
+       };
       function main_submenu_visibility(element) {
         // Displays or not
         // HIDE
@@ -146,8 +123,7 @@
             // dfrfg
             break;
           case "PREFS":
-            // <p>Those are planned switchable properties, the display camera coords can slow you browser...</p><button class="" onclick="display_cam_coords()">Display Camera position</button>
-            document.getElementById("main_submenu").innerHTML = '<h2>PREFERENCES</h2><button class="" onclick="toggle_groundSky()">Toggle Ground & Sky</button><button class="" onclick="toggle_Fog()">Toggle Fog</button>';
+            document.getElementById("main_submenu").innerHTML = '<h2>PREFERENCES</h2><button class="" id ="tog_groundSky" onclick="toggle_groundSky()">Toggle Ground & Sky</button><button class="" onclick="toggle_Fog()">Toggle Fog</button>';
             break;
           case "ACADEMY":
             document.getElementById("main_submenu").innerHTML = '<h2>Academy</h2><p>Here datas from the JSON file, still needs some styling... Tell me wich displayed informations you want.</p><p>Regarding City names, owners and coords, there are duplications to allow our collected datas and server file datas at same time.</p><p>For example, for coordinates, it display our manually collected datas or the /area_pos1 corner from the server file list.</p><p>Next step is to display simple statistics and update Cities status</p>';
@@ -195,23 +171,46 @@
             console.log("Ma qué passo ?");
         }
       }
-
-      function openSideMenu() {
-        if (document.getElementById("MenuSide1").style.width == "290px") {
-          document.getElementById("MenuSide1").style.width = "0px";
-        } else {
-          document.getElementById("MenuSide1").style.width = "290px";
-        }
-      }
-      //
-      function closeSideMenu() {
-        document.getElementById("MenuSide1").style.width = "0";
-      }
       function switchInspector() {
         scene.debugLayer.show();
       }
+      function toggle_groundSky() {
 
-
+        if (scene.getMeshByName('ground')) {
+          // removing ground an skybox that already exists
+          scene.getMeshByName('ground').dispose(true,true);
+          scene.getMeshByName('skyBox').dispose(true,true);
+          //document.getElementById("tog_groundSky").innerHTML = "none";
+        } else {
+          // Creating ground then Skybox
+          const Mat_Ground = new BABYLON.StandardMaterial("Mat_Ground");
+          Mat_Ground.diffuseColor = new BABYLON.Color3.FromHexString("#122E1A");
+          Mat_Ground.specularColor = new BABYLON.Color3.FromHexString("#000000");
+          const ground = BABYLON.MeshBuilder.CreateGround("ground", {height: 100000, width: 100000, subdivisions: 4});
+          ground.material = Mat_Ground;
+          // Sky material
+          var skyboxMaterial = new BABYLON.SkyMaterial("skyMaterial", scene);
+          skyboxMaterial.backFaceCulling = false;
+          // Sky mesh (box)
+          var skybox = BABYLON.Mesh.CreateBox("skyBox", 70000.0, scene);
+          skybox.material = skyboxMaterial;
+          skyboxMaterial.turbidity = 45;
+          skyboxMaterial.luminance = 0.86;
+          skyboxMaterial.inclination = 0;
+          skyboxMaterial.mieDirectionalG = 0.8;
+          skyboxMaterial.mieCoefficient = 0.005;
+          // Manually set the sun position
+          skyboxMaterial.useSunPosition = true; // Do not set sun position from azimuth and inclination
+          skyboxMaterial.sunPosition = new BABYLON.Vector3(50, 100, -20);
+        }
+      }
+      function toggle_Fog() {
+        if (scene.fogMode == BABYLON.Scene.FOGMODE_EXP2){
+          scene.fogMode = BABYLON.Scene.FOGMODE_NONE;
+        } else {
+          scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
+        }
+      }
       /* ----------------------------------------------------------------------- Cameras Functions ------------------ */
       function resetCamera(){
         var activCam = scene.activeCamera;
@@ -223,28 +222,14 @@
         console.log("Camera Resetted");
       }
       function toggleCam() {
-        /*scene.activeCamera.dettach(canvas, true);*/
-      //  camera_univ1.attachControl(canvas, true);
-      //scene.cameras.push(camera_univ1);
-
-      if ( scene.activeCamera == scene.cameras[0] ) {
-        scene.activeCamera = scene.cameras[1];
-        scene.cameras[1].attachControl(canvas, true);
+        if ( scene.activeCamera == scene.cameras[0] ) {
+          scene.activeCamera = scene.cameras[1];
+          scene.cameras[1].attachControl(canvas, true);
         } else {
-        scene.activeCamera = scene.cameras[0];
-        scene.cameras[0].attachControl(canvas, true);
+          scene.activeCamera = scene.cameras[0];
+          scene.cameras[0].attachControl(canvas, true);
         }
       }
-      // -------------------------------------
-      function display_cam_coords(){
-        document.getElementById("cam_coords").style.display = "flex";
-        /*scene.onBeforeRenderObservable.add(function () {
-          document.getElementById("Cam_X").innerHTML = "X:&nbsp;<span class='coords'>"+ Math.round(scene.activeCamera.position.x)+"</span>&nbsp;&nbsp;";
-          document.getElementById("Cam_Y").innerHTML = "Y:&nbsp;<span class='coords'>"+Math.round(scene.activeCamera.position.y)+"</span>&nbsp;&nbsp;";
-          document.getElementById("Cam_Z").innerHTML = "Z:&nbsp;<span class='coords'>"+Math.round(scene.activeCamera.position.z)+"</span>";
-        });*/
-      }
-
       // ********************************************************************* CITIES INFOS FUNCTIONS
       async function getCities() {
           let url = 'Cities.json';
@@ -255,7 +240,6 @@
               console.log(error);
           }
       }
-
       async function menuCities() {
         let cities = await getCities();
 
@@ -368,7 +352,6 @@
 
           }
         }}
-
       async function zeppelination() {
         let cities = await getCities();
 
@@ -409,7 +392,6 @@
          console.log("3D Zep imported, cloned and positionned");
         });
       }
-
       async function sailshipandfish() {
         let cities = await getCities();
 
@@ -450,7 +432,6 @@
          scene_ready();
         });
       }
-
       async function minecartization() {
         let cities = await getCities();
 
@@ -490,7 +471,6 @@
          console.log("3D Minecart imported, cloned and positionned");
         });
       }
-
       async function write_CityInfos(discCityMat,Mat_NameCity,Mat_Mayor,Mat_Coords,Mat_Biomes) {
         let cities = await getCities();
           scene.blockfreeActiveMeshesAndRenderingGroups = true;
@@ -611,25 +591,6 @@
       	var scene   = new BABYLON.Scene(engine);
         var scale   = 1, MeshWriter;
 
-
-        window.onload = function(){
-            var hideMe = document.getElementById('main_submenu');
-            var menu = document.getElementById('menu_main');
-            var babylon_canva = document.getElementById("renderCanvas");
-
-            // hiding div content from main menu when clicked in or ouside
-            hideMe.onclick = function(elem){
-              hideMe.style.display = 'none';
-            };
-            babylon_canva.onclick = function(e){
-              hideMe.style.display = 'none';
-              document.getElementById("main_submenu").classList.remove('main_submenuWide');
-              document.getElementById("main_submenu").classList.add('main_submenu');
-            }
-         };
-
-
-
         // Observables
         /*scene.onBeforeRenderObservable.add(function () {
           document.getElementById("Cam_X").innerHTML = "X:&nbsp;<span class='coords'>"+ Math.round(scene.activeCamera.position.x)+"</span>&nbsp;&nbsp;";
@@ -637,11 +598,13 @@
           document.getElementById("Cam_Z").innerHTML = "Z:&nbsp;<span class='coords'>"+ Math.round(scene.activeCamera.position.z)+"</span>&nbsp;&nbsp;";
         });*/
 
-        /*scene.registerAfterRender(function () {
-          document.getElementById("Cam_X").innerHTML = "X:&nbsp;<span class='coords'>"+ Math.round(scene.activeCamera.position.x)+"</span>&nbsp;&nbsp;";
-          document.getElementById("Cam_Y").innerHTML = "Y:&nbsp;<span class='coords'>"+ Math.round(scene.activeCamera.position.y)+"</span>&nbsp;&nbsp;";
-          document.getElementById("Cam_Z").innerHTML = "Z:&nbsp;<span class='coords'>"+ Math.round(scene.activeCamera.position.z)+"</span>&nbsp;&nbsp;";
-        })*/
+
+        scene.registerAfterRender(function () {
+          // update GUI camera position
+          gui_camposx.text = Math.round(scene.activeCamera.position.x);
+          gui_camposy.text = Math.round(scene.activeCamera.position.y);
+          gui_camposz.text = Math.round(scene.activeCamera.position.z);
+        })
 
         // Arc Cameras
         var camera_arc1  = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/4, 50, BABYLON.Vector3.Zero(), scene);
@@ -657,22 +620,9 @@
         var camera_univ1 = new BABYLON.FreeCamera("camera_univ1", new BABYLON.Vector3(0, 250, -700), scene);
         camera_univ1.speed = 50;
         camera_univ1.inputs.addMouseWheel();
-        /*
-        var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
-        // Enable mouse wheel inputs.
-        camera.inputs.addMouseWheel();
-        // Change the mouse wheel Y axis to controll the cameras height in the scene:
-        //camera.inputs.attached["mousewheel"].wheelYMoveRelative = BABYLON.Coordinate.Y;
-        // Revese the mouse wheel Y axis direction:
-        // camera.inputs.attached["mousewheel"].wheelPrecisionY = -1;
-        // This targets the camera to scene origin
-        camera.setTarget(BABYLON.Vector3.Zero());
-        // This attaches the camera to the canvas
-        camera.attachControl(true);
-        scene.activeCamera.position = new BABYLON.Vector3(2001, 800, 0);*/
 
         // SSAO
-        // Create SSAO and configure all properties (for the example)
+        // Create SSAO and configure all properties
         var ssaoRatio = {
             ssaoRatio: 0.9, // Ratio of the SSAO post-process, in a lower resolution
             combineRatio:1 // Ratio of the combine post-process (combines the SSAO and the scene)
@@ -698,13 +648,11 @@
         scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
         scene.fogDensity = 0.000035;
 
-
         // light
         var lightDirect1 = new BABYLON.DirectionalLight("lightDirect1", new BABYLON.Vector3(25, -60, 35), scene);
         lightDirect1.intensity = 1;
         var lightHemi1 = new BABYLON.HemisphericLight("lightHemi1", new BABYLON.Vector3(0,10,0), scene);
         lightHemi1.intensity = 1;
-
 
         // required to load Meshwriter
         if ( typeof TYPE === "undefined" ) {
@@ -714,18 +662,44 @@
         Writer = BABYLON.MeshWriter(scene, {scale:scale,defaultFont:"Arial"});
 
         // GUI
-        /*var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mapUI");
+        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mapUI");
         var panelTop = new BABYLON.GUI.StackPanel();
+        panelTop.height = "30px";
+
+        panelTop.isVertical = false;
         advancedTexture.addControl(panelTop);
         panelTop.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
         panelTop.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+        panelTop.background = "#00000090";
 
+        coords_with = "65px";
+        coords_size = 14;
+        coords_color = "#ffffff";
+
+        var gui_campos_label = new BABYLON.GUI.TextBlock();
+        gui_campos_label.text = "CAM  POS";
+        gui_campos_label.color = "grey";
+        gui_campos_label.fontSize = 12;
+        gui_campos_label.width = coords_with;
+        panelTop.addControl(gui_campos_label);
         var gui_camposx = new BABYLON.GUI.TextBlock();
-        gui_camposx.text = scene.activeCamera.position;
-        gui_camposx.color = "white";
-        gui_camposx.fontSize = 24;
-        advancedTexture.addControl(gui_camposx);*/
-
+        gui_camposx.text = "X";
+        gui_camposx.color = coords_color;
+        gui_camposx.fontSize = coords_size;
+        gui_camposx.width = coords_with;
+        panelTop.addControl(gui_camposx);
+        var gui_camposy = new BABYLON.GUI.TextBlock();
+        gui_camposy.text = "Y ";
+        gui_camposy.color = coords_color;
+        gui_camposy.fontSize = coords_size;
+        gui_camposy.width = coords_with;
+        panelTop.addControl(gui_camposy)
+        var gui_camposz = new BABYLON.GUI.TextBlock();
+        gui_camposz.text = "Z";
+        gui_camposz.color = coords_color;
+        gui_camposz.fontSize = coords_size;
+        gui_camposz.width = coords_with;
+        panelTop.addControl(gui_camposz)
 
         /*var button = BABYLON.GUI.Button.CreateSimpleButton("but", "Click Me");
         button.width = 0.2;
@@ -749,7 +723,6 @@
         // Material for discs
         const discCityMat = new BABYLON.StandardMaterial("discCityMat");
         discCityMat.diffuseColor = new BABYLON.Color3.FromHexString("#193D24");
-
         // Materials for City texts 47B01C FF9A00 ffaf00
         const Mat_NameCity = new BABYLON.StandardMaterial("Mat_NameCity");
         Mat_NameCity.diffuseColor = new BABYLON.Color3.FromHexString("#FF9A00");
@@ -772,7 +745,6 @@
         beaconMat.emissiveColor = new BABYLON.Color3(0, 0.63, 1);
         beaconMat.diffuseColor = new BABYLON.Color3.FromHexString("#00E4FF");
 
-
         // optimization
         scene.useGeometryIdsMap = true;
         scene.useMaterialMeshMap = true;
@@ -786,6 +758,7 @@
         // ORIGIN
         // Place a txt at origin
         var text_Origin = new Writer("ORIGIN", {"anchor": "center","letter-height": 60,"color": "#0f0000","position": {"x" : 0, "y" : 1, "z": -20}});
+        text_Origin.material = Mat_grid_numbers;
 
         // text distances along +z axis
         scene.blockfreeActiveMeshesAndRenderingGroups = true;
@@ -807,32 +780,25 @@
         Haven_Beacon.position.z = 1152;
         Haven_Beacon.material = beaconMat;
 
-        // ground plane 17331F
-        /*const ground = BABYLON.MeshBuilder.CreateGround("ground", {height: 80000, width: 80000, subdivisions: 4});
-        ground.material = Mat_Ground;*/
-
         // Load Circular_Grid Mesh
         Promise.all([
         BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "Circular_Grid.gltf", scene).then(function (Circular_Grid) {
         })
         ]).then(() => {
-
           //console.log("3D Grid imported");
         });
         // Load Haven Island
         Promise.all([
         BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "island_Haven.gltf", scene).then(function (Haven_island) {
         })
-      ]).then(() => {
-
+        ]).then(() => {
            //console.log("Haven Island imported");
         });
         // Load Odonhull Island
         Promise.all([
         BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "island_Odonhull.gltf", scene).then(function (Odonhull_island) {
         })
-      ]).then(() => {
-
+        ]).then(() => {
            //console.log("Odonhull Island imported");
            // proceduralTextures
            /*const Mat_Mountain_stone = scene.getMaterialByName("Mountain_stone");
@@ -845,15 +811,14 @@
         Promise.all([
         BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "island_Sacrementum.gltf", scene).then(function (Sacrementum_island) {
         })
-      ]).then(() => {
-
+        ]).then(() => {
            //console.log("Sacrementum Island imported");
         });
         // Load Puerto Island
         Promise.all([
         BABYLON.SceneLoader.ImportMeshAsync(null, "meshes/", "island_Puerto.gltf", scene).then(function (Puerto_island) {
         })
-      ]).then(() => {
+        ]).then(() => {
             console.log("Puerto Del Sol Island imported");
             var Torch = scene.getMeshByName("Collosus_Torch");
             Torch.actionManager = new BABYLON.ActionManager(scene);
