@@ -23,33 +23,36 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 
 --- TO DO ---
 * Many things left to do, and it adds up :
-- [ ] CODE: add timers, check importing assets and functions times
-- [ ] CODE: rewrite textCities infos with 3DGUI OR test with POVs generations
-- [ ] FIX : Fix panning bug again (focuscam)
+- [ ] CODE : add timers, check importing assets and functions times
+- [ ] CODE : rewrite textCities infos with 3DGUI OR test with POVs generations
+- [ ] CODE : cleaning JSON from server infos ? (needs manual pos)
+- [ ] CODE : improve underground cities handling
+- [ ] ORG : improve imported mesh selection / naming
+- [ ] ORG : Parent city_infos to disc // testing with Transformation nodes actually
+- [ ] FIX : Fix panning bug again (focuscam) >> ggrrrr >> maybe try target 3D ui instead ?
+- [ ] UI : improve side menu (layout, hover)
 - [ ] UI : improve academy display
+- [ ] UI : Change text size according to City size/activity
+- [ ] UI : needs SSAO & Ambient
+- [ ] UI : display actual pointer position (projection invis plane ?)
 - [ ] FEATURE : related to above task, add city statistics
 - [ ] FEATURE : add a camera collision container OR use the skybox directly
-- [ ] PERF : fix duplicated imported materials
-- [ ] CODE: cleaning JSON from server infos ? (needs manual pos)
-- [ ] CODE: improve underground cities handling
-- [ ] CODE/FEATURE: seperate POVs from Cities, default is "hidden"
-- [ ] UI: Change text size according to City size/activity
-- [ ] UI/PERF: needs SSAO & Ambient
-- [ ] CODE, UI : improve side menu (layout, hover)
-- [ ] ORG :Parent city_infos to disc // testing with Transformation nodes actually
-- [ ] FEATURE : add possibility to enter coords (jump to, check closest city/mobility)
-- [ ] FEATURE : constrain camera's Y axis
+- [ ] PERF : fix duplicated imported materials ()
 - [ ] PERF : use LOD
-- [ ] UI : display actual pointer position (projection invis plane ?)
+- [ ] FEATURE : add possibility to enter coords (jump to, check closest city/mobility)
+- [ ] FEATURE: seperate POVs from Cities, default is "hidden"
+- [ ] FEATURE : constrain camera's Y axis
 - [ ] FEATURE : make city's discs or City name clickable too > then option list (travel, info...)
 - [ ] FEATURE : add voice's attack spot and dates, add POVs category
+- [ ] FEATURE : add layers displaying mobility paths (boat; zep; rails)
+- [ ] FEATURE : add Tunnels / bridges
+- [ ] IDEA : prototype class game loop
 - [ ] IDEA : add possibility to place grid origin at locations, with rotation
 - [ ] IDEA : AND / OR add a ruler
 - [ ] IDEA : Add registered path (with multilines)
-- [ ] FEATURE : add layers displaying mobility paths (boat; zep; rails)
 - [ ] IDEA : test flythrough (city to city)
 - [ ] IDEA / 3D : obtain a layer 0 of the world (only ocean, river) >> add water only (Global Blender Mesh)
-- [ ] FEATURE : add Tunnels / bridges
+
 POSTPONNED
 - [ ] FEATURE / CONTENT : display more cities datas (shields, quick description, state, alliance, farms, portals, church)
 Will have to stop somewhere...
