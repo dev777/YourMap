@@ -22,21 +22,42 @@ CONTROLS
 LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 
 --- TO DO ---
-* Many things, by priority :
-- [ ] CODE: add timers
-- [ ] CODE: check importing assets and functions times
+* Many things left to do, and it adds up :
+- [ ] CODE: add timers, check importing assets and functions times
 - [ ] CODE: rewrite textCities infos with 3DGUI OR test with POVs generations
+- [ ] FIX : Fix panning bug again (focuscam)
+- [ ] UI : improve academy display
+- [ ] CODE: cleaning JSON from server infos ? (needs manual pos)
+- [ ] CODE: improve underground cities handling
+- [ ] CODE/FEATURE: seperate POVs from Cities, default is "hidden"
+- [ ] UI: Change text size according to City size/activity
+- [ ] UI/PERF: needs SSAO & Ambient
+- [ ] CODE, UI : improve side menu (layout, hover)
+- [ ] ORG :Parent city_infos to disc // testing with Transformation nodes actually
+- [ ] FEATURE : add possibility to enter coords (jump to, check closest city/mobility)
+- [ ] FEATURE : constrain camera's Y axis
+- [ ] PERF : use LOD
+- [ ] UI : display actual pointer position (projection invis plane ?)
+- [ ] FEATURE : make city's discs or City name clickable too > then option list (travel, info...)
+- [ ] FEATURE : add voice's attack spot and dates, add POVs category
+- [ ] IDEA : add possibility to place grid origin at locations, with rotation
+- [ ] IDEA : AND / OR add a ruler
+- [ ] IDEA : Add registered path (with multilines)
+- [ ] FEATURE : add layers displaying mobility paths (boat; zep; rails)
+- [ ] IDEA : test flythrough (city to city)
+- [ ] IDEA / 3D : obtain a layer 0 of the world (only ocean, river) >> add water only (Global Blender Mesh)
+- [ ] FEATURE : add Tunnels / bridges
+POSTPONNED
+- [ ] FEATURE / CONTENT : display more cities datas (shields, quick description, state, alliance, farms, portals, church)
+Will have to stop somewhere...
+DONE
+- [x] FIX : reset cameras > now it loose panning > must fix >> ok must use target.position.clone() for it to works
 - [x] CODE : Mix own and server JSON, add : server_Owner, server_CityName, display, creationdate, position0ifNot...
 - [x] CODE : Rewriting Json part
 - [x] PERF : reassign txt materials, purge generated ones
 - [x] UI / CODE : add a loading screen or something, mb credits until loaded
 - [x] FEATURE : display cam x y z >> GUI2D stack panel, AfterRender babylon function
-- [ ] FIX : Fix panning bug again (focuscam)
 - [x] UI/PERF : make ressources heavy parameters deactivable
-- [ ] CODE: improve underground cities handling
-- [ ] CODE/FEATURE: seperate POVs from Cities, default is disabled
-- [ ] UI: Change text size according to City size/activity
-- [ ] UI/PERF: needs SSAO & Ambient
 - [x] CODE : using Y value for cities
 - [x] CONTENT : added landscape around, changed environment set by default
 - [x] FEATURE : Academy list v1
@@ -47,32 +68,15 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [x] TXT : fix 'n' letter or use CAPS >> using caps for now
 - [x] UI : add icons for mobility >> added 3D meshes : zep & boatMesh
 - [x] CODE : js generate cities menu
-- [ ] CODE, UI : improve side menu
 - [x] CODE / UI: add mobility/mayor/biome/coords infos
 - [x] change TXT material to diffuse
 - [x] UI : add minecart meshes
 - [x] FEATURE : Side pannel with cities that focus on selected city with a local ArcCam >> wup wup wup, choosed JS/HTML menu for now
-- [x] FIX : reset cameras > now it loose panning > must fix >> ok must use target.position.clone() for it to works
-- [ ] ORG :Parent city_infos to disc
-- [ ] FEATURE : add possibility to enter coords (jump to, check closest city)
 - [x] FEATURE : choose cameras : free / arc
-- [ ] FEATURE : constrain camera's Y axis
 - [x] CODE : separate Json file
 - [x] PERF : replace circular grid with a 3D mesh instance
 - [x] UI : Reorder buttons, make a bottom bar
-- [ ] PERF : use LOD
 - [x] PERF : check all shadows / collision / lights to disable  >> Those needs to be activated
-- [ ] UI : display actual pointer position (projection invis plane ?)
-- [ ] FEATURE / CONTENT : display more cities datas (shields, quick description, state, alliance, farms, portals, church)
-- [ ] FEATURE : make city's discs or City name clickable too > then option list (travel, info...)
-- [ ] FEATURE : add voice's attack spot and dates, add POVs category
-- [ ] IDEA : add possibility to place grid origin at locations, with rotation
-- [ ] IDEA : AND / OR add a ruler
-- [ ] IDEA : Add registered path (with multilines)
 - [x] UI : change lightning and colors
-- [ ] FEATURE : add layers displaying mobility paths (boat; zep; rails)
-- [ ] IDEA : test flythrough (city to city)
-- [ ] IDEA / 3D : obtain a layer 0 of the world (only ocean, river) >> add water only (Global Blender Mesh)
 - [x] CONTENT : try manual carto Haven Island > tedious
 - [x] FIX : replace city names with Blender objects ? >> Nope, got text meshes finally
-- [ ] FEATURE : add Tunnels / bridges
