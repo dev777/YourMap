@@ -27,9 +27,12 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [x] CODE : Rewriting Json part
 - [x] PERF : reassign txt materials, purge generated ones
 - [x] UI / CODE : add a loading screen or something, mb credits until loaded
-- [ ] FEATURE : display cam x y z
+- [x] FEATURE : display cam x y z >> GUI2D stack panel, AfterRender babylon function
 - [ ] FIX : Fix panning bug again (focuscam)
+- [x] UI/PERF : make ressources heavy parameters deactivable
+- [ ] UI/PERF: needs SSAO & Ambient
 - [x] CODE : using Y value for cities
+- [x] CONTENT : added landscape around, changed environment set by default
 - [x] FEATURE : Academy list v1
 - [x] UI : Put back help controls
 - [x] FEATURE : add keyboard control to camera >> default for universal camera
@@ -46,13 +49,13 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [x] FIX : reset cameras > now it loose panning > must fix >> ok must use target.position.clone() for it to works
 - [ ] ORG :Parent city_infos to disc
 - [ ] FEATURE : add possibility to enter coords (jump to, check closest city)
-- [ ] FEATURE : choose cameras : free / top
+- [x] FEATURE : choose cameras : free / arc
 - [ ] FEATURE : constrain camera's Y axis
 - [x] CODE : separate Json file
 - [x] PERF : replace circular grid with a 3D mesh instance
 - [x] UI : Reorder buttons, make a bottom bar
 - [ ] PERF : use LOD
-- [ ] PERF : check all shadows / collision / lights to disable
+- [x] PERF : check all shadows / collision / lights to disable  >> Those needs to be activated
 - [ ] UI : display actual pointer position (projection invis plane ?)
 - [ ] FEATURE / CONTENT : display more cities datas (shields, quick description, state, alliance, farms, portals, church)
 - [ ] FEATURE : make city's discs or City name clickable too > then option list (travel, info...)
