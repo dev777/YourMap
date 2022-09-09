@@ -23,6 +23,9 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 
 --- TO DO ---
 * Many things, by priority :
+- [ ] CODE: add timers
+- [ ] CODE: check importing assets and functions times
+- [ ] CODE: rewrite textCities infos with 3DGUI OR test with POVs generations
 - [x] CODE : Mix own and server JSON, add : server_Owner, server_CityName, display, creationdate, position0ifNot...
 - [x] CODE : Rewriting Json part
 - [x] PERF : reassign txt materials, purge generated ones
@@ -30,6 +33,9 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [x] FEATURE : display cam x y z >> GUI2D stack panel, AfterRender babylon function
 - [ ] FIX : Fix panning bug again (focuscam)
 - [x] UI/PERF : make ressources heavy parameters deactivable
+- [ ] CODE: improve underground cities handling
+- [ ] CODE/FEATURE: seperate POVs from Cities, default is disabled
+- [ ] UI: Change text size according to City size/activity
 - [ ] UI/PERF: needs SSAO & Ambient
 - [x] CODE : using Y value for cities
 - [x] CONTENT : added landscape around, changed environment set by default
