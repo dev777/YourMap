@@ -24,7 +24,7 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 --- TO DO ---
 * Many things left to do, and it adds up :
 - [ ] CODE : add timers, check importing assets and functions times
-- [ ] CODE : rewrite textCities infos with 3DGUI OR test with POVs generations
+- [ ] CODE : rewrite textCities infos with 3DGUI OR test with POIs generations
 - [ ] CODE : cleaning JSON from server infos ? (needs manual pos)
 - [ ] CODE : improve underground cities handling
 - [ ] ORG : improve imported mesh selection / naming
@@ -39,11 +39,11 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [ ] FEATURE : add a camera collision container OR use the skybox directly
 - [ ] PERF : fix duplicated imported materials ()
 - [ ] PERF : use LOD
-- [ ] FEATURE : add possibility to enter coords (jump to, check closest city/mobility)
-- [ ] FEATURE: seperate POVs from Cities, default is "hidden"
+- [x] FEATURE : add possibility to enter coords (jump to, check closest city/mobility) > needs improv
+- [ ] FEATURE: seperate POIs from Cities, default is "hidden"
 - [ ] FEATURE : constrain camera's Y axis
 - [ ] FEATURE : make city's discs or City name clickable too > then option list (travel, info...)
-- [ ] FEATURE : add voice's attack spot and dates, add POVs category
+- [ ] FEATURE : add voice's attack spot and dates, add POI category
 - [ ] FEATURE : add layers displaying mobility paths (boat; zep; rails)
 - [ ] FEATURE : add Tunnels / bridges
 - [ ] IDEA : prototype class game loop
