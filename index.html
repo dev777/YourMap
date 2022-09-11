@@ -185,6 +185,8 @@
           const Mat_Ground = new BABYLON.StandardMaterial("Mat_Ground");
           Mat_Ground.diffuseColor = new BABYLON.Color3.FromHexString("#122E1A");
           Mat_Ground.specularColor = new BABYLON.Color3.FromHexString("#000000");
+          Mat_Ground.alpha = 0.8;
+          Mat_Ground.backFaceCulling = false;
           const ground = BABYLON.MeshBuilder.CreateGround("ground", {height: 110000, width: 110000, subdivisions: 4});
           ground.material = Mat_Ground;
           // Sky material
@@ -653,6 +655,8 @@
         const Mat_Ground = new BABYLON.StandardMaterial("Mat_Ground");
         Mat_Ground.diffuseColor = new BABYLON.Color3.FromHexString("#122E1A");
         Mat_Ground.specularColor = new BABYLON.Color3.FromHexString("#000000");
+        Mat_Ground.alpha = 0.8;
+        Mat_Ground.backFaceCulling = false;
         const ground = BABYLON.MeshBuilder.CreateGround("ground", {height: 110000, width: 110000, subdivisions: 4});
         ground.material = Mat_Ground;
         // --------------------------------------------------------------------- Sky material
