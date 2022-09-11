@@ -671,9 +671,13 @@
         skyboxMaterial.sunPosition = new BABYLON.Vector3(50, 100, -20);
         // light
         var lightDirect1 = new BABYLON.DirectionalLight("lightDirect1", new BABYLON.Vector3(25, -60, 35), scene);
-        lightDirect1.intensity = 1;
+        lightDirect1.intensity = 1.5;
+        lightDirect1.diffuse = new BABYLON.Color3.FromHexString("#FFCD81");
         var lightHemi1 = new BABYLON.HemisphericLight("lightHemi1", new BABYLON.Vector3(0,10,0), scene);
-        lightHemi1.intensity = 1;
+        lightHemi1.intensity = 1.3;
+        lightHemi1.diffuse = new BABYLON.Color3.FromHexString("#8DCFD4");
+
+        /*
         // --------------------------------------------------------------------- SSAO
         // Create SSAO and configure all properties
         var ssaoRatio = {
@@ -690,6 +694,7 @@
         scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline("ssao", camera_arc1);
         // --------------------------------------------------------------------- Antialias
         new BABYLON.PassPostProcess("scale_pass", 2.0, camera_arc1, BABYLON.Texture.LINEAR_LINEAR_MIPNEAREST);
+        */
 
 
         // required to load Meshwriter ----------------------------------------- MESHWRITER
@@ -762,7 +767,7 @@
         // --------------------------------------------------------------------- GUI Build
         var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mapUI");
         // Coords panel
-        var panelTop = new BABYLON.GUI.StackPanel();
+        var panelTop = new BABYLON.GUI.StackPanel("panel_Top");
         panelTop.height = "28px";
         panelTop.isVertical = false;
         advancedTexture.addControl(panelTop);
@@ -773,7 +778,7 @@
         coords_with = "70px";
         coords_size = 14;
         coords_color = "#ffffff";
-        var gui_campos_label = new BABYLON.GUI.TextBlock();
+        var gui_campos_label = new BABYLON.GUI.TextBlock("cam_pos_Label");
         gui_campos_label.text = "CAM  POS";
         gui_campos_label.color = "grey";
         gui_campos_label.fontSize = 11;
@@ -781,19 +786,19 @@
         gui_campos_label.verticalAlignment = 3;
         gui_campos_label.paddingLeft = "10px";
         panelTop.addControl(gui_campos_label);
-        var gui_camposx = new BABYLON.GUI.TextBlock();
+        var gui_camposx = new BABYLON.GUI.TextBlock("cam_pos_x");
         gui_camposx.text = "X";
         gui_camposx.color = coords_color;
         gui_camposx.fontSize = coords_size;
         gui_camposx.width = coords_with;
         panelTop.addControl(gui_camposx);
-        var gui_camposy = new BABYLON.GUI.TextBlock();
+        var gui_camposy = new BABYLON.GUI.TextBlock("cam_pos_y");
         gui_camposy.text = "Y ";
         gui_camposy.color = coords_color;
         gui_camposy.fontSize = coords_size;
         gui_camposy.width = coords_with;
         panelTop.addControl(gui_camposy)
-        var gui_camposz = new BABYLON.GUI.TextBlock();
+        var gui_camposz = new BABYLON.GUI.TextBlock("cam_pos_z");
         gui_camposz.text = "Z";
         gui_camposz.color = coords_color;
         gui_camposz.fontSize = coords_size;
@@ -801,15 +806,15 @@
         panelTop.addControl(gui_camposz)
 
         // ****************************************************** Panel addPoi
-        var panelPoi = new BABYLON.GUI.StackPanel();
-        //panelPoi.height = "228px";
-        panelPoi.width = "128px";
+        var panelPoi = new BABYLON.GUI.StackPanel("panel_Poi");
+        panelPoi.top = "10px"
+        //panelPoi.left = "-10px"
+        panelPoi.width = "135px";
         panelPoi.isVertical = true;
         advancedTexture.addControl(panelPoi);
         panelPoi.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
         panelPoi.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
         panelPoi.spacing = 4;
-        //panelPoi.background = "#00000090";
 
         /*var labelPoi = new BABYLON.GUI.TextBlock();
         labelPoi.text = "Add a POI";
@@ -818,14 +823,15 @@
         labelPoi.height = "32px";
         panelPoi.addControl(labelPoi);*/
 
-        var button_AddPoi = BABYLON.GUI.Button.CreateSimpleButton("button_AddPoi", "Add POI");
+        var button_AddPoi = BABYLON.GUI.Button.CreateSimpleButton("btn_AddPoi", "Add POI");
         button_AddPoi.width = 1;
+        button_AddPoi.left = 10;
         button_AddPoi.height = "24px";
         button_AddPoi.fontSize = "14px";
-        button_AddPoi.color = "orange";
+        button_AddPoi.color = "#faaa00";
         button_AddPoi.thickness = 0;
-        //button_AddPoi.cornerRadius = 5;
-        button_AddPoi.background = "#00000090";
+        button_AddPoi.cornerRadius = 10;
+        button_AddPoi.background = "#000000";
         button_AddPoi.onPointerDownObservable.add(function() {
           // Switch imput coords panel visibility
           if (panelPoiInput.isVisible == false) {
@@ -836,18 +842,19 @@
         });
         panelPoi.addControl(button_AddPoi);
 
-        var button_FocusPoi = BABYLON.GUI.Button.CreateSimpleButton("button_FocusPoi", "Focus POI");
+        var button_FocusPoi = BABYLON.GUI.Button.CreateSimpleButton("btn_FocusPoi", "Focus POI");
         button_FocusPoi.width = 1;
+        button_FocusPoi.left = 10;
         button_FocusPoi.height = "24px";
         button_FocusPoi.fontSize = "14px";
-        button_FocusPoi.color = "white";
+        button_FocusPoi.color = "#50f0fa";
         button_FocusPoi.thickness = 0;
         button_FocusPoi.cornerRadius = 10;
-        button_FocusPoi.background = "#000000";
+        button_FocusPoi.background = "#00000090";
         button_FocusPoi.isVisible = false;
         panelPoi.addControl(button_FocusPoi);
 
-        var panelPoiInput = new BABYLON.GUI.StackPanel();
+        var panelPoiInput = new BABYLON.GUI.StackPanel("panel_PoiInput");
         /*panelPoiInput.height = "228px";*/
         panelPoiInput.width = 1;
         panelPoiInput.isVertical = true;
@@ -858,15 +865,16 @@
         panelPoiInput.spacing = 4;
         panelPoiInput.isVisible = false;
 
-        var labelPoiInput = new BABYLON.GUI.TextBlock();
+        var labelPoiInput = new BABYLON.GUI.TextBlock("label_PoiInput");
         labelPoiInput.text = "Enter X then Z coord";
+        labelPoiInput.weight = "italic";
         labelPoiInput.color = "#eeeeee";
         labelPoiInput.fontSize = 13;
         labelPoiInput.height = "24px";
         panelPoiInput.addControl(labelPoiInput);
 
 
-        var input_x = new BABYLON.GUI.InputText();
+        var input_x = new BABYLON.GUI.InputText("input_x");
         input_x.width = 0.8;
         input_x.height = "21px";
         input_x.fontSize = "16px";
@@ -886,7 +894,7 @@
         input_y.color = "white";
         input_y.background = "grey";
         panelPoi.addControl(input_y);*/
-        var input_z = new BABYLON.GUI.InputText();
+        var input_z = new BABYLON.GUI.InputText("input_z");
         input_z.width = 0.8;
         input_z.height = "21px";
         input_z.fontSize = "16px";
@@ -898,9 +906,9 @@
         input_z.onFocusSelectAll = true;
 
 
-        var button_ValidPoi = BABYLON.GUI.Button.CreateSimpleButton("button_ValidPoi", "Validate");
+        var button_ValidPoi = BABYLON.GUI.Button.CreateSimpleButton("btn_ValidPoi", "Validate");
         button_ValidPoi.width = 1;
-        button_ValidPoi.height = "20px";
+        button_ValidPoi.height = "25px";
         button_ValidPoi.fontSize = "14px";
         button_ValidPoi.color = "orange";
         button_ValidPoi.thickness = 0;
