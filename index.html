@@ -52,6 +52,9 @@
   </div>
 
     <script>
+    // overall execution time
+    let t0= performance.now(); //start time
+
       // Cities datas Credits : alexandre2005, AliasAlreadyTaken, Bla, Chache, Mielle and probably many others (help makes this accurate please)
       // INIT SCENE
       var canvas = document.getElementById("renderCanvas");
@@ -217,7 +220,7 @@
         var activCam = scene.activeCamera;
         var target = scene.getMeshByName("Balloon_primitive0");
         // needed to preserve panning
-        target_pos = target.position.clone()
+        target_pos = target.position.clone();
         activCam.position = new BABYLON.Vector3(0, 900, -1500);
         activCam.setTarget(target_pos);
         console.log("Camera Resetted");
@@ -278,7 +281,7 @@
               var disc_city = "city_origin_"+obj.City_Name.toUpperCase();
               var target = scene.getMeshByName(disc_city);
               // needed to preserve panning ****************** NOT WORKING ANYMORE via Menu, no panning
-              target_pos = target.position.clone()
+              target_pos = target.position.clone();
               activCam.position = new BABYLON.Vector3(target.position.x, 900, target.position.z-1000);
               activCam.setTarget(target);
                 console.log("Camera focused on "+obj.City_Name);
@@ -483,6 +486,8 @@
         });
       }
       async function write_CityInfos(discCityMat,Mat_NameCity,Mat_Mayor,Mat_Coords,Mat_Biomes) {
+        let tf_0= performance.now(); //start time
+
         let cities = await getCities();
           scene.blockfreeActiveMeshesAndRenderingGroups = true;
           var TN_HavenRot_clockwise = scene.getMeshByName('TN_HavenRot_clockwise');
@@ -550,7 +555,7 @@
                 var y_cylinder = parseInt( save_city_y, 10 )/2;
                 index_city.position = new BABYLON.Vector3(city_x, y_cylinder, city_z);
                 index_city.material = discCityMat;
-                y_cylinder.parent = TN_HavenRot_clockwise;
+
 
               // --- create City Names text at exact x/z position, y is forced +15 --- // "#1C3870" // caaa55
               eval('var text_CityName_'+ i +' = new Writer("'+ City_Name +'",{"anchor": "center","letter-height": '+fontNameSize+',"letter-thickness":5, "color": "#fff","position": {"x" : '+ city_x +', "y" : '+ txt_city_y +', "z": '+ city_z +'}});');
@@ -589,11 +594,15 @@
           // test zone *
           scene.blockfreeActiveMeshesAndRenderingGroups = false;
           //console.log("Text Cities generated");
+          let tf_1= performance.now(); //start time
+          console.log('Time taken to execute CityInfo function:'+ (tf_1-tf_0)/1000 +' seconds');
         }
 
-        function scene_ready(){
-          console.log("Scene ready");
+        function scene_ready() {
           document.getElementById("loading_screen").style.display = "none";
+          let t1= performance.now(); //end time
+          console.log('Time taken to execute the whole init function:'+ (t1-t0)/1000 +' seconds');
+          console.log("Scene ready");
         }
 
       // ======================================================================= MAIN FUNCTION ==============
@@ -708,8 +717,11 @@
         // Init Writer for 3D text
         Writer = BABYLON.MeshWriter(scene, {scale:scale,defaultFont:"Arial"});
 
-        // ********************************************************************* GUI ************************
-        //var POI_count = 0;
+        // ********************************************************************* 2D GUI ************************
+        var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 50, scene, true);
+        dynamicTexture.hasAlpha = true;
+        dynamicTexture.drawText("edfvfv", 5, 40, "bold 236px Arial", "white" , "transparent", true);
+
         // --------------------------------------------------------------------- Babylon 2D GUI Functions
         async function POI_enteredCoords(){
           let cities = await getCities();
@@ -720,17 +732,14 @@
             labelPoiInput.color = "red";
           } else {
             // --------------------------------------------- Make the POI
-            //POI_count ++;
             // reset info / error label
             labelPoiInput.text = "Enter X then Z coord";
             labelPoiInput.color = "white";
             panelPoiInput.isVisible = false;
-            // create TransformationNode and sphere + box parented to it
-            var TN_POI = new BABYLON.TransformNode("TN_POI");
-            TN_POI.position.x = input_x.text;
-            TN_POI.position.z = input_z.text;
+            // POI_Sphere will be used directly for position
             const POI_Sphere = new BABYLON.MeshBuilder.CreateSphere("POI_Sphere", {diameter: 24}, scene);
-            POI_Sphere.parent = TN_POI;
+            POI_Sphere.position.x = input_x.text;
+            POI_Sphere.position.z = input_z.text;
             POI_Sphere.position.y = 15;
             POI_Sphere.material = Mat_POI;
             const POI_Box = new BABYLON.MeshBuilder.CreateBox("POI_Box", {height: 50, width: 18, depth: 18});
@@ -746,29 +755,65 @@
               activCam.setTarget(POI_Sphere);
             });
 
-
-            // Looping all cities
+            // storing first city with display: true
+            var closestCity = cities['Cities'][1];
+            // storing its distance
+            City_originString = "city_origin_"+closestCity.City_Name.toUpperCase();
+            City_origin = scene.getMeshByName(City_originString);
+            closestDistance = Math.round( BABYLON.Vector3.Distance(City_origin.position, POI_Sphere.position ) );
+            // Looping all cities with mobility
             for ( let i = 0; i < cities['Cities'].length; i++ ) {
               let obj = cities['Cities'][i];
 
               if ( (obj.mobility.includes("boat")) || (obj.mobility.includes("zeppelin")) || (obj.mobility.includes("rail")) ){
-
-                originString = "city_origin_"+obj.City_Name.toUpperCase();
-                origin = scene.getMeshByName(originString);
-                distance = Math.round( BABYLON.Vector3.Distance(POI_Sphere.position, origin.position) );
-
-                //console.log(obj.City_Name+" - "+obj.mobility+" - "+distance+" Km");
-
+                City_originString = "city_origin_"+obj.City_Name.toUpperCase();
+                City_origin = scene.getMeshByName(City_originString);
+                distance = Math.round( BABYLON.Vector3.Distance(City_origin.position, POI_Sphere.position ) );
+                // checking closest distance
+                if (distance < closestDistance) {
+                  closestCity = obj;
+                  closestDistance = distance;
+                }
               }
             }
 
+            // displaying closest city with mobility
+            var txt_POI_label = new Writer("Nearest city with mobility", {"anchor": "center","letter-height": 23,"color": "#aaaaaa","position": {"x" : input_x.text, "y" : 240, "z": input_z.text}});
+            mesh_txt_POI_label = txt_POI_label.getMesh();
+            mesh_txt_POI_label.rotation.x = BABYLON.Tools.ToRadians(-90);
+            //mesh_txt_POI_label.material = Mat_grid_numbers;
+            mesh_txt_POI_label.parent = POI_Sphere;
+            var txt_POI = new Writer(closestCity.City_Name, {"anchor": "center","letter-height": 42,"color": "#aa00000","position": {"x" : input_x.text, "y" : 200, "z": input_z.text}});
+            mesh_txt_POI = txt_POI.getMesh();
+            mesh_txt_POI.rotation.x = BABYLON.Tools.ToRadians(-90);
+            mesh_txt_POI.material = Mat_POI;
+            mesh_txt_POI.parent = POI_Sphere;
+            var txt_POI_mobility = new Writer(closestCity.mobility, {"anchor": "center","letter-height": 32,"color": "#22aaaa","position": {"x" : input_x.text, "y" : 170, "z": input_z.text}});
+            mesh_txt_POI_mobility = txt_POI_mobility.getMesh();
+            mesh_txt_POI_mobility.rotation.x = BABYLON.Tools.ToRadians(-90);
+            //mesh_txt_POI_mobility.material = Mat_POI;
+            mesh_txt_POI_mobility.parent = POI_Sphere;
+            var txt_POI_distance = new Writer(closestDistance+" meters", {"anchor": "center","letter-height": 32,"color": "#000000","position": {"x" : input_x.text, "y" : 135, "z": input_z.text}});
+            mesh_txt_POI_distance = txt_POI_distance.getMesh();
+            mesh_txt_POI_distance.rotation.x = BABYLON.Tools.ToRadians(-90);
+            //mesh_txt_POI_mobility.material = Mat_POI;
+            mesh_txt_POI_distance.parent = POI_Sphere;
+            //
+
+            City_originString = "city_origin_"+closestCity.City_Name.toUpperCase();
+            City_origin = scene.getMeshByName(City_originString);
+            var path = [
+                POI_Sphere.position,
+                new BABYLON.Vector3(closestCity.city_x,closestCity.city_y,closestCity.city_z),
+            ]
+            var tube = BABYLON.MeshBuilder.CreateTube("tube_POI_City", {path: path, radius: 3}, scene);
 
             //BABYLON.Vector3.Distance(p1,p2)
             button_FocusPoi.isVisible = true;
           }
         }
 
-        // --------------------------------------------------------------------- GUI Build
+        // --------------------------------------------------------------------- 2D GUI Layout
         var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mapUI");
         // Coords panel
         var panelTop = new BABYLON.GUI.StackPanel("panel_Top");
@@ -820,13 +865,6 @@
         panelPoi.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
         panelPoi.spacing = 4;
 
-        /*var labelPoi = new BABYLON.GUI.TextBlock();
-        labelPoi.text = "Add a POI";
-        labelPoi.color = "white";
-        labelPoi.fontSize = 16;
-        labelPoi.height = "32px";
-        panelPoi.addControl(labelPoi);*/
-
         var button_AddPoi = BABYLON.GUI.Button.CreateSimpleButton("btn_AddPoi", "Add POI");
         button_AddPoi.width = 1;
         button_AddPoi.left = 10;
@@ -877,7 +915,6 @@
         labelPoiInput.height = "24px";
         panelPoiInput.addControl(labelPoiInput);
 
-
         var input_x = new BABYLON.GUI.InputText("input_x");
         input_x.width = 0.8;
         input_x.height = "21px";
@@ -890,14 +927,6 @@
         panelPoiInput.addControl(input_x);
         input_x.onFocusSelectAll = true;
 
-        /*var input_y = new BABYLON.GUI.InputText();
-        input_y.width = 0.8;
-        input_y.height = "20px";
-        input_y.fontSize = "16px";
-        input_y.text = "75000";
-        input_y.color = "white";
-        input_y.background = "grey";
-        panelPoi.addControl(input_y);*/
         var input_z = new BABYLON.GUI.InputText("input_z");
         input_z.width = 0.8;
         input_z.height = "21px";
@@ -908,7 +937,6 @@
         input_z.thickness = 0;
         panelPoiInput.addControl(input_z);
         input_z.onFocusSelectAll = true;
-
 
         var button_ValidPoi = BABYLON.GUI.Button.CreateSimpleButton("btn_ValidPoi", "Validate");
         button_ValidPoi.width = 1;
@@ -965,6 +993,7 @@
         scene.useGeometryIdsMap = true;
         scene.useMaterialMeshMap = true;
         // ********************************************************************* launch daz funxions
+
         menuCities();
         write_CityInfos(discCityMat,Mat_NameCity,Mat_Mayor,Mat_Coords,Mat_Biomes);
         zeppelination();
@@ -1108,6 +1137,8 @@
             engine.resize();
         });
       // ************************************************************ Temp Zone
+
+
     </script>
 
 </body>

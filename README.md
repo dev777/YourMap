@@ -23,7 +23,7 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 
 --- TO DO ---
 * Many things left to do, and it adds up :
-- [ ] CODE : add timers, check importing assets and functions times
+- [x] CODE : add timers, check importing assets and functions times
 - [ ] CODE : rewrite textCities infos with 3DGUI OR test with POIs generations
 - [ ] CODE : cleaning JSON from server infos ? (needs manual pos)
 - [ ] CODE : improve underground cities handling
@@ -35,11 +35,12 @@ LMB Rotate view / RMB Pan view / WHEEL zoom to pointer
 - [ ] UI : Change text size according to City size/activity
 - [ ] UI : needs SSAO & Ambient
 - [ ] UI : display actual pointer position (projection invis plane ?)
-- [ ] FEATURE : related to above task, add city statistics
+- [ ] FEATURE : academy, add city statistics
 - [ ] FEATURE : add a camera collision container OR use the skybox directly
 - [ ] PERF : fix duplicated imported materials ()
 - [ ] PERF : use LOD
-- [x] FEATURE : add possibility to enter coords (jump to, check closest city/mobility) > needs improv
+- [x] FEATURE : add possibility to enter coords (jump to, check closest city/mobility)
+- [x] FEATURE : POI display nearest city with mobility
 - [ ] FEATURE: seperate POIs from Cities, default is "hidden"
 - [ ] FEATURE : constrain camera's Y axis
 - [ ] FEATURE : make city's discs or City name clickable too > then option list (travel, info...)
