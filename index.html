@@ -803,14 +803,27 @@
             City_originString = "city_origin_"+closestCity.City_Name.toUpperCase();
             City_origin = scene.getMeshByName(City_originString);
 
-            var vectorToCity = new BABYLON.Vector3(closestCity.city_x,closestCity.city_y,closestCity.city_z);
-            //console.log("SpherePosition: "+POI_Sphere.position+" --- var: "+closestCity.city_x+", "+closestCity.city_y+", "+closestCity.city_z+" --- vector; "+vectorToCity);
-            var path = [
+
+            const myPoints2 = [
                 POI_Sphere.position,
-                new BABYLON.Vector3(closestCity.city_x,closestCity.city_y,closestCity.city_z),
+                City_origin.position.position
             ]
-            var tube = BABYLON.MeshBuilder.CreateTube("tube_POI_City", {path: path, radius: 3}, scene);
-            //BABYLON.Vector3.Distance(p1,p2)
+            var sphere = BABYLON.MeshBuilder.CreateSphere("sphere");
+            var box = BABYLON.MeshBuilder.CreateBox("box");
+            box.position.x = 5;
+            box.position.y = 2;
+            const myPoints = [
+            POI_Sphere.position,
+            City_origin.position,
+            ]
+
+            const lines = BABYLON.MeshBuilder.CreateLines("lines", {points: myPoints});
+            lines.color = new BABYLON.Color3(0.13, 0.75, 1);
+            // Draw an arc
+            /*const POI_arc = BABYLON.Curve3.ArcThru3Points(POI_Sphere.position,mesh_txt_POI_distance.position, City_origin.position);
+            const arcLine = BABYLON.MeshBuilder.CreateLines("POI_arc", {points: POI_arc.getPoints()});*/
+
+
             button_FocusPoi.isVisible = true;
           }
         }
