@@ -804,21 +804,15 @@
             City_origin = scene.getMeshByName(City_originString);
 
             // Draw a line between POI and the choosen city
-            const myPoints = [
-            POI_Sphere.position,
-            City_origin.position
+            const myPointsConnect = [
+              TN_HavenRot_clockwise.position,
+              City_origin.position,
+              POI_Sphere.position
             ]
-            const lines = BABYLON.MeshBuilder.CreateLines("lines", {points: myPoints});
-            //lines.color = new BABYLON.Color3(0.13, 0.75, 1);
+            const lineConnect_POI = BABYLON.MeshBuilder.CreateLines("linesConnect_POI", {points: myPointsConnect});
+            lineConnect_POI.color = new BABYLON.Color3(0.13, 0.75, 1);
 
-            // Draw an arc
-            var arcPOI_sphere = BABYLON.MeshBuilder.CreateSphere("arcPOI_sphere", {diameter: 24}, scene);
 
-            arcPOI_sphere.position.x = POI_Sphere.position.x-(POI_Sphere.position.x-City_origin.position.x);
-
-            const POI_arc = BABYLON.Curve3.ArcThru3Points(POI_Sphere.position,POI_Sphere.position, City_origin.position);
-            const arcLine = BABYLON.MeshBuilder.CreateLines("POI_arc", {points: POI_arc.getPoints()});
-            arcPOI_sphere.dispose;
 
             button_FocusPoi.isVisible = true;
           }
