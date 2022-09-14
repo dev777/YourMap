@@ -788,7 +788,7 @@
             mesh_txt_POI.rotation.x = BABYLON.Tools.ToRadians(-90);
             mesh_txt_POI.material = Mat_POI_txt1;
             mesh_txt_POI.parent = POI_Sphere;
-            var txt_POI_mobility = new Writer(closestCity.mobility, {"anchor": "center","letter-height": 30,"color": "#22aaaa","position": {"x" : input_x.text, "y" : 160, "z": input_z.text}});
+            var txt_POI_mobility = new Writer(closestCity.mobility, {"anchor": "center","letter-height": 30,"color": "#22aaaa","position": {"x" : input_x.text, "y" : 165, "z": input_z.text}});
             mesh_txt_POI_mobility = txt_POI_mobility.getMesh();
             mesh_txt_POI_mobility.rotation.x = BABYLON.Tools.ToRadians(-90);
             mesh_txt_POI_mobility.material = Mat_Biomes;
@@ -803,26 +803,22 @@
             City_originString = "city_origin_"+closestCity.City_Name.toUpperCase();
             City_origin = scene.getMeshByName(City_originString);
 
-
-            const myPoints2 = [
-                POI_Sphere.position,
-                City_origin.position.position
-            ]
-            var sphere = BABYLON.MeshBuilder.CreateSphere("sphere");
-            var box = BABYLON.MeshBuilder.CreateBox("box");
-            box.position.x = 5;
-            box.position.y = 2;
+            // Draw a line between POI and the choosen city
             const myPoints = [
             POI_Sphere.position,
-            City_origin.position,
+            City_origin.position
             ]
-
             const lines = BABYLON.MeshBuilder.CreateLines("lines", {points: myPoints});
-            lines.color = new BABYLON.Color3(0.13, 0.75, 1);
-            // Draw an arc
-            /*const POI_arc = BABYLON.Curve3.ArcThru3Points(POI_Sphere.position,mesh_txt_POI_distance.position, City_origin.position);
-            const arcLine = BABYLON.MeshBuilder.CreateLines("POI_arc", {points: POI_arc.getPoints()});*/
+            //lines.color = new BABYLON.Color3(0.13, 0.75, 1);
 
+            // Draw an arc
+            var arcPOI_sphere = BABYLON.MeshBuilder.CreateSphere("arcPOI_sphere", {diameter: 24}, scene);
+
+            arcPOI_sphere.position.x = POI_Sphere.position.x-(POI_Sphere.position.x-City_origin.position.x);
+
+            const POI_arc = BABYLON.Curve3.ArcThru3Points(POI_Sphere.position,POI_Sphere.position, City_origin.position);
+            const arcLine = BABYLON.MeshBuilder.CreateLines("POI_arc", {points: POI_arc.getPoints()});
+            arcPOI_sphere.dispose;
 
             button_FocusPoi.isVisible = true;
           }
