@@ -756,7 +756,7 @@
             });
 
             // storing first city with display: true
-            var closestCity = cities['Cities'][1];
+            var closestCity = cities['Cities'][2];
             // storing its distance
             City_originString = "city_origin_"+closestCity.City_Name.toUpperCase();
             City_origin = scene.getMeshByName(City_originString);
@@ -765,7 +765,7 @@
             for ( let i = 0; i < cities['Cities'].length; i++ ) {
               let obj = cities['Cities'][i];
 
-              if ( (obj.mobility.includes("boat")) || (obj.mobility.includes("zeppelin")) || (obj.mobility.includes("rail")) ){
+              if ( (obj.mobility.includes("boat")) || (obj.mobility.includes("zeppelin")) || (obj.mobility.includes("rail")) && ( !obj.mobility == "unknown" ) ){
                 City_originString = "city_origin_"+obj.City_Name.toUpperCase();
                 City_origin = scene.getMeshByName(City_originString);
                 distance = Math.round( BABYLON.Vector3.Distance(City_origin.position, POI_Sphere.position ) );
@@ -781,33 +781,35 @@
             var txt_POI_label = new Writer("Nearest city with mobility", {"anchor": "center","letter-height": 23,"color": "#aaaaaa","position": {"x" : input_x.text, "y" : 240, "z": input_z.text}});
             mesh_txt_POI_label = txt_POI_label.getMesh();
             mesh_txt_POI_label.rotation.x = BABYLON.Tools.ToRadians(-90);
-            mesh_txt_POI_label.material = Mat_POI_txt1;
+            mesh_txt_POI_label.material = Mat_POI;
             mesh_txt_POI_label.parent = POI_Sphere;
             var txt_POI = new Writer(closestCity.City_Name, {"anchor": "center","letter-height": 42,"color": "#aa00000","position": {"x" : input_x.text, "y" : 200, "z": input_z.text}});
             mesh_txt_POI = txt_POI.getMesh();
             mesh_txt_POI.rotation.x = BABYLON.Tools.ToRadians(-90);
-            mesh_txt_POI.material = Mat_Mayor;
+            mesh_txt_POI.material = Mat_POI_txt1;
             mesh_txt_POI.parent = POI_Sphere;
-            var txt_POI_mobility = new Writer(closestCity.mobility, {"anchor": "center","letter-height": 32,"color": "#22aaaa","position": {"x" : input_x.text, "y" : 170, "z": input_z.text}});
+            var txt_POI_mobility = new Writer(closestCity.mobility, {"anchor": "center","letter-height": 30,"color": "#22aaaa","position": {"x" : input_x.text, "y" : 160, "z": input_z.text}});
             mesh_txt_POI_mobility = txt_POI_mobility.getMesh();
             mesh_txt_POI_mobility.rotation.x = BABYLON.Tools.ToRadians(-90);
             mesh_txt_POI_mobility.material = Mat_Biomes;
             mesh_txt_POI_mobility.parent = POI_Sphere;
-            var txt_POI_distance = new Writer(closestDistance+" meters", {"anchor": "center","letter-height": 32,"color": "#000000","position": {"x" : input_x.text, "y" : 135, "z": input_z.text}});
+            var txt_POI_distance = new Writer(closestDistance+" meters", {"anchor": "center","letter-height": 30,"color": "#000000","position": {"x" : input_x.text, "y" : 130, "z": input_z.text}});
             mesh_txt_POI_distance = txt_POI_distance.getMesh();
             mesh_txt_POI_distance.rotation.x = BABYLON.Tools.ToRadians(-90);
-            mesh_txt_POI_distance.material = Mat_POI_txt1;
+            mesh_txt_POI_distance.material = Mat_Biomes;
             mesh_txt_POI_distance.parent = POI_Sphere;
             //
 
             City_originString = "city_origin_"+closestCity.City_Name.toUpperCase();
             City_origin = scene.getMeshByName(City_originString);
+
+            var vectorToCity = new BABYLON.Vector3(closestCity.city_x,closestCity.city_y,closestCity.city_z);
+            //console.log("SpherePosition: "+POI_Sphere.position+" --- var: "+closestCity.city_x+", "+closestCity.city_y+", "+closestCity.city_z+" --- vector; "+vectorToCity);
             var path = [
                 POI_Sphere.position,
                 new BABYLON.Vector3(closestCity.city_x,closestCity.city_y,closestCity.city_z),
             ]
             var tube = BABYLON.MeshBuilder.CreateTube("tube_POI_City", {path: path, radius: 3}, scene);
-
             //BABYLON.Vector3.Distance(p1,p2)
             button_FocusPoi.isVisible = true;
           }
@@ -960,13 +962,11 @@
         // ********************************************************************* Materials ******************
         // GUI POI
         const Mat_POI = new BABYLON.StandardMaterial("POI");
-        /*Mat_POI.diffuseColor = new BABYLON.Color3.FromHexString("#E61E1E");
-        Mat_POI.emmisiveColor = new BABYLON.Color3.FromHexString("#F33939");*/
-        Mat_POI.diffuseColor = new BABYLON.Color3.FromHexString("#20009a");
-        Mat_POI.emmisiveColor = new BABYLON.Color3.FromHexString("#ffffff");
+        Mat_POI.diffuseColor = new BABYLON.Color3.FromHexString("#0A5AD5");
+        Mat_POI.emmisiveColor = new BABYLON.Color3.FromHexString("#555555");
         Mat_POI.specularColor = new BABYLON.Color3.FromHexString("#000000");
         const Mat_POI_txt1 = new BABYLON.StandardMaterial("Mat_POI_txt1");
-        Mat_POI_txt1.diffuseColor = new BABYLON.Color3.FromHexString("#aaaaaa");
+        Mat_POI_txt1.diffuseColor = new BABYLON.Color3.FromHexString("#98C6E0");
         Mat_POI_txt1.emmisiveColor = new BABYLON.Color3.FromHexString("#000000");
         Mat_POI_txt1.specularColor = new BABYLON.Color3.FromHexString("#000000");
         // Material for discs
@@ -1026,9 +1026,9 @@
         }
 
         // Haven beacon
-        const Haven_Beacon = BABYLON.MeshBuilder.CreateCylinder("Haven_Beacon", {diameter: 7, height: 5000});
+        const Haven_Beacon = BABYLON.MeshBuilder.CreateCylinder("Haven_Beacon", {diameter: 7, height: 25000});
         Haven_Beacon.position.x = 2001;
-        Haven_Beacon.position.y = 2800;
+        Haven_Beacon.position.y = 12800;
         Haven_Beacon.position.z = 1152;
         Haven_Beacon.material = beaconMat;
 
